@@ -8,6 +8,7 @@ public class NightClubs extends RestaurantsAndNightClubs{
 		assessment = new ArrayList();
 		averageAssessment = 0;
 		sumOfAssessment = 0;
+		id++;
 	}
 	public String getNameOfEstablishment() {
 		return nameOfEstablishment;

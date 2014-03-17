@@ -1,6 +1,7 @@
 package org.hillel.it.mycity.model.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Cinema extends Establisment{
 	private int numberOfHalls;
@@ -10,6 +11,7 @@ public class Cinema extends Establisment{
 		assessment = new ArrayList();
 		averageAssessment = 0;
 		sumOfAssessment = 0;
+		id++;
 	}
 	public void setNameOfEstablishment(String nameOfEstablishment){
 		this.nameOfEstablishment = nameOfEstablishment;
@@ -65,5 +67,17 @@ public class Cinema extends Establisment{
 	public void setAssessment(int assessment) {
 		this.assessment.add(assessment);
 		sumOfAssessment += assessment;
+	}
+	public void setDateOfCreation(Date date){
+		this.created = date;
+	}
+	public Date getDateOfCreation(){
+		return created;
+	}
+	public void setDateOfModification(Date date){
+		this.modified = date;
+	}
+	public Date getDateOfModification(){
+		return modified;
 	}
 }

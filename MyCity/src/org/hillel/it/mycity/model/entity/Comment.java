@@ -24,8 +24,13 @@ public class Comment {
 	public List getCommentsForEstablisment(){
 		return comments;
 	}
-	public void setCommentAssessment(String comment){
+	public void setCommentPositiveAssessment(String comment){
 		++commentAssessment;
+		int index = comments.indexOf(comment);
+		ids.put(index, commentAssessment);
+	}
+	public void setCommentNegativeAssessment(String comment){
+		--commentAssessment;
 		int index = comments.indexOf(comment);
 		ids.put(index, commentAssessment);
 	}
