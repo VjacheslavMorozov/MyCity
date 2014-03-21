@@ -3,7 +3,7 @@ package org.hillel.it.mycity.model.entity;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Cinema extends Establisment{
+public class Cinema extends Establishment{
 	private int numberOfHalls;
 	private int numberOfSeatsInHall;
 	private String cinemaTechnology;

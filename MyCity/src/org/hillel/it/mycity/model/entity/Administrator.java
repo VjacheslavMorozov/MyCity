@@ -21,7 +21,7 @@ public class Administrator{
 		String administratorName = (String) usersInformation.get("username");
 		return administratorName;
 	}
-	public void addEstablishment(Establisment establisment){
+	public void addEstablishment(Establishment establisment){
 		
 	}
 	public void deleteEstablishmentById(){
