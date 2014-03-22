@@ -20,7 +20,7 @@ public class Administrator{
 	public String getUserName(){
 		return usersInformation.get("username");
 	}
-	public void addEstablishment(Establisment establisment){
+	public void addEstablishment(Establishment establisment){
 		
 	}
 	public void deleteEstablishmentById(){
