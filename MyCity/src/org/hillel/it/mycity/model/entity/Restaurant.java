@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Restaurant extends RestaurantsAndNightClubs{
 	Restaurant(){
-		assessment = new ArrayList();
+		assessment = new ArrayList<>();
 		averageAssessment = 0;
 		sumOfAssessment = 0;
 		id++;

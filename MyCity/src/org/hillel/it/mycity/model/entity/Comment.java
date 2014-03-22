@@ -11,11 +11,11 @@ public class Comment {
 	* у одного комменты может быть несколько оценок commentAssessment. Идеально для этого был бы 2мерный
 	* массив*/
 	private int commentAssessment;
-	private Map ids;
-	private List comments;
+	private Map<Integer,Integer> ids;
+	private List<String> comments;
 	Comment(){
-		List comments = new ArrayList();
-		Map ids = new HashMap();
+		comments = new ArrayList<>();
+		ids = new HashMap<>();
 		commentAssessment = 0;
 	}
 	public void setComment(String comment){
@@ -36,7 +36,6 @@ public class Comment {
 	}
 	public int getCommentAssessment(String comment){
 		int index = comments.indexOf(comment);
-		int commentAssessment = (int) ids.get(index);
-		return commentAssessment;
+		return ids.get(index);
 	}
 }

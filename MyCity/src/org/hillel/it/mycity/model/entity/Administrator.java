@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class Administrator{
-	private Map usersInformation;
+	private Map<String, String> usersInformation;
 	Administrator(){
-		usersInformation = new HashMap();
+		usersInformation = new HashMap<>();
 	}
 	public void setUserName(String userName){
 		if(usersInformation.containsValue(userName)){
@@ -18,8 +18,7 @@ public class Administrator{
 		usersInformation.put("username", userName);
 	}
 	public String getUserName(){
-		String administratorName = (String) usersInformation.get("username");
-		return administratorName;
+		return usersInformation.get("username");
 	}
 	public void addEstablishment(Establisment establisment){
 		

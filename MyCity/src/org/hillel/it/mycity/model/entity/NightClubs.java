@@ -5,7 +5,7 @@ import java.util.List;
 
 public class NightClubs extends RestaurantsAndNightClubs{
 	NightClubs(){
-		assessment = new ArrayList();
+		assessment = new ArrayList<>();
 		averageAssessment = 0;
 		sumOfAssessment = 0;
 		id++;

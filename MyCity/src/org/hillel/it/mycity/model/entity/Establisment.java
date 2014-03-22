@@ -9,7 +9,7 @@ public abstract class Establisment extends BaseEntity{
 	protected String descriptionOfEstablishment;
 	protected Comment comment;
 	//массив оценок от 1 - 10, из этого массива вычисляется средняя и показывается на странице заведения.
-	protected List assessment;
+	protected List<Integer> assessment;
 	protected double averageAssessment;
 	protected int sumOfAssessment;
 }
