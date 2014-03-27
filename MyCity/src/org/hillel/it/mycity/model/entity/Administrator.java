@@ -20,10 +20,16 @@ public class Administrator{
 	public String getUserName(){
 		return usersInformation.get("username");
 	}
-	public void addEstablishment(Establishment establisment){
-		
+	public void addEstablishmentCinema(){
+		Establishment establishment = new Cinema();
 	}
-	public void deleteEstablishmentById(){
+	public void addEstablishmentRestaurant(){
+		Establishment establishment = new Restaurant();
+	}
+	public void addEstablishmentNightClub(){
+		Establishment establishment = new NightClubs();
+	}
+	public void deleteEstablishmentById(int id){
 		
 	}
 	public void deleteComment(){
