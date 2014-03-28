@@ -7,7 +7,7 @@ public class Cinema extends Establishment{
 	private int numberOfHalls;
 	private int numberOfSeatsInHall;
 	private String cinemaTechnology;
-	Cinema(){
+	public Cinema(){
 		assessment = new ArrayList();
 		averageAssessment = 0;
 		sumOfAssessment = 0;
@@ -16,13 +16,13 @@ public class Cinema extends Establishment{
 	public void setNameOfEstablishment(String nameOfEstablishment){
 		this.nameOfEstablishment = nameOfEstablishment;
 	}
-	public String getNameOfEstabishment(){
+	public String getNameOfEstablishment(){
 		return nameOfEstablishment;
 	}
-	public void setAddressOfEstabishment(String addressOfEstablishment){
+	public void setAddressOfEstablishment(String addressOfEstablishment){
 		this.addressOfEstablishment = addressOfEstablishment;
 	}
-	public String getAddressOfEstabishment(){
+	public String getAddressOfEstablishment(){
 		return addressOfEstablishment;
 	}
 	public int getNumberOfHalls() {
@@ -43,16 +43,16 @@ public class Cinema extends Establishment{
 	public void setCinemaTechnology(String cinemaTechnology) {
 		this.cinemaTechnology = cinemaTechnology;
 	}
-	public String getTelephoneOfEstabishment() {
+	public String getTelephoneOfEstablishment() {
 		return telephoneOfEstablishment;
 	}
-	public void setTelephoneOfEstabishment(String telephoneOfEstablishment) {
+	public void setTelephoneOfEstablishment(String telephoneOfEstablishment) {
 		this.telephoneOfEstablishment = telephoneOfEstablishment;
 	}
-	public String getDescriptionOfEstabishment() {
+	public String getDescriptionOfEstablishment() {
 		return descriptionOfEstablishment;
 	}
-	public void setDescriptionOfEstabishment(String descriptionOfEstablishment) {
+	public void setDescriptionOfEstablishment(String descriptionOfEstablishment) {
 		this.descriptionOfEstablishment = descriptionOfEstablishment;
 	}
 	public void setComment(String comment){
@@ -79,5 +79,8 @@ public class Cinema extends Establishment{
 	}
 	public Date getDateOfModification(){
 		return modified;
+	}
+	public int getId(){
+		return id;
 	}
 }

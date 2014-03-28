@@ -8,9 +8,9 @@ public class Moderator {
 		
 	}
 	public boolean markEstablismentToDelete(){
-		
+		return true;
 	}
 	public boolean markEstablismentToEdit(){
-		
+		return true;
 	}
 }

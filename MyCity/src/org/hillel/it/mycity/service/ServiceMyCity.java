@@ -4,10 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Comment;
-import org.hillel.it.mycity.model.entity.Establishment;
-import org.hillel.it.mycity.model.entity.Establisment;
 import org.hillel.it.mycity.model.entity.Time;
-import org.hillel.it.mycity.model.entity.User;
+
 public interface ServiceMyCity {
 	//Users
 	public void setUserName(String userName);
@@ -37,7 +35,7 @@ public interface ServiceMyCity {
 	//For Establisment
 	public void setNameOfEstablishment(String nameOfEstablishment);
 	public String getNameOfEstablishment();
-	public void setAddressOfEstablishmtn(String addressOfEstablishment);
+	public void setAddressOfEstablishmetn(String addressOfEstablishment);
 	public String getAddressOfEstablishment();
 	public String getTelephoneOfEstablishment();
 	public void setTelephoneOfEstablishment(String telephoneOfEstablishment);
@@ -50,6 +48,7 @@ public interface ServiceMyCity {
 	public Date getDateOfCreation();
 	public void setDateOfModification(Date date);
 	public void getDateOfModification();
+	public int getId();
 	//Cinema
 	public int getNumberOfHalls();
 	public void setNumberOfHalls(int numberOfHalls);

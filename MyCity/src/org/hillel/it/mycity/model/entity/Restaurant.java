@@ -3,7 +3,7 @@ package org.hillel.it.mycity.model.entity;
 import java.util.ArrayList;
 
 public class Restaurant extends RestaurantsAndNightClubs{
-	Restaurant(){
+	public Restaurant(){
 		assessment = new ArrayList<>();
 		averageAssessment = 0;
 		sumOfAssessment = 0;
@@ -69,5 +69,8 @@ public class Restaurant extends RestaurantsAndNightClubs{
 	public void setAssessment(int assessment) {
 		this.assessment.add(assessment);
 		sumOfAssessment += assessment;
+	}
+	public int getId(){
+		return id;
 	}
 }

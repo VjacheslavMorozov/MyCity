@@ -1,9 +1,7 @@
 package org.hillel.it.mycity.model.entity;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
  
 public class Administrator{
 	private Map<String, String> usersInformation;

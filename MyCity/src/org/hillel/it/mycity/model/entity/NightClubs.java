@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NightClubs extends RestaurantsAndNightClubs{
-	NightClubs(){
+	public NightClubs(){
 		assessment = new ArrayList<>();
 		averageAssessment = 0;
 		sumOfAssessment = 0;
@@ -73,5 +73,8 @@ public class NightClubs extends RestaurantsAndNightClubs{
 	public void setAssessment(int assessment) {
 		this.assessment.add(assessment);
 		sumOfAssessment += assessment;
+	}
+	public int getId(){
+		return id;
 	}
 }
