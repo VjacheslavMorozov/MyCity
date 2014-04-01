@@ -25,7 +25,7 @@ public class ServiceImpl implements ServiceMyCity {
 	public void addEstablishmentRestaurant(
 			String nameOfEstablishment, String addressOfEstablishment) {
 		
-		RestaurantsAndNightClubs restaurant = new Restaurant();
+		Restaurant restaurant = new Restaurant();
 		restaurant.setNameOfEstablishment(nameOfEstablishment);
 		restaurant.setAddressOfEstablishment(addressOfEstablishment);
 		establishmentRepository.addEstablishment(restaurant);
@@ -34,40 +34,53 @@ public class ServiceImpl implements ServiceMyCity {
 
 	@Override
 	public void addEstablishmentNightClub(
-			String setNameOfEstablishment, String addressOfEstablishment) {
-		Establishment nightClub = new NightClubs()
+			String nameOfEstablishment, String addressOfEstablishment) {
+		
+		NightClubs nightClub = new NightClubs();
+		nightClub.setNameOfEstablishment(nameOfEstablishment);
+		nightClub.setAddressOfEstablishment(addressOfEstablishment);
+		establishmentRepository.addEstablishment(nightClub);
+		
 	}
 
 	@Override
-	public void addEstablishmentCinema(String setNameOfEstablishment,
+	public void addEstablishmentCinema(String nameOfEstablishment,
 			String addressOfEstablishment) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Cinema cinema = new Cinema();
+		cinema.setNameOfEstablishment(nameOfEstablishment);
+		cinema.setAddressOfEstablishment(addressOfEstablishment);
+		establishmentRepository.addEstablishment(cinema);
+		
 	}
 
 	@Override
 	public Establishment getEstablishmentById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if(establishmentRepository.getEstablishmentById(id) == null){
+			System.out.println("Error. No such id");
+			return null;
+		}
+		return establishmentRepository.getEstablishmentById(id);
 	}
 
 	@Override
-	public List<Establishment> getAllEstablishment(
-			List<Establishment> establishments) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Establishment> getAllEstablishment() {
+		if(establishmentRepository.getAllEstablishment() == null){
+			System.out.println("List of Establishment is empty");
+			return null;
+		}
+		return establishmentRepository.getAllEstablishment();
 	}
 
 	@Override
-	public boolean deleteAllEstablishments(List<Establishment> establishments) {
-		// TODO Auto-generated method stub
-		return false;
+	public void deleteAllEstablishments() {
+		establishmentRepository.deleteAllEstablishments();
 	}
 
 	@Override
-	public boolean deleteEstablishmentById(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public void deleteEstablishmentById(int id) {
+		establishmentRepository.deleteEstablishmentById(id);
 	}
 
 	@Override

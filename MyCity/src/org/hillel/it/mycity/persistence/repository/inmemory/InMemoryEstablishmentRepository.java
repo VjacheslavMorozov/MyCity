@@ -3,6 +3,7 @@ package org.hillel.it.mycity.persistence.repository.inmemory;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hillel.it.mycity.model.entity.BaseEntity;
 import org.hillel.it.mycity.model.entity.Establishment;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 
@@ -22,41 +23,62 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		
 	}
 	@Override
-	public Establishment getEstablishmentById(int index) {
+	public Establishment getEstablishmentById(int id) {
 		
-		if(index > establishments.size()-1){
-			
-			System.out.println("No an a Establishment by this index");
-			return null;
-			
+		int index = 0;
+		for(BaseEntity establishment: establishments){
+			if(establishment.getId() == id){
+				return establishments.get(index);
+			}
+			index++;
 		}
-		return establishments.get(index);
-		
+		return null;
 	}
 	@Override
 	public List<Establishment> getAllEstablishment() {
 		
+		if(establishments.isEmpty()){
+			System.out.println("List of Establishment is epmty");
+			return null;
+		}
 		return establishments;
 		
 	}
+	
 	@Override
-	public boolean deleteAllEstablishments() {
+	public void deleteAllEstablishments() {
 		
+		if(establishments.isEmpty()){
+			System.out.println("List of Establishment is epmty");
+			return;
+		}
 		establishments.clear();
-		return true;
+		return;
 		
 	}
+	
 	@Override
-	public boolean deleteEstablishmentById(int index) {
+	public void deleteEstablishmentById(int id) {
 		
-		if(index > establishments.size()-1){
+		int index = 0;
+		if(establishments.isEmpty()){
 			
-			System.out.println("No an a Establishment by this index");
-			return false;
+			return;
 			
 		}
-		establishments.remove(index);
-		return true;
+		for(Establishment establishment: establishments){
+			
+			if(establishment.getId() == id){
+				
+				establishments.remove(index);
+				return;
+				
+			}
+			
+			index++;
+			
+		}
+		return;
 		
 	}
 	

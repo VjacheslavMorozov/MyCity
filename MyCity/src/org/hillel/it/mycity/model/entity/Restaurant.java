@@ -6,8 +6,8 @@ public class Restaurant extends RestaurantsAndNightClubs{
 	public Restaurant(){
 		
 		setId();
-		assessmentsOfEstablishment = new Assessment();
-		commentsOfEstablishment = new Comment();
+		//assessmentsOfEstablishment = new Assessment();
+		//commentsOfEstablishment = new Comment();
 		
 	}
 }

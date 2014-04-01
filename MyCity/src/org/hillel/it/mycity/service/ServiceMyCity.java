@@ -8,13 +8,13 @@ import org.hillel.it.mycity.model.entity.Establishment;
 import org.hillel.it.mycity.model.entity.Time;
 
 public interface ServiceMyCity {
-	public void addEstablishmentRestaurant(String setNameOfEstablishment,String addressOfEstablishment);
-	public void addEstablishmentNightClub(String setNameOfEstablishment,String addressOfEstablishment);
-	public void addEstablishmentCinema(String setNameOfEstablishment,String addressOfEstablishment);
-	public void getEstablishmentById(int id);
-	public List<Establishment> getAllEstablishment(List<Establishment> establishments);
-	public boolean deleteAllEstablishments(List<Establishment> establishments);
-	public boolean deleteEstablishmentById(int id);
+	public void addEstablishmentRestaurant(String nameOfEstablishment,String addressOfEstablishment);
+	public void addEstablishmentNightClub(String nameOfEstablishment,String addressOfEstablishment);
+	public void addEstablishmentCinema(String nameOfEstablishment,String addressOfEstablishment);
+	public Establishment getEstablishmentById(int id);
+	public List<Establishment> getAllEstablishment();
+	public void deleteAllEstablishments();
+	public void deleteEstablishmentById(int id);
 	//Administrator and Moderator
 	public void deleteComment(int id);
 	//RegistratedUser

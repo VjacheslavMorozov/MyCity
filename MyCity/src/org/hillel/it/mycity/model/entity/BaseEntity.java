@@ -54,7 +54,7 @@ public abstract class BaseEntity {
 		return id;
 		
 	}
-	public void setId(){
+	protected void setId(){
 		
 		id++;
 		

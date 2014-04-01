@@ -10,8 +10,8 @@ public class Cinema extends Establishment{
 	public Cinema(){
 		
 		setId();
-		commentsOfEstablishment = new Comment();
-		assessmentsOfEstablishment = new Assessment();
+		//commentsOfEstablishment = new Comment();
+		//assessmentsOfEstablishment = new Assessment();
 		
 	}
 	public void setNumberOfHalls(int numberOfHalls) {

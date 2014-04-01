@@ -7,8 +7,8 @@ public class NightClubs extends RestaurantsAndNightClubs{
 	public NightClubs(){
 		
 		setId();
-		commentsOfEstablishment = new Comment();
-		assessmentsOfEstablishment = new Assessment();
+		//commentsOfEstablishment = new Comment();
+		//assessmentsOfEstablishment = new Assessment();
 		
 	}
 	/*Я думаю, что лучше создать отдельный класс под Оценки, так как, каждый пользователь может их менять
