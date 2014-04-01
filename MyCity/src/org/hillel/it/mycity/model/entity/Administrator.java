@@ -25,7 +25,7 @@ public class Administrator{
 		Establishment establishment = new Restaurant();
 	}
 	public void addEstablishmentNightClub(){
-		Establishment establishment = new NightClubs();
+		Establishment establishment = new NightClub();
 	}
 	public void deleteEstablishmentById(int id){
 		

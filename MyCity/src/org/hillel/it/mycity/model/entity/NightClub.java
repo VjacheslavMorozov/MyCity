@@ -1,12 +1,13 @@
 package org.hillel.it.mycity.model.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-public class NightClubs extends RestaurantsAndNightClubs{
-	public NightClubs(){
+public class NightClub extends RestaurantsAndNightClubs{
+	public NightClub(){
 		
 		setId();
+		Date date = new Date();
+		setCreateDate(date);
 		//commentsOfEstablishment = new Comment();
 		//assessmentsOfEstablishment = new Assessment();
 		

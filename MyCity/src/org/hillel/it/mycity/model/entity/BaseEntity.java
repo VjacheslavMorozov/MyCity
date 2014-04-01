@@ -9,14 +9,9 @@ public abstract class BaseEntity {
 	private Administrator createdBy;
 	private Administrator modifiedBy;
 	
-	public void setCreateDate(Date createdDate){
+	protected void setCreateDate(Date createdDate){
 		
 		this.createdDate = createdDate;
-		
-	}
-	public void setModifiedDate(Date modifiedDate){
-		
-		this.modifiedDate = modifiedDate;
 		
 	}
 	public Date getCreatedDate(){
@@ -24,12 +19,17 @@ public abstract class BaseEntity {
 		return createdDate;
 		
 	}
+	public void setModifiedDate(Date modifiedDate){
+		
+		this.modifiedDate = modifiedDate;
+		
+	}
 	public Date getModifiedDate(){
 		
 		return modifiedDate;
 		
 	}
-	public void setCreatedBy(Administrator createdBy){
+	protected void setCreatedBy(Administrator createdBy){
 		
 		this.createdBy = createdBy;
 		

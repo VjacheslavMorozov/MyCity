@@ -10,6 +10,8 @@ public class Cinema extends Establishment{
 	public Cinema(){
 		
 		setId();
+		Date date = new Date();
+		setCreateDate(date);
 		//commentsOfEstablishment = new Comment();
 		//assessmentsOfEstablishment = new Assessment();
 		
