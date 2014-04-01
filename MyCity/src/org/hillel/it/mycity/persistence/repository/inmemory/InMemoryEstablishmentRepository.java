@@ -26,7 +26,12 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	public Establishment getEstablishmentById(int id) {
 		
 		int index = 0;
-		for(BaseEntity establishment: establishments){
+		if(id == 0){
+			System.out.println("Incorrect id");
+			return null;
+			
+		}
+		for(Establishment establishment: establishments){
 			if(establishment.getId() == id){
 				return establishments.get(index);
 			}
@@ -62,9 +67,11 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		
 		int index = 0;
 		if(establishments.isEmpty()){
-			
+			System.out.println("List is empty");
 			return;
-			
+		}
+		else if(id == 0){
+			System.out.println("Incorrect id");
 		}
 		for(Establishment establishment: establishments){
 			

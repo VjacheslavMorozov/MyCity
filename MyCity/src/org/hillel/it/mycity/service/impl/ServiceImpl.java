@@ -56,7 +56,7 @@ public class ServiceImpl implements ServiceMyCity {
 
 	@Override
 	public Establishment getEstablishmentById(int id) {
-		
+
 		if(establishmentRepository.getEstablishmentById(id) == null){
 			System.out.println("Error. No such id");
 			return null;

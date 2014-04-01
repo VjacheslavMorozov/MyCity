@@ -18,10 +18,10 @@ public class Starter {
 		serviceImpl.addEstablishmentNightClub("Palladium", "Italian blv.");
 		serviceImpl.addEstablishmentRestaurant("Steak", "Deribasovskaya str.");
 		
-		//проблема
-		/*Establishment cinema = new Cinema();
-		cinema = serviceImpl.getEstablishmentById(0);
-		System.out.println(cinema.getNameOfEstablishment());*/
+		//проблема с типом возвращаемого значения.
+		Establishment cinema = new Cinema();
+		cinema = serviceImpl.getEstablishmentById(1);
+		System.out.println(cinema.getNameOfEstablishment());
 		
 		List<Establishment> establishments = new ArrayList<>();
 		establishments = serviceImpl.getAllEstablishment();
