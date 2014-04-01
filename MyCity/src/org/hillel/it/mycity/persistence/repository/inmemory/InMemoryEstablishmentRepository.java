@@ -4,31 +4,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Establishment;
+import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 
-public class InMemoryEstablishmentRepository {
-	private List<Establishment> establishment;
+public class InMemoryEstablishmentRepository implements EstablishmentRepository{
+	private List<Establishment> establishments;
+	
 	public InMemoryEstablishmentRepository() {
-		establishment = new ArrayList<>();
-	}
-	public void addRestaurant(Establishment restaurant){
 		
-		establishment.add(restaurant);
+		establishments = new ArrayList<>();
 		
 	}
-	public void addNightClub(Establishment nightClub){
+	
+	@Override
+	public void addEstablishment(Establishment establishment) {
 		
-		establishment.add(nightClub);
-		
-	}
-	public void addCinema(Establishment cinema){
-		
-		establishment.add(cinema);
+		establishments.add(establishment);
 		
 	}
-	public void getIndex(int index){
-		establishment.remove(index);
+	@Override
+	public Establishment getEstablishmentById(int index) {
+		
+		if(index > establishments.size()-1){
+			
+			System.out.println("No an a Establishment by this index");
+			return null;
+			
+		}
+		return establishments.get(index);
+		
 	}
-	public int returnListSize(){
-		return establishment.size();
+	@Override
+	public List<Establishment> getAllEstablishment() {
+		
+		return establishments;
+		
 	}
+	@Override
+	public boolean deleteAllEstablishments() {
+		
+		establishments.clear();
+		return true;
+		
+	}
+	@Override
+	public boolean deleteEstablishmentById(int index) {
+		
+		if(index > establishments.size()-1){
+			
+			System.out.println("No an a Establishment by this index");
+			return false;
+			
+		}
+		establishments.remove(index);
+		return true;
+		
+	}
+	
 }

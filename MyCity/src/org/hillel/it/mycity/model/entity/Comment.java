@@ -19,23 +19,33 @@ public class Comment {
 		commentAssessment = 0;
 	}
 	public void setComment(String comment){
+		
 		this.comments.add(comment);
+		
 	}
-	public List getCommentsForEstablisment(){
+	public List<String> getCommentsForEstablisment(){
+		
 		return comments;
+		
 	}
 	public void setCommentPositiveAssessment(String comment){
+		
 		++commentAssessment;
 		int index = comments.indexOf(comment);
 		ids.put(index, commentAssessment);
+		
 	}
 	public void setCommentNegativeAssessment(String comment){
+		
 		--commentAssessment;
 		int index = comments.indexOf(comment);
 		ids.put(index, commentAssessment);
+		
 	}
 	public int getCommentAssessment(String comment){
+		
 		int index = comments.indexOf(comment);
 		return ids.get(index);
+		
 	}
 }

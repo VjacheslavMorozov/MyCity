@@ -8,79 +8,40 @@ public class Cinema extends Establishment{
 	private int numberOfSeatsInHall;
 	private String cinemaTechnology;
 	public Cinema(){
-		assessment = new ArrayList();
-		averageAssessment = 0;
-		sumOfAssessment = 0;
-		id++;
-	}
-	public void setNameOfEstablishment(String nameOfEstablishment){
-		this.nameOfEstablishment = nameOfEstablishment;
-	}
-	public String getNameOfEstablishment(){
-		return nameOfEstablishment;
-	}
-	public void setAddressOfEstablishment(String addressOfEstablishment){
-		this.addressOfEstablishment = addressOfEstablishment;
-	}
-	public String getAddressOfEstablishment(){
-		return addressOfEstablishment;
-	}
-	public int getNumberOfHalls() {
-		return numberOfHalls;
+		
+		setId();
+		commentsOfEstablishment = new Comment();
+		assessmentsOfEstablishment = new Assessment();
+		
 	}
 	public void setNumberOfHalls(int numberOfHalls) {
+		
 		this.numberOfHalls = numberOfHalls;
+		
 	}
-	public int getNumberOfSeatsInHall() {
-		return numberOfSeatsInHall;
+	public int getNumberOfHalls() {
+		
+		return numberOfHalls;
+		
 	}
 	public void setNumberOfSeatsInHall(int numberOfSeatsInHall) {
+		
 		this.numberOfSeatsInHall = numberOfSeatsInHall;
+		
 	}
-	public String getCinemaTechnology() {
-		return cinemaTechnology;
+	public int getNumberOfSeatsInHall() {
+		
+		return numberOfSeatsInHall;
+		
 	}
 	public void setCinemaTechnology(String cinemaTechnology) {
+		
 		this.cinemaTechnology = cinemaTechnology;
+		
 	}
-	public String getTelephoneOfEstablishment() {
-		return telephoneOfEstablishment;
-	}
-	public void setTelephoneOfEstablishment(String telephoneOfEstablishment) {
-		this.telephoneOfEstablishment = telephoneOfEstablishment;
-	}
-	public String getDescriptionOfEstablishment() {
-		return descriptionOfEstablishment;
-	}
-	public void setDescriptionOfEstablishment(String descriptionOfEstablishment) {
-		this.descriptionOfEstablishment = descriptionOfEstablishment;
-	}
-	public void setComment(String comment){
-		this.comment.setComment(comment);
-	}
-	public Comment getComment(){
-		return comment;
-	}
-	public double getAssessment() {
-		return (double) sumOfAssessment/assessment.size();
-	}
-	public void setAssessment(int assessment) {
-		this.assessment.add(assessment);
-		sumOfAssessment += assessment;
-	}
-	public void setDateOfCreation(Date date){
-		this.created = date;
-	}
-	public Date getDateOfCreation(){
-		return created;
-	}
-	public void setDateOfModification(Date date){
-		this.modified = date;
-	}
-	public Date getDateOfModification(){
-		return modified;
-	}
-	public int getId(){
-		return id;
+	public String getCinemaTechnology() {
+		
+		return cinemaTechnology;
+		
 	}
 }
