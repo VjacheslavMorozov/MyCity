@@ -10,9 +10,6 @@ public interface ServiceMyCity {
 	public void addEstablishmentRestaurant(String nameOfEstablishment,String addressOfEstablishment);
 	public void addEstablishmentNightClub(String nameOfEstablishment,String addressOfEstablishment);
 	public void addEstablishmentCinema(String nameOfEstablishment,String addressOfEstablishment);
-	public Cinema getEstablishmentCinemaById(int id);
-	public NightClub getEstablishmentNightClubById(int id);
-	public Restaurant getEstablishmentRestaurantById(int id);
 	public List<Cinema> getAllCinemaEstablishment();
 	public List<NightClub> getAllNightClubEstablishment();
 	public List<Restaurant> getAllRestaurantEstablishment();
@@ -22,4 +19,6 @@ public interface ServiceMyCity {
 	public void deleteComment(int id);
 	//RegistratedUser
 	public void writeCommet(String comment);
+	public <T> T getEstablishmentById(int id, Class<T> type);
+	public void deleteEstablishmentByType(String establishmentType);
 }

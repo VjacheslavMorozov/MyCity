@@ -54,36 +54,9 @@ public class ServiceImpl implements ServiceMyCity {
 		
 	}
 	
-	@Override
-	public Cinema getEstablishmentCinemaById(int id){
+	public void deleteEstablishmentByType(String establishmentType) {
 		
-		if(establishmentRepository.getEstablishmentCinemaById(id) == null){
-			System.out.println("Error. No such id");
-			return null;
-		}
-		return establishmentRepository.getEstablishmentCinemaById(id);
-		
-	}
-	
-	@Override
-	public NightClub getEstablishmentNightClubById(int id) {
-	
-		if(establishmentRepository.getEstablishmentNightClubById(id) == null){
-			System.out.println("Error. No such id");
-			return null;
-		}
-		return establishmentRepository.getEstablishmentNightClubById(id);
-		
-	}
-	
-	@Override
-	public Restaurant getEstablishmentRestaurantById(int id) {
-		
-		if(establishmentRepository.getEstablishmentRestaurantById(id) == null){
-			System.out.println("Error. No such id");
-			return null;
-		}
-		return establishmentRepository.getEstablishmentRestaurantById(id);
+		establishmentRepository.deleteEstablishmentByType(establishmentType);
 		
 	}
 	
@@ -143,6 +116,13 @@ public class ServiceImpl implements ServiceMyCity {
 	@Override
 	public void writeCommet(String comment) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public <T> T getEstablishmentById(int id, Class<T> type){
+		
+		return establishmentRepository.getEstablishmentById(id, type);
 		
 	}
 }

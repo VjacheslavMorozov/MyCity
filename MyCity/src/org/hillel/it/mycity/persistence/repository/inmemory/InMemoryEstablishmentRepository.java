@@ -45,61 +45,50 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		
 	}
 	
-	@Override
-	public Cinema getEstablishmentCinemaById(int id) {
+	public <T> T getEstablishmentById(int id, Class<T> type) {
 		
-		if(id == 0){
+		if(id <= 0) {
 			
 			System.out.println("Incorrect id");
 			return null;
 			
 		}
-		for(Cinema cinema: cinemas){
-			if(cinema.getId() == id){
+		if(type.toString().toLowerCase().contains("cinema")) {
+			
+			for(int i = 0; i < cinemas.size(); i++) {
+				System.out.println(cinemas.get(i).getId());
 				
-				return cinema;
+				if(cinemas.get(i).getId() == id) {
+					
+					return type.cast(cinemas.get(i));
+					
+				}
 				
 			}
-		}
-		return null;
-		
-	}
-
-	@Override
-	public NightClub getEstablishmentNightClubById(int id) {
-	
-		if(id == 0){
 			
-			System.out.println("Incorrect id");
-			return null;
+		} else if(type.toString().toLowerCase().contains("nightclub")) {
 			
-		}
-		for(NightClub nightClub: nightClubs){
-			if(nightClub.getId() == id){
+			for(int i = 0; i < nightClubs.size(); i++) {
 				
-				return nightClub;
+				if(nightClubs.get(i).getId() == id) {
+					
+					return type.cast(nightClubs.get(i));
+					
+				}
 				
 			}
-		}
-		return null;
-		
-	}
-
-	@Override
-	public Restaurant getEstablishmentRestaurantById(int id) {
-		
-		if(id == 0){
+		} else {
 			
-			System.out.println("Incorrect id");
-			return null;
-			
-		}
-		for(Restaurant restaurant: restaurants){
-			if(restaurant.getId() == id){
+			for(int i = 0; i < restaurants.size(); i++) {
 				
-				return restaurant;
+				if(restaurants.get(i).getId() == id) {
+					
+					return type.cast(restaurants.get(i));
+					
+				}
 				
 			}
+			
 		}
 		return null;
 		
@@ -139,26 +128,22 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	}
 
 	@Override
-	public void deleteAllCinemaEstablishments() {
-		
-		cinemas.clear();
-		
+	public void deleteEstablishmentByType(String establishmentType) {
+		establishmentType.toUpperCase();
+		switch (establishmentType) {
+		case "CINEMA":
+			cinemas.clear();
+			break;
+		case "NIGHTCLUBS":
+			nightClubs.clear();
+			break;
+		case "RESTAURANT":
+			restaurants.clear();
+		default:
+			System.out.println("No such type of establishment");
+			break;
+		}
 	}
-
-	@Override
-	public void deleteAllNightClubEstablishments() {
-		
-		nightClubs.clear();
-		
-	}
-
-	@Override
-	public void deleteAllRestaurantEstablishments() {
-		
-		restaurants.clear();
-		
-	}
-
 	@Override
 	public void deleteEstablishmentById(int id) {
 		
@@ -168,44 +153,60 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 			System.out.println("List is empty");
 			return;
 			
-		} else if(id == 0) {
+		} else if(id <= 0) {
 			
 			System.out.println("Incorrect id");
-			
-		}
-		for(Cinema cinema: cinemas){
-			if(cinema.getId() == id){
-				
-				cinemas.remove(index);
-				return;
-				
-			}	
-			index++;
+			return;
 			
 		}
 		
-		index = 0;
-		
-		for(NightClub nightClub: nightClubs){
-			if(nightClub.getId() == id){
-				
-				nightClubs.remove(index);
-				return;
-				
-			}	
-			index++;
+		int maxIndex = 0;
+		if(cinemas.size() > nightClubs.size() && cinemas.size() > restaurants.size()){
+			
+			maxIndex = cinemas.size();
+			
+		} else if(nightClubs.size() > restaurants.size() && nightClubs.size() > cinemas.size()) {
+			
+			maxIndex = nightClubs.size();
+			
+		} else {
+			
+			maxIndex = restaurants.size();
+			
 		}
 		
-		index = 0;
-		
-		for(Restaurant restaurant: restaurants){
-			if(restaurant.getId() == id){
+		for(int i = 0; i < maxIndex; i++) {
+			
+			if(i < cinemas.size()) {
 				
-				restaurants.remove(index);
-				return;
+				if(cinemas.get(i).getId() == id) {
+					
+					cinemas.remove(i);
+					return;
+					
+				}
 				
-			}	
-			index++;
+			}
+			if(i < nightClubs.size()) {
+				
+				if(nightClubs.get(i).getId() == id) {
+					
+					nightClubs.remove(i);
+					return;
+					
+				}
+				
+			}
+			if(i < restaurants.size()) {
+				
+				if(restaurants.get(i).getId() == id) {
+					
+					restaurants.remove(i);
+					return;
+					
+				}
+				
+			}
 			
 		}
 	}
@@ -213,10 +214,9 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	@Override
 	public void deleteAllEstablishments() {
 		
-		deleteAllCinemaEstablishments();
-		deleteAllNightClubEstablishments();
-		deleteAllRestaurantEstablishments();
+		cinemas.clear();
+		nightClubs.clear();
+		restaurants.clear();
 		
 	}
-	
 }

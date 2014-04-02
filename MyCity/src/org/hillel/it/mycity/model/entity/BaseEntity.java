@@ -3,11 +3,12 @@ package org.hillel.it.mycity.model.entity;
 import java.util.Date;
 
 public abstract class BaseEntity {
-	private int id = 0;
+	private int id;
 	private Date createdDate;
 	private Date modifiedDate;
 	private Administrator createdBy;
 	private Administrator modifiedBy;
+	private static int idCount = 1;
 	
 	protected void setCreateDate(Date createdDate){
 		
@@ -49,14 +50,16 @@ public abstract class BaseEntity {
 		return modifiedBy;
 		
 	}
-	public int getId(){
+	public void setId() {
+		
+		id = idCount;
+		idCount++;
+		
+	}
+	public int getId() {
 		
 		return id;
 		
 	}
-	protected void setId(){
-		
-		id++;
-		
-	}
+	
 }
