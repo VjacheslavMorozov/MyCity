@@ -15,10 +15,6 @@ public interface ServiceMyCity {
 	public List<Restaurant> getAllRestaurantEstablishment();
 	public void deleteAllEstablishments();
 	public void deleteEstablishmentById(int id);
-	//Administrator and Moderator
-	public void deleteComment(int id);
-	//RegistratedUser
-	public void writeCommet(String comment);
 	public <T> T getEstablishmentById(int id, Class<T> type);
 	public void deleteEstablishmentByType(String establishmentType);
 }

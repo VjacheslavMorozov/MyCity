@@ -18,5 +18,7 @@ public class Starter {
 		serviceImpl.addEstablishmentNightClub("Palladium", "Italian blv.");
 		serviceImpl.addEstablishmentRestaurant("Steak", "Deribasovskaya str.");
 		
+		Cinema cinema = serviceImpl.getEstablishmentById(1, Cinema.class);
+		
 	}
 }

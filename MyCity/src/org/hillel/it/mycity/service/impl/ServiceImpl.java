@@ -3,12 +3,8 @@ package org.hillel.it.mycity.service.impl;
 import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Cinema;
-import org.hillel.it.mycity.model.entity.Comment;
-import org.hillel.it.mycity.model.entity.Establishment;
 import org.hillel.it.mycity.model.entity.NightClub;
 import org.hillel.it.mycity.model.entity.Restaurant;
-import org.hillel.it.mycity.model.entity.RestaurantsAndNightClubs;
-import org.hillel.it.mycity.model.entity.Time;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 import org.hillel.it.mycity.service.ServiceMyCity;
 
@@ -63,9 +59,11 @@ public class ServiceImpl implements ServiceMyCity {
 	@Override
 	public List<Cinema> getAllCinemaEstablishment(){
 		
-		if(establishmentRepository.getAllCinemaEstablishment() == null){
+		if(establishmentRepository.getAllCinemaEstablishment() == null) {
+			
 			System.out.println("List of Establishment is empty");
 			return null;
+			
 		}
 		return establishmentRepository.getAllCinemaEstablishment();
 		
@@ -74,9 +72,11 @@ public class ServiceImpl implements ServiceMyCity {
 	@Override
 	public List<NightClub> getAllNightClubEstablishment() {
 		
-		if(establishmentRepository.getAllNightClubEstablishment() == null){
+		if(establishmentRepository.getAllNightClubEstablishment() == null) {
+			
 			System.out.println("List of Establishment is empty");
 			return null;
+			
 		}
 		return establishmentRepository.getAllNightClubEstablishment();
 		
@@ -85,9 +85,11 @@ public class ServiceImpl implements ServiceMyCity {
 	@Override
 	public List<Restaurant> getAllRestaurantEstablishment() {
 		
-		if(establishmentRepository.getAllRestaurantEstablishment() == null){
+		if(establishmentRepository.getAllRestaurantEstablishment() == null) {
+			
 			System.out.println("List of Establishment is empty");
 			return null;
+			
 		}
 		return establishmentRepository.getAllRestaurantEstablishment();
 		
@@ -104,18 +106,6 @@ public class ServiceImpl implements ServiceMyCity {
 	public void deleteEstablishmentById(int id) {
 		
 		establishmentRepository.deleteEstablishmentById(id);
-		
-	}
-
-	@Override
-	public void deleteComment(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void writeCommet(String comment) {
-		// TODO Auto-generated method stub
 		
 	}
 	

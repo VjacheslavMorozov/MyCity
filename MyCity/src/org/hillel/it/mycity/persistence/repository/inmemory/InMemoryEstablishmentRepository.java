@@ -1,8 +1,8 @@
 package org.hillel.it.mycity.persistence.repository.inmemory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.hillel.it.mycity.model.entity.BaseEntity;
 import org.hillel.it.mycity.model.entity.Cinema;
@@ -53,7 +53,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 			return null;
 			
 		}
-		if(type.toString().toLowerCase().contains("cinema")) {
+		if(type.toString().contains("Cinema")) {
 			
 			for(int i = 0; i < cinemas.size(); i++) {
 				System.out.println(cinemas.get(i).getId());
@@ -66,7 +66,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 				
 			}
 			
-		} else if(type.toString().toLowerCase().contains("nightclub")) {
+		} else if(type.toString().contains("NightClub")) {
 			
 			for(int i = 0; i < nightClubs.size(); i++) {
 				
@@ -97,9 +97,11 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	@Override
 	public List<Cinema> getAllCinemaEstablishment() {
 		
-		if(cinemas.isEmpty()){
+		if(cinemas.isEmpty()) {
+			
 			System.out.println("List of Cinemas is epmty");
 			return null;
+			
 		}
 		return cinemas;
 		
@@ -108,9 +110,11 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	@Override
 	public List<NightClub> getAllNightClubEstablishment() {
 		
-		if(nightClubs.isEmpty()){
+		if(nightClubs.isEmpty()) {
+			
 			System.out.println("List of Night Clubs is epmty");
 			return null;
+			
 		}
 		return nightClubs;
 		
@@ -119,9 +123,11 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	@Override
 	public List<Restaurant> getAllRestaurantEstablishment() {
 		
-		if(restaurants.isEmpty()){
+		if(restaurants.isEmpty()) {
+			
 			System.out.println("List of Restaurants is epmty");
 			return null;
+			
 		}
 		return restaurants;
 		
@@ -129,7 +135,8 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 
 	@Override
 	public void deleteEstablishmentByType(String establishmentType) {
-		establishmentType.toUpperCase();
+		establishmentType.toUpperCase(); 
+		
 		switch (establishmentType) {
 		case "CINEMA":
 			cinemas.clear();
@@ -143,11 +150,12 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 			System.out.println("No such type of establishment");
 			break;
 		}
+		
 	}
+	
 	@Override
 	public void deleteEstablishmentById(int id) {
 		
-		int index = 0;
 		if(cinemas.isEmpty() && nightClubs.isEmpty() && restaurants.isEmpty()) {
 			
 			System.out.println("List is empty");
