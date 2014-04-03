@@ -9,7 +9,7 @@ public abstract class Establishment extends BaseEntity{
 	private String descriptionOfEstablishment;
 	protected Comment commentsOfEstablishment;
 	//массив оценок от 1 - 10, из этого массива вычисляется средняя и показывается на странице заведения.
-	protected Assessment assessmentsOfEstablishment;
+	protected Assessment assessmentsOfEstablishment; // @timur Возможно ТУТ и не нужен весь массив оценок, а только сама средняя оценка. 
 	
 	public void setNameOfEstablishment(String nameOfEstablishment){
 		

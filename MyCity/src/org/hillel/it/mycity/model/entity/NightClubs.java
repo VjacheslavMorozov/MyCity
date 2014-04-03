@@ -3,6 +3,7 @@ package org.hillel.it.mycity.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+// @timur Думаю будет правильнее единственное число. NightClub.
 public class NightClubs extends RestaurantsAndNightClubs{
 	public NightClubs(){
 		

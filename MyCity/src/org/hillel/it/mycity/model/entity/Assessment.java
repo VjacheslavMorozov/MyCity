@@ -5,6 +5,16 @@ import java.util.List;
 
 public class Assessment {
 	
+	/*
+	 * @timur 
+	 * 
+	 * Как понимаю объект класса Assessment представляет одну оценку одного пользователя на одно заведение. 
+	 * 
+	 *  Считаю, что тут точно должно быть 3 поля:  
+	 *  user_id, establishment_id и assessment.
+	 * 
+	 */
+	
 	private List<Integer> assessments;
 	protected double averageAssessment;
 	protected int sumOfAssessment;

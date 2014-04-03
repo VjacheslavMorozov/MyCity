@@ -3,6 +3,7 @@ package org.hillel.it.mycity.model.entity;
 import java.util.HashMap;
 import java.util.Map;
 
+// @timur Нужно переименовать в RegisteredUser. 
 public class RegistratedUser {
 	private Map<String, String> usersInformation;
 	RegistratedUser(){

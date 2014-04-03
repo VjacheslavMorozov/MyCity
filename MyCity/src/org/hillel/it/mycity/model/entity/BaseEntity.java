@@ -6,7 +6,7 @@ public abstract class BaseEntity {
 	private int id = 0;
 	private Date createdDate;
 	private Date modifiedDate;
-	private Administrator createdBy;
+	private Administrator createdBy; // @timur Предлагаю создать создать базовый класс (интерфейс) Role для всех ролей. И заменить здесь Administrator на Role.  
 	private Administrator modifiedBy;
 	
 	public void setCreateDate(Date createdDate){
