@@ -4,7 +4,7 @@ import java.util.Date;
  
 public class Administrator extends Person{
 	
-	Administrator(Person administrator) {
+	public Administrator(Person administrator) {
 		setId();
 		setCreateDate(new Date());
 		setCreatedBy(administrator);

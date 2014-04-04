@@ -51,7 +51,6 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		
 		if(type.toString().contains("Cinema")) {
 			for(int i = 0; i < cinemas.size(); i++) {
-				System.out.println(cinemas.get(i).getId());
 				if(cinemas.get(i).getId() == id) {
 					return type.cast(cinemas.get(i));
 				}
