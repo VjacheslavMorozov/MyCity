@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Restaurant extends RestaurantsAndNightClubs{
-	public Restaurant(){
+	
+	public Restaurant(Administrator administrator){
 		
 		setId();
-		Date date = new Date();
-		setCreateDate(date);
-		//assessmentsOfEstablishment = new Assessment();
-		//commentsOfEstablishment = new Comment();
+		setCreateDate(new Date());
+		setCreatedBy(administrator);
+		assessmentsOfEstablishment = new ArrayList<>();
+		commentsOfEstablishment = new ArrayList<>();
 		
 	}
 }

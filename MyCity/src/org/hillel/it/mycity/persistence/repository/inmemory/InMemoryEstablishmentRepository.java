@@ -26,9 +26,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	
 	@Override
 	public void addEstablishmentCinema(Cinema cinema) {
-		
 		cinemas.add(cinema);
-		
 	}
 
 	@Override
@@ -48,50 +46,30 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	public <T> T getEstablishmentById(int id, Class<T> type) {
 		
 		if(id <= 0) {
-			
-			System.out.println("Incorrect id");
-			return null;
-			
+			throw new RuntimeException("Incorrect id");
 		}
+		
 		if(type.toString().contains("Cinema")) {
-			
 			for(int i = 0; i < cinemas.size(); i++) {
 				System.out.println(cinemas.get(i).getId());
-				
 				if(cinemas.get(i).getId() == id) {
-					
 					return type.cast(cinemas.get(i));
-					
 				}
-				
 			}
-			
 		} else if(type.toString().contains("NightClub")) {
-			
 			for(int i = 0; i < nightClubs.size(); i++) {
-				
 				if(nightClubs.get(i).getId() == id) {
-					
-					return type.cast(nightClubs.get(i));
-					
+					return type.cast(nightClubs.get(i));	
 				}
-				
 			}
 		} else {
-			
 			for(int i = 0; i < restaurants.size(); i++) {
-				
 				if(restaurants.get(i).getId() == id) {
-					
 					return type.cast(restaurants.get(i));
-					
 				}
-				
 			}
-			
 		}
 		return null;
-		
 	}
 
 	@Override
@@ -99,8 +77,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		
 		if(cinemas.isEmpty()) {
 			
-			System.out.println("List of Cinemas is epmty");
-			return null;
+			throw new RuntimeException("Cinema List is empty");
 			
 		}
 		return cinemas;

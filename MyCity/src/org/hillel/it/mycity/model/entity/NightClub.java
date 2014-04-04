@@ -3,11 +3,11 @@ package org.hillel.it.mycity.model.entity;
 import java.util.Date;
 
 public class NightClub extends RestaurantsAndNightClubs{
-	public NightClub(){
+	public NightClub(Administrator administrator){
 		
 		setId();
-		Date date = new Date();
-		setCreateDate(date);
+		setCreateDate(new Date());
+		setCreatedBy(administrator);
 		//commentsOfEstablishment = new Comment();
 		//assessmentsOfEstablishment = new Assessment();
 		
