@@ -1,11 +1,32 @@
 package org.hillel.it.mycity.model.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public abstract class Person extends BaseEntity{
 	private String firstName;
 	private String lastName;
 	private String login;
 	private String eMail;
 	private String password;
+	private Set<String> loginSet = new HashSet<>();
+	private Set<String> emailSet = new HashSet<>();
+	
+	public void loginTest(String login) {
+		int size = loginSet.size();
+		loginSet.add(this.login);
+		if(size == loginSet.size()) {
+			throw new RuntimeException("Login is ready used");
+		}
+	}
+	
+	public void emailTest(String eMail) {
+		int size = emailSet.size();
+		emailSet.add(this.login);
+		if(size == emailSet.size()) {
+			throw new RuntimeException("eMail is ready used");
+		}
+	}
 	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -24,6 +45,11 @@ public abstract class Person extends BaseEntity{
 	}
 	
 	public void setLogin(String login) {
+		try {
+			loginTest(login);
+		} catch (RuntimeException e) {
+			System.out.println("Try another login" + e);
+		}
 		this.login = login;
 	}
 	
@@ -32,6 +58,11 @@ public abstract class Person extends BaseEntity{
 	}
 	
 	public void setEMail(String eMail) {
+		try {
+			emailTest(eMail);
+		} catch (RuntimeException e) {
+			System.out.println("Try another email" + e);
+		}
 		this.eMail = eMail;
 	}
 	

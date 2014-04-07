@@ -17,29 +17,32 @@ public class ServiceImpl implements ServiceMyCity {
 	}
 	
 	@Override
-	public void addEstablishmentRestaurant(
-			String nameOfEstablishment, String addressOfEstablishment, Administrator administrator) {
+	public void addEstablishmentRestaurant(Administrator administrator) {
+		if(administrator.getLogin() == null) {
+			System.out.println("Administrator has no login");
+			return;
+		}
 		Restaurant restaurant = new Restaurant(administrator);
-		restaurant.setNameOfEstablishment(nameOfEstablishment);
-		restaurant.setAddressOfEstablishment(addressOfEstablishment);
 		establishmentRepository.addEstablishmentRestaurant(restaurant);
 	}
 
 	@Override
-	public void addEstablishmentNightClub(
-			String nameOfEstablishment, String addressOfEstablishment, Administrator administrator) {
+	public void addEstablishmentNightClub(Administrator administrator) {
+		if(administrator.getLogin() == null) {
+			System.out.println("Administrator has no login");
+			return;
+		}
 		NightClub nightClub = new NightClub(administrator);
-		nightClub.setNameOfEstablishment(nameOfEstablishment);
-		nightClub.setAddressOfEstablishment(addressOfEstablishment);
 		establishmentRepository.addEstablishmentNightClub(nightClub);
 	}
 
 	@Override
-	public void addEstablishmentCinema(String nameOfEstablishment,
-			String addressOfEstablishment, Administrator administrator) {
+	public void addEstablishmentCinema(Administrator administrator) {
+		if(administrator.getLogin() == null) {
+			System.out.println("Administrator has no login");
+			return;
+		}
 		Cinema cinema = new Cinema(administrator);
-		cinema.setNameOfEstablishment(nameOfEstablishment);
-		cinema.setAddressOfEstablishment(addressOfEstablishment);
 		establishmentRepository.addEstablishmentCinema(cinema);
 	}
 	
@@ -50,7 +53,7 @@ public class ServiceImpl implements ServiceMyCity {
 	@Override
 	public List<Cinema> getAllCinemaEstablishment(){
 		if(establishmentRepository.getAllCinemaEstablishment() == null) {
-			System.out.println("List of Establishment is empty");
+			System.out.println("List of Cinema Establishments is empty");
 			return null;
 		}
 		return establishmentRepository.getAllCinemaEstablishment();
@@ -59,7 +62,7 @@ public class ServiceImpl implements ServiceMyCity {
 	@Override
 	public List<NightClub> getAllNightClubEstablishment() {
 		if(establishmentRepository.getAllNightClubEstablishment() == null) {
-			System.out.println("List of Establishment is empty");
+			System.out.println("List of Night Club Establishments is empty");
 			return null;
 		}
 		return establishmentRepository.getAllNightClubEstablishment();
@@ -68,7 +71,7 @@ public class ServiceImpl implements ServiceMyCity {
 	@Override
 	public List<Restaurant> getAllRestaurantEstablishment() {
 		if(establishmentRepository.getAllRestaurantEstablishment() == null) {
-			System.out.println("List of Establishment is empty");
+			System.out.println("List of Restaurant Establishments is empty");
 			return null;
 		}
 		return establishmentRepository.getAllRestaurantEstablishment();

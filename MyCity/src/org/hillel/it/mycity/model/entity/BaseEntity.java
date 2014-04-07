@@ -43,7 +43,7 @@ public abstract class BaseEntity {
 		return modifiedBy;
 	}
 	
-	public void setId() {
+	protected void setId() {
 		id = idCount;
 		idCount++;
 	}

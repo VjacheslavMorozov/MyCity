@@ -9,9 +9,9 @@ import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.model.entity.Restaurant;
 
 public interface ServiceMyCity {
-	public void addEstablishmentRestaurant(String nameOfEstablishment,String addressOfEstablishment, Administrator administrator);
-	public void addEstablishmentNightClub(String nameOfEstablishment,String addressOfEstablishment, Administrator administrator);
-	public void addEstablishmentCinema(String nameOfEstablishment,String addressOfEstablishment, Administrator administrator);
+	public void addEstablishmentRestaurant(Administrator administrator);
+	public void addEstablishmentNightClub(Administrator administrator);
+	public void addEstablishmentCinema(Administrator administrator);
 	public List<Cinema> getAllCinemaEstablishment();
 	public List<NightClub> getAllNightClubEstablishment();
 	public List<Restaurant> getAllRestaurantEstablishment();

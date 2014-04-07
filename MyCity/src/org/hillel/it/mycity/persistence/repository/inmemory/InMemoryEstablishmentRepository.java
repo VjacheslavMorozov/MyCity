@@ -31,9 +31,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 
 	@Override
 	public void addEstablishmentNightClub(NightClub nightClub) {
-		
 		nightClubs.add(nightClub);
-		
 	}
 
 	@Override
@@ -45,23 +43,35 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	
 	public <T> T getEstablishmentById(int id, Class<T> type) {
 		
-		if(id <= 0) {
-			throw new RuntimeException("Incorrect id");
+		if(id < 1) {
+			System.out.println("Incorrect id");
+			return null;
 		}
-		
 		if(type.toString().contains("Cinema")) {
+			if(cinemas.isEmpty()) {
+				System.out.println("Cinema array is empty");
+				return null;
+			}
 			for(int i = 0; i < cinemas.size(); i++) {
 				if(cinemas.get(i).getId() == id) {
 					return type.cast(cinemas.get(i));
 				}
 			}
 		} else if(type.toString().contains("NightClub")) {
+			if(nightClubs.isEmpty()) {
+				System.out.println("Night Club array is empty");
+				return null;
+			}
 			for(int i = 0; i < nightClubs.size(); i++) {
 				if(nightClubs.get(i).getId() == id) {
 					return type.cast(nightClubs.get(i));	
 				}
 			}
-		} else {
+		} else if(type.toString().contains("Restaurant")){
+			if(restaurants.isEmpty()) {
+				System.out.println("Restaurant array is empty");
+				return null;
+			}
 			for(int i = 0; i < restaurants.size(); i++) {
 				if(restaurants.get(i).getId() == id) {
 					return type.cast(restaurants.get(i));
@@ -75,9 +85,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	public List<Cinema> getAllCinemaEstablishment() {
 		
 		if(cinemas.isEmpty()) {
-			
-			throw new RuntimeException("Cinema List is empty");
-			
+			return null;
 		}
 		return cinemas;
 		
@@ -85,43 +93,34 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 
 	@Override
 	public List<NightClub> getAllNightClubEstablishment() {
-		
 		if(nightClubs.isEmpty()) {
-			
-			System.out.println("List of Night Clubs is epmty");
 			return null;
-			
 		}
 		return nightClubs;
-		
 	}
 
 	@Override
 	public List<Restaurant> getAllRestaurantEstablishment() {
-		
 		if(restaurants.isEmpty()) {
-			
-			System.out.println("List of Restaurants is epmty");
 			return null;
-			
 		}
 		return restaurants;
-		
 	}
 
 	@Override
 	public void deleteEstablishmentByType(String establishmentType) {
-		establishmentType.toUpperCase(); 
+		String type = establishmentType.toUpperCase(); 
 		
-		switch (establishmentType) {
+		switch (type) {
 		case "CINEMA":
 			cinemas.clear();
 			break;
-		case "NIGHTCLUBS":
+		case "NIGHTCLUB":
 			nightClubs.clear();
 			break;
 		case "RESTAURANT":
 			restaurants.clear();
+			break;
 		default:
 			System.out.println("No such type of establishment");
 			break;
@@ -132,64 +131,44 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	@Override
 	public void deleteEstablishmentById(int id) {
 		
-		if(cinemas.isEmpty() && nightClubs.isEmpty() && restaurants.isEmpty()) {
-			
+		if (id <= 0)  {
 			System.out.println("List is empty");
 			return;
-			
-		} else if(id <= 0) {
-			
+		} else if(cinemas.isEmpty() && nightClubs.isEmpty() && restaurants.isEmpty()){
 			System.out.println("Incorrect id");
 			return;
-			
 		}
 		
 		int maxIndex = 0;
 		if(cinemas.size() > nightClubs.size() && cinemas.size() > restaurants.size()){
-			
 			maxIndex = cinemas.size();
-			
 		} else if(nightClubs.size() > restaurants.size() && nightClubs.size() > cinemas.size()) {
-			
 			maxIndex = nightClubs.size();
-			
 		} else {
-			
 			maxIndex = restaurants.size();
-			
 		}
 		
 		for(int i = 0; i < maxIndex; i++) {
-			
 			if(i < cinemas.size()) {
-				
 				if(cinemas.get(i).getId() == id) {
-					
 					cinemas.remove(i);
+					System.out.println("Cinema has been removed by index - " + id);
 					return;
-					
 				}
-				
 			}
 			if(i < nightClubs.size()) {
-				
 				if(nightClubs.get(i).getId() == id) {
-					
 					nightClubs.remove(i);
+					System.out.println("NightClub has been removed by index - " + id);
 					return;
-					
 				}
-				
 			}
 			if(i < restaurants.size()) {
-				
 				if(restaurants.get(i).getId() == id) {
-					
 					restaurants.remove(i);
+					System.out.println("Restaurant has been removed by index - " + id);
 					return;
-					
 				}
-				
 			}
 			
 		}
