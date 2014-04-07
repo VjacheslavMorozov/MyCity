@@ -182,4 +182,18 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		restaurants.clear();
 		
 	}
+	
+	public int getLastId() {
+		if(cinemas.isEmpty() && nightClubs.isEmpty() && restaurants.isEmpty()) {
+			System.out.println("There is no Establishment elements");
+			return 0;
+		}
+		if(!cinemas.isEmpty()) {
+			return cinemas.get(cinemas.size()-1).getIdCount();
+		} else if(!nightClubs.isEmpty()) {
+			return nightClubs.get(nightClubs.size()-1).getIdCount();
+		} else {
+			return restaurants.get(restaurants.size()-1).getIdCount();
+		}
+	}
 }

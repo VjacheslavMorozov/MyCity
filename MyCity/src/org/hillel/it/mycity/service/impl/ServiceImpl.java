@@ -101,4 +101,8 @@ public class ServiceImpl implements ServiceMyCity {
 	public Restaurant getRestaurantEstablishmentById(int id) {
 		return establishmentRepository.getEstablishmentById(id, Restaurant.class);
 	}
+	
+	public int getLastId() {
+		return establishmentRepository.getLastId();
+	}
 }

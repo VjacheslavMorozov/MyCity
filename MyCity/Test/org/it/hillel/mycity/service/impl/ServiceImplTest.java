@@ -26,7 +26,6 @@ public class ServiceImplTest {
 	private List<Restaurant> restaurantList;
 	private List<NightClub> nightClubList;
 	private Administrator administrator;
-	private static int idCount = 0;
 	
 	@Before
 	public void beforeTest() {
@@ -34,7 +33,6 @@ public class ServiceImplTest {
 		serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository);
 		administrator = new Administrator(null);
 		System.out.println('\n' + "Befor Test");
-		idCount++;
 	}
 	
 	@Test
@@ -43,7 +41,6 @@ public class ServiceImplTest {
 		serviceImpl.addEstablishmentRestaurant(administrator);
 		administrator.setLogin("login");
 		serviceImpl.addEstablishmentRestaurant(administrator);
-		idCount++;
 	}
 	
 	@Test
@@ -52,7 +49,6 @@ public class ServiceImplTest {
 		serviceImpl.addEstablishmentNightClub(administrator);
 		administrator.setLogin("login");
 		serviceImpl.addEstablishmentNightClub(administrator);
-		idCount++;
 	}
 	
 	@Test
@@ -61,7 +57,6 @@ public class ServiceImplTest {
 		serviceImpl.addEstablishmentCinema(administrator);
 		administrator.setLogin("login");
 		serviceImpl.addEstablishmentCinema(administrator);
-		idCount++;
 	}
 	
 	@Test
@@ -72,7 +67,6 @@ public class ServiceImplTest {
 		assertNull(cinemaList = serviceImpl.getAllCinemaEstablishment());
 		serviceImpl.addEstablishmentCinema(administrator);
 		cinemaList = serviceImpl.getAllCinemaEstablishment();
-		idCount++;
 	}
 	
 	@Test
@@ -83,7 +77,6 @@ public class ServiceImplTest {
 		assertNull(nightClubList = serviceImpl.getAllNightClubEstablishment());
 		serviceImpl.addEstablishmentNightClub(administrator);
 		nightClubList = serviceImpl.getAllNightClubEstablishment();
-		idCount++;
 	}
 	
 	@Test
@@ -94,7 +87,6 @@ public class ServiceImplTest {
 		assertNull(restaurantList = serviceImpl.getAllRestaurantEstablishment());
 		serviceImpl.addEstablishmentRestaurant(administrator);
 		restaurantList = serviceImpl.getAllRestaurantEstablishment();
-		idCount++;
 	}
 	
 	@Test
@@ -105,7 +97,6 @@ public class ServiceImplTest {
 		serviceImpl.addEstablishmentNightClub(administrator);
 		serviceImpl.addEstablishmentRestaurant(administrator);
 		serviceImpl.deleteAllEstablishments();
-		idCount = idCount + 3;
 	}
 	
 	@Test
@@ -117,22 +108,18 @@ public class ServiceImplTest {
 		serviceImpl.addEstablishmentCinema(administrator);
 		serviceImpl.addEstablishmentNightClub(administrator);
 		serviceImpl.addEstablishmentRestaurant(administrator);
-		idCount = idCount + 3;
-		serviceImpl.deleteEstablishmentById(idCount - 2);
+		serviceImpl.deleteEstablishmentById(serviceImpl.getLastId() - 3);
 		serviceImpl.addEstablishmentCinema(administrator);
 		serviceImpl.addEstablishmentCinema(administrator);
-		idCount = idCount + 2;
-		serviceImpl.deleteEstablishmentById(idCount - 3);
+		serviceImpl.deleteEstablishmentById(serviceImpl.getLastId() - 4);
 		serviceImpl.addEstablishmentNightClub(administrator);
 		serviceImpl.addEstablishmentNightClub(administrator);
-		idCount = idCount + 2;
-		serviceImpl.deleteEstablishmentById(idCount - 4);
+		serviceImpl.deleteEstablishmentById(serviceImpl.getLastId() - 5);
 		serviceImpl.addEstablishmentRestaurant(administrator);
 		serviceImpl.addEstablishmentRestaurant(administrator);
 		serviceImpl.addEstablishmentNightClub(administrator);
 		serviceImpl.addEstablishmentNightClub(administrator);
-		idCount = idCount + 4;
-		serviceImpl.deleteEstablishmentById(idCount - 7);
+		serviceImpl.deleteEstablishmentById(serviceImpl.getLastId() - 8);
 		
 	}
 	
@@ -141,30 +128,27 @@ public class ServiceImplTest {
 		System.out.println("Get Cinema by id:");
 		administrator.setLogin("login");
 		assertNull(serviceImpl.getCinemaEstablishmentById(0));
-		assertNull(serviceImpl.getCinemaEstablishmentById(idCount + 1));
+		assertNull(serviceImpl.getCinemaEstablishmentById(serviceImpl.getLastId() + 1));
 		serviceImpl.addEstablishmentCinema(administrator);
-		idCount = idCount + 1;
-		assertNotNull(serviceImpl.getCinemaEstablishmentById(idCount));
+		serviceImpl.getCinemaEstablishmentById(serviceImpl.getLastId() - 1);
 	}
 	
 	@Test
 	public void getNightClubEstablishmentByIdTest() {
 		System.out.println("Get Night Club by id:");
 		administrator.setLogin("login");
-		assertNull(serviceImpl.getNightClubEstablishmentById(idCount));
+		assertNull(serviceImpl.getNightClubEstablishmentById(serviceImpl.getLastId() + 1));
 		serviceImpl.addEstablishmentNightClub(administrator);
-		idCount = idCount + 1;
-		serviceImpl.getNightClubEstablishmentById(idCount);
+		serviceImpl.getNightClubEstablishmentById(serviceImpl.getLastId() - 1);
 	}
 	
 	@Test
 	public void getRestaurantEstablishmentByIdTest() {
 		System.out.println("Get Restaurant by id:");
 		administrator.setLogin("login");
-		assertNull(serviceImpl.getRestaurantEstablishmentById(idCount));
+		assertNull(serviceImpl.getRestaurantEstablishmentById(serviceImpl.getLastId() + 1));
 		serviceImpl.addEstablishmentRestaurant(administrator);
-		idCount = idCount + 1;
-		serviceImpl.getRestaurantEstablishmentById(idCount);
+		serviceImpl.getRestaurantEstablishmentById(serviceImpl.getLastId() - 1);
 	}
 	
 	@Test
