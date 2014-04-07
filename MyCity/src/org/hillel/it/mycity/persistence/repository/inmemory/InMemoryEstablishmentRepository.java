@@ -17,11 +17,9 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	private List<Restaurant> restaurants;
 	
 	public InMemoryEstablishmentRepository() {
-		
 		cinemas = new ArrayList<>();
 		nightClubs = new ArrayList<>();
 		restaurants = new ArrayList<>();
-		
 	}
 	
 	@Override

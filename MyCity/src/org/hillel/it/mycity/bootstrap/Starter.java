@@ -13,11 +13,13 @@ public class Starter {
 		
 		Administrator administrator = new Administrator(null);
 		
+		administrator.setLogin("MyLogin");
+		
 		serviceImpl.addEstablishmentCinema(administrator);
 		serviceImpl.addEstablishmentNightClub(administrator);
 		serviceImpl.addEstablishmentRestaurant(administrator);
 		
-		Cinema cinema = serviceImpl.getCinemaEstablishmentById(2);
+		serviceImpl.getCinemaEstablishmentById(2).setAddressOfEstablishment("Rodina str.");
 		
 	}
 }
