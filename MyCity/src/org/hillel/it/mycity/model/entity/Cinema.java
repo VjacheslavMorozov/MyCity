@@ -9,9 +9,7 @@ public class Cinema extends Establishment{
 	private String cinemaTechnology;
 	
 	public Cinema(Person administrator) {
-		setId();
-		setCreateDate(new Date());
-		setCreatedBy(administrator);
+		super(administrator);
 		commentsOfEstablishment = new ArrayList<>();
 	}
 	public void setNumberOfHalls(int numberOfHalls) {

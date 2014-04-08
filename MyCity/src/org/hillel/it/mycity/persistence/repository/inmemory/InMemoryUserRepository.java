@@ -6,24 +6,24 @@ import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Moderator;
-import org.hillel.it.mycity.model.entity.RegistratedUser;
+import org.hillel.it.mycity.model.entity.User;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
 
 public class InMemoryUserRepository implements UserRepository{
 	
 	private List<Administrator> administrators;
 	private List<Moderator> moderators;
-	private List<RegistratedUser> registratedUsers;
+	private List<User> users;
 	
 	public InMemoryUserRepository() {
 		administrators = new ArrayList<>();
 		moderators = new ArrayList<>();
-		registratedUsers = new ArrayList<>();
+		users = new ArrayList<>();
 	}
 
 	@Override
-	public void addRegistratedUser(RegistratedUser registratedUser) {
-		registratedUsers.add(registratedUser);
+	public void addRegistratedUser(User registratedUser) {
+		users.add(registratedUser);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class InMemoryUserRepository implements UserRepository{
 			System.out.println("Incorrect Id");
 			return;
 		}
-		if(administrators.isEmpty() && moderators.isEmpty() && registratedUsers.isEmpty()) {
+		if(administrators.isEmpty() && moderators.isEmpty() && users.isEmpty()) {
 			System.out.println("All user arrays is empty");
 			return;
 		}
@@ -62,8 +62,8 @@ public class InMemoryUserRepository implements UserRepository{
 					return;
 				}
 			}
-		} else if(!registratedUsers.isEmpty()) {
-			Iterator<RegistratedUser> iterator = registratedUsers.iterator();
+		} else if(!users.isEmpty()) {
+			Iterator<User> iterator = users.iterator();
 			while (iterator.hasNext()) {
 				if(iterator.next().getId() == id) {
 					iterator.remove();
@@ -92,7 +92,7 @@ public class InMemoryUserRepository implements UserRepository{
 	}
 
 	@Override
-	public List<RegistratedUser> getAllRegistratedUsers() {
+	public List<User> getAllRegistratedUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -5,9 +5,7 @@ import java.util.Date;
 public class Administrator extends Person{
 	
 	public Administrator(Person administrator) {
-		setId();
-		setCreateDate(new Date());
-		setCreatedBy(administrator);
+		super(administrator);
 	}
 	
 	public void addEstablishmentCinema() {

@@ -2,16 +2,29 @@ package org.hillel.it.mycity.model.entity;
 
 import java.util.Date;
 
+	/*Есть два вариант, либо сделать Commet, как класс, который создается единажды для каждого заведения 
+	*или как класс для каждого комментария, в первом случае у меня возникла проблема из-за того, что
+	* у одного комменты может быть несколько оценок commentAssessment. Идеально для этого был бы 2мерный
+	* массив*/
+	
+	/*
+	 * @timur Думаю объект класса Comment должен представлять 
+	 * один комментарий. Один комментарий - это комментарий 
+	 * одного пользователя (user_id) к одному заведению (establishment_id).
+	 * 
+	 * Потом уже будем делать выборки этих комментариев как угодно: 
+	 * 1) Список всех комментриев к заведению. Например, это будет поле класса Establishment.
+	 * 2) Список всех комментариев пользователя. Например, это будет поле класса RegisteredUser. 
+	 * 
+	 */
 public class Comment extends BaseEntity{
 	
 	private int commentAssessment;
 	private String comment;
 	private boolean needToModerate;
 	
-	Comment(Person user) {
-		setId();
-		setCreateDate(new Date());
-		setCreatedBy(user);
+	public Comment(Person person) {
+		super(person);
 		commentAssessment = 0;
 		needToModerate = false;
 	}

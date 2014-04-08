@@ -6,10 +6,7 @@ import java.util.Date;
 public class Restaurant extends RestaurantsAndNightClubs{
 	
 	public Restaurant(Administrator administrator){
-		
-		setId();
-		setCreateDate(new Date());
-		setCreatedBy(administrator);
+		super(administrator);
 		assessmentsOfEstablishment = new ArrayList<>();
 		commentsOfEstablishment = new ArrayList<>();
 		
