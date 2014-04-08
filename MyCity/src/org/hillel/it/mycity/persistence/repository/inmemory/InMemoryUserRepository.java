@@ -6,14 +6,14 @@ import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Moderator;
-import org.hillel.it.mycity.model.entity.RegisteredUser;
+import org.hillel.it.mycity.model.entity.User;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
 
 public class InMemoryUserRepository implements UserRepository{
 	
 	private List<Administrator> administrators;
 	private List<Moderator> moderators;
-	private List<RegisteredUser> registratedUsers;
+	private List<User> registratedUsers;
 	
 	public InMemoryUserRepository() {
 		administrators = new ArrayList<>();
@@ -22,7 +22,7 @@ public class InMemoryUserRepository implements UserRepository{
 	}
 
 	@Override
-	public void addRegistratedUser(RegisteredUser registratedUser) {
+	public void addRegistratedUser(User registratedUser) {
 		registratedUsers.add(registratedUser);
 	}
 
@@ -63,7 +63,7 @@ public class InMemoryUserRepository implements UserRepository{
 				}
 			}
 		} else if(!registratedUsers.isEmpty()) {
-			Iterator<RegisteredUser> iterator = registratedUsers.iterator();
+			Iterator<User> iterator = registratedUsers.iterator();
 			while (iterator.hasNext()) {
 				if(iterator.next().getId() == id) {
 					iterator.remove();
@@ -92,7 +92,7 @@ public class InMemoryUserRepository implements UserRepository{
 	}
 
 	@Override
-	public List<RegisteredUser> getAllRegistratedUsers() {
+	public List<User> getAllRegistratedUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
