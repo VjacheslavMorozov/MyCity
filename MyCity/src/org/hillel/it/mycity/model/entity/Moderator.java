@@ -1,16 +1,13 @@
 package org.hillel.it.mycity.model.entity;
 
-public class Moderator {
-	public void deleteComment(){
-		
+import java.util.Date;
+
+public class Moderator extends Person{
+	
+	public Moderator(Person administrator) {
+		setId();
+		setCreateDate(new Date());
+		setCreatedBy(administrator);
 	}
-	public void editCommet(){
-		
-	}
-	public boolean markEstablismentToDelete(){
-		return true;
-	}
-	public boolean markEstablismentToEdit(){
-		return true;
-	}
+	
 }

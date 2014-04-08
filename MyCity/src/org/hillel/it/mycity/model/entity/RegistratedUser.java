@@ -1,31 +1,13 @@
 package org.hillel.it.mycity.model.entity;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
-// @timur Нужно переименовать в RegisteredUser. 
-public class RegistratedUser {
-	private Map<String, String> usersInformation;
-	RegistratedUser(){
-		usersInformation = new HashMap<>();
+public class RegistratedUser extends Person{
+
+	public RegistratedUser(Person administrator) {
+		setId();
+		setCreateDate(new Date());
+		setCreatedBy(administrator);
 	}
-	public void setUserName(String userName){
-		if(usersInformation.containsValue(userName)){
-			System.out.println("Error. Administrator with this username is available");
-			return;
-		}
-		usersInformation.put("username", userName);
-	}
-	public String getUserName(){
-		return usersInformation.get("username");
-	}
-	public void writeCommet(String comment){
-		
-	}
-	public void setAssessmentToEstablisment(int Assessment){
-		
-	}
-	public void setAssessmentToComment(boolean sign){
-		
-	}
+	
 }

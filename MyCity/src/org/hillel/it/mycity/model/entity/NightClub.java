@@ -1,13 +1,13 @@
 package org.hillel.it.mycity.model.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-// @timur Думаю будет правильнее единственное число. NightClub.
-public class NightClubs extends RestaurantsAndNightClubs{
-	public NightClubs(){
+public class NightClub extends RestaurantsAndNightClubs{
+	public NightClub(Administrator administrator){
 		
 		setId();
+		setCreateDate(new Date());
+		setCreatedBy(administrator);
 		//commentsOfEstablishment = new Comment();
 		//assessmentsOfEstablishment = new Assessment();
 		

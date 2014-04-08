@@ -1,45 +1,25 @@
 package org.hillel.it.mycity.bootstrap;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Cinema;
-import org.hillel.it.mycity.model.entity.Establishment;
-import org.hillel.it.mycity.model.entity.Restaurant;
+import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryEstablishmentRepository;
 import org.hillel.it.mycity.service.impl.ServiceImpl;
 
 public class Starter {
 	public static void main(String[] args) {
-		InMemoryEstablishmentRepository inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
+		EstablishmentRepository inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
 		ServiceImpl serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository);
 		
-		serviceImpl.addEstablishmentCinema("Planeta-Kino", "Rivera");
-		serviceImpl.addEstablishmentNightClub("Palladium", "Italian blv.");
-		serviceImpl.addEstablishmentRestaurant("Steak", "Deribasovskaya str.");
+		Administrator administrator = new Administrator(null);
 		
-		//проблема с типом возвращаемого значения.
-		Establishment cinema = new Cinema();
-		cinema = serviceImpl.getEstablishmentById(1);
-		System.out.println(cinema.getNameOfEstablishment());
+		administrator.setLogin("MyLogin");
 		
-		List<Establishment> establishments = new ArrayList<>();
-		establishments = serviceImpl.getAllEstablishment();
+		serviceImpl.addEstablishmentCinema(administrator);
+		serviceImpl.addEstablishmentNightClub(administrator);
+		serviceImpl.addEstablishmentRestaurant(administrator);
 		
-		for(Establishment establishment: establishments){
-			
-			System.out.println(establishment.getNameOfEstablishment());
-			
-		}
+		serviceImpl.getCinemaEstablishmentById(2).setAddressOfEstablishment("Rodina str.");
 		
-		serviceImpl.deleteEstablishmentById(1);
-		
-		for(Establishment establishment: establishments){
-			
-			System.out.println(establishment.getNameOfEstablishment());
-			
-		}
-		
-		serviceImpl.deleteAllEstablishments();
 	}
 }

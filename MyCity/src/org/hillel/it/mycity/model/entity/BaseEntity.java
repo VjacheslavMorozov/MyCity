@@ -3,60 +3,56 @@ package org.hillel.it.mycity.model.entity;
 import java.util.Date;
 
 public abstract class BaseEntity {
-	private int id = 0;
+	private int id;
 	private Date createdDate;
 	private Date modifiedDate;
-	private Administrator createdBy; // @timur Предлагаю создать создать базовый класс (интерфейс) Role для всех ролей. И заменить здесь Administrator на Role.  
-	private Administrator modifiedBy;
+	private Person createdBy;
+	private Person modifiedBy;
+	private static int idCount = 1;
 	
-	public void setCreateDate(Date createdDate){
-		
+	protected void setCreateDate(Date createdDate){
 		this.createdDate = createdDate;
-		
 	}
-	public void setModifiedDate(Date modifiedDate){
-		
-		this.modifiedDate = modifiedDate;
-		
-	}
+	
 	public Date getCreatedDate(){
-		
 		return createdDate;
-		
 	}
+	
+	public void setModifiedDate(Date modifiedDate){
+		this.modifiedDate = modifiedDate;
+	}
+	
 	public Date getModifiedDate(){
 		
 		return modifiedDate;
 		
 	}
-	public void setCreatedBy(Administrator createdBy){
-		
+	protected void setCreatedBy(Person createdBy){
 		this.createdBy = createdBy;
-		
 	}
-	public Administrator getCreatedBy(){
-		
+	
+	public Person getCreatedBy(){
 		return createdBy;
-		
 	}
-	public void setModifiedBy(Administrator modifiedBy){
-		
+	
+	public void setModifiedBy(Person modifiedBy){
 		this.modifiedBy = modifiedBy;
-		
 	}
-	public Administrator getModifiedBy(){
-		
+	
+	public Person getModifiedBy(){
 		return modifiedBy;
-		
 	}
-	public int getId(){
-		
+	
+	protected void setId() {
+		id = idCount;
+		idCount++;
+	}
+	
+	public int getId() {
 		return id;
-		
 	}
-	protected void setId(){
-		
-		id++;
-		
+	
+	public int getIdCount() {
+		return idCount;
 	}
 }

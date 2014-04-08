@@ -1,42 +1,40 @@
 package org.hillel.it.mycity.model.entity;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
  
-public class Administrator{
-	private Map<String, String> usersInformation;
-	Administrator(){
-		usersInformation = new HashMap<>();
+public class Administrator extends Person{
+	
+	public Administrator(Person administrator) {
+		setId();
+		setCreateDate(new Date());
+		setCreatedBy(administrator);
 	}
-	public void setUserName(String userName){
-		if(usersInformation.containsValue(userName)){
-			System.out.println("Error. Administrator with this username is available");
-			return;
-		}
-		usersInformation.put("username", userName);
-	}
-	public String getUserName(){
-		return usersInformation.get("username");
-	}
-	public void addEstablishmentCinema(){
-		Establishment establishment = new Cinema();
-	}
-	public void addEstablishmentRestaurant(){
-		Establishment establishment = new Restaurant();
-	}
-	public void addEstablishmentNightClub(){
-		Establishment establishment = new NightClubs();
-	}
-	public void deleteEstablishmentById(int id){
+	
+	public void addEstablishmentCinema() {
 		
 	}
-	public void deleteComment(){
+	
+	public void addEstablishmentRestaurant() {
 		
 	}
-	public void editComment(){
+	
+	public void addEstablishmentNightClub() {
 		
 	}
-	public void editEstablishmentInformation(){
+	
+	public void deleteEstablishmentById(int id) {
+		
+	}
+	
+	public void deleteComment() {
+		
+	}
+	
+	public void editComment() {
+		
+	}
+	
+	public void editEstablishmentInformation() {
 		
 	}
 }

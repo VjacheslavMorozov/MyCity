@@ -7,12 +7,12 @@ public class Cinema extends Establishment{
 	private int numberOfHalls;
 	private int numberOfSeatsInHall;
 	private String cinemaTechnology;
-	public Cinema(){
-		
+	
+	public Cinema(Person administrator) {
 		setId();
-		//commentsOfEstablishment = new Comment();
-		//assessmentsOfEstablishment = new Assessment();
-		
+		setCreateDate(new Date());
+		setCreatedBy(administrator);
+		commentsOfEstablishment = new ArrayList<>();
 	}
 	public void setNumberOfHalls(int numberOfHalls) {
 		

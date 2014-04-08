@@ -1,11 +1,7 @@
 package org.hillel.it.mycity.model.entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
-public class Comment {
 	/*Есть два вариант, либо сделать Commet, как класс, который создается единажды для каждого заведения 
 	*или как класс для каждого комментария, в первом случае у меня возникла проблема из-за того, что
 	* у одного комменты может быть несколько оценок commentAssessment. Идеально для этого был бы 2мерный
@@ -21,42 +17,70 @@ public class Comment {
 	 * 2) Список всех комментариев пользователя. Например, это будет поле класса RegisteredUser. 
 	 * 
 	 */
+public class Comment extends BaseEntity{
+	
 	private int commentAssessment;
-	private Map<Integer,Integer> ids;
-	private List<String> comments;
-	Comment(){
-		comments = new ArrayList<>();
-		ids = new HashMap<>();
+	private String comment;
+	private boolean needToModerate;
+	
+	Comment(Person user) {
+		setId();
+		setCreateDate(new Date());
+		setCreatedBy(user);
 		commentAssessment = 0;
+		needToModerate = false;
 	}
-	public void setComment(String comment){
-		
-		this.comments.add(comment);
-		
+	
+	public boolean checkUser(Person user) {
+		if(getCreatedBy().getId() != user.getId() && !user.toString().contains("Administrator")) {
+			return false;
+		}
+		return true;
 	}
-	public List<String> getCommentsForEstablisment(){
-		
-		return comments;
-		
+	
+	public void setComment(String comment, Person user) {
+		if(!checkUser(user)) {
+			throw new RuntimeException("This user cannot set or change this Comment");
+		}
+		this.comment = comment;
+		setModifiedDate(new Date());
+		setModifiedBy(user);
 	}
-	public void setCommentPositiveAssessment(String comment){
-		
+	
+	public String getComment() {
+		return comment;
+	}
+	
+	public void setCommentPositiveAssessment(Person user) {
+		if(!checkUser(user)) {
+			throw new RuntimeException("This user cannot set or change this Comment");
+		}
 		++commentAssessment;
-		int index = comments.indexOf(comment);
-		ids.put(index, commentAssessment);
-		
 	}
-	public void setCommentNegativeAssessment(String comment){
-		
+	
+	public void setCommentNegativeAssessment(Person user) {
+		if(!checkUser(user)) {
+			throw new RuntimeException("This user cannot set or change this Comment");
+		}
 		--commentAssessment;
-		int index = comments.indexOf(comment);
-		ids.put(index, commentAssessment);
+	}
+	
+	public int getCommentAssessment() {
+		return commentAssessment;
+	}
+	
+	public void setCommentToModerate(Person user) {
+		if(user.toString().contains("RegistratedUser")) {
+			throw new RuntimeException("This user cannot set comment to moderation");
+		}
+		needToModerate = true;
 		
 	}
-	public int getCommentAssessment(String comment){
-		
-		int index = comments.indexOf(comment);
-		return ids.get(index);
-		
+	
+	public boolean checkCommentForModeration() {
+		if(needToModerate) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -1,41 +1,27 @@
 package org.hillel.it.mycity.model.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-public class Assessment {
+public class Assessment extends BaseEntity{
 	
-	/*
-	 * @timur 
-	 * 
-	 * Как понимаю объект класса Assessment представляет одну оценку одного пользователя на одно заведение. 
-	 * 
-	 *  Считаю, что тут точно должно быть 3 поля:  
-	 *  user_id, establishment_id и assessment.
-	 * 
-	 */
+	private int assessment;
 	
-	private List<Integer> assessments;
-	protected double averageAssessment;
-	protected int sumOfAssessment;
-	
-	public Assessment(){
-		
-		assessments = new ArrayList<>();
-		averageAssessment = 0;
-		sumOfAssessment = 0;
-		
+	Assessment(Person user) {
+		setId();
+		setCreateDate(new Date());
+		setCreatedBy(user);
 	}
 	
-	public void setAssessment(int assessment) {
-		
-		this.assessments.add(assessment);
-		sumOfAssessment += assessment;
-		
+	public void setAssessment(int assessment, Person user) {
+		if(getCreatedBy().getId() != user.getId()) {
+			throw new RuntimeException("This user cannot change assessment");
+		}
+		this.assessment = assessment;
+		setModifiedBy(user);
+		setModifiedDate(new Date());
 	}
-	public double getAssessment() {
-		
-		return (double) sumOfAssessment/assessments.size();
-		
+	
+	public int getAssessment() {
+		return assessment;
 	}
 }
