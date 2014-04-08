@@ -19,4 +19,5 @@ public interface EstablishmentRepository {
 	public void deleteEstablishmentById(int id);
 	public <T> T getEstablishmentById(int id, Class<T> type);
 	public int getLastId();
+	
 }

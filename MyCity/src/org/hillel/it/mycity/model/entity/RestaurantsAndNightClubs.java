@@ -7,37 +7,31 @@ public abstract class RestaurantsAndNightClubs extends Establishment{
 	private int averageCheck;
 	
 		
-	public RestaurantsAndNightClubs(Person person) {
-		super(person);
+	public RestaurantsAndNightClubs(Administrator administrator) {
+		super(administrator);
 	}
-	public void setAverageCheck(int averageCheck){
-		
+	
+	public void setAverageCheck(int averageCheck) {
 		this.averageCheck = averageCheck;
-		
 	}
-	public int getAverageCheck(){
-		
+	
+	public int getAverageCheck() {
 		return averageCheck;
-		
 	}
-	public void setTimeOpen(int hour, int minute){
-		
+	
+	public void setTimeOpen(int hour, int minute) {	
 		timeOpen.setTime(hour, minute);
-		
 	}
-	public int getTimeOpenInMinute(){
-		
+	
+	public int getTimeOpenInMinute() {
 		return timeOpen.getTimeInMinute();
-		
 	}
-	public void setTimeClose(int hour, int minute){
-		
+	
+	public void setTimeClose(int hour, int minute) {
 		timeClose.setTime(hour, minute);
-		
 	}
-	public int getTimeCloseInMinute(){
-		
+	
+	public int getTimeCloseInMinute() {	
 		return timeClose.getTimeInMinute();
-		
 	}
 }

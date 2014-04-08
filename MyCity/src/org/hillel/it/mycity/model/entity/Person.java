@@ -12,8 +12,8 @@ public abstract class Person extends BaseEntity{
 	private Set<String> loginSet = new HashSet<>();
 	private Set<String> emailSet = new HashSet<>();
 	
-	public Person(Person person) {
-		super(person);
+	public Person(Administrator administrator) {
+		super(administrator);
 	}
 
 	public void loginTest(String login) {

@@ -1,5 +1,6 @@
 package org.hillel.it.mycity.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Establishment extends BaseEntity{
@@ -7,14 +8,14 @@ public abstract class Establishment extends BaseEntity{
 	private String addressOfEstablishment;
 	private String telephoneOfEstablishment; //формат (0482) 34-56-15, можно добавить форматирование по
 	private String descriptionOfEstablishment;
-	protected List<Comment> commentsOfEstablishment;
-	protected List<Assessment> assessmentsOfEstablishment;
-	//массив оценок от 1 - 10, из этого массива вычисляется средняя и показывается на странице заведения.
+	private List<Comment> commentsOfEstablishment;
+	private List<Assessment> assessmentsOfEstablishment;
 	
-	public Establishment(Person person) {
-		super(person);
+	public Establishment(Administrator administrator) {
+		super(administrator);
+		commentsOfEstablishment = new ArrayList<>();
+		assessmentsOfEstablishment = new ArrayList<>();
 	}
-	
 	
 	public void setNameOfEstablishment(String nameOfEstablishment){
 		this.nameOfEstablishment = nameOfEstablishment;

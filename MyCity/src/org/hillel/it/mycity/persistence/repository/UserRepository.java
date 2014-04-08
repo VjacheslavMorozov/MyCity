@@ -7,6 +7,7 @@ import org.hillel.it.mycity.model.entity.Moderator;
 import org.hillel.it.mycity.model.entity.User;
 
 public interface UserRepository {
+	
 	public void addRegistratedUser(User registratedUser);
 	public void addModerator(Moderator	moderator);
 	public void addAdministrator(Administrator administrator);
@@ -16,4 +17,6 @@ public interface UserRepository {
 	public List<Moderator> getAllModerators();
 	public List<User> getAllRegistratedUsers();
 	public int getLastId();
+	public void deleteAllUsers();
+	
 }

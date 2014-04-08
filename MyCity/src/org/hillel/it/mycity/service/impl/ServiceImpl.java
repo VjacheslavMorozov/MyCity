@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Cinema;
+import org.hillel.it.mycity.model.entity.Moderator;
 import org.hillel.it.mycity.model.entity.NightClub;
 import org.hillel.it.mycity.model.entity.Restaurant;
+import org.hillel.it.mycity.model.entity.User;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 import org.hillel.it.mycity.service.ServiceMyCity;
 
@@ -104,5 +106,71 @@ public class ServiceImpl implements ServiceMyCity {
 	
 	public int getLastId() {
 		return establishmentRepository.getLastId();
+	}
+
+	@Override
+	public void addAdministrator(Administrator administrator) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addModerator(Administrator administrator) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addUser(Administrator administrator) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Administrator> getAllAdministrators() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Moderator> getAllModerators() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteAllUsers() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteUserById(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Administrator getAdministratorById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Moderator getModeratorById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User getUserById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

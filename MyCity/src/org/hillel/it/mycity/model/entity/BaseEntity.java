@@ -16,7 +16,7 @@ public abstract class BaseEntity {
 		setCreatedBy(person);		
 	}
 	
-	protected void setCreateDate(Date createdDate){
+	private void setCreateDate(Date createdDate){
 		this.createdDate = createdDate;
 	}
 	
@@ -29,11 +29,10 @@ public abstract class BaseEntity {
 	}
 	
 	public Date getModifiedDate(){
-		
 		return modifiedDate;
-		
 	}
-	protected void setCreatedBy(Person createdBy){
+	
+	private void setCreatedBy(Person createdBy){
 		this.createdBy = createdBy;
 	}
 	

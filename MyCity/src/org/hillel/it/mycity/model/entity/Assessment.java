@@ -24,4 +24,8 @@ public class Assessment extends BaseEntity{
 	public int getAssessment() {
 		return assessment;
 	}
+	
+	public int getUserId() {
+		return getId();
+	}
 }
