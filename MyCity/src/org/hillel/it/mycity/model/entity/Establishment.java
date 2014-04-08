@@ -11,10 +11,16 @@ public abstract class Establishment extends BaseEntity{
 	protected List<Assessment> assessmentsOfEstablishment;
 	//массив оценок от 1 - 10, из этого массива вычисляется средняя и показывается на странице заведения.
 	
+	public Establishment(Person person) {
+		super(person);
+	}
+	
+	
 	public void setNameOfEstablishment(String nameOfEstablishment){
 		this.nameOfEstablishment = nameOfEstablishment;
 	}
 	
+
 	public String getNameOfEstablishment() {
 		return nameOfEstablishment;
 	}

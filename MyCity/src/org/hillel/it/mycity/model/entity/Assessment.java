@@ -6,10 +6,8 @@ public class Assessment extends BaseEntity{
 	
 	private int assessment;
 	
-	Assessment(Person user) {
-		setId();
-		setCreateDate(new Date());
-		setCreatedBy(user);
+	public Assessment(Person person) {
+		super(person);
 	}
 	
 	public void setAssessment(int assessment, Person user) {

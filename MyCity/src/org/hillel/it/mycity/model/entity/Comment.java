@@ -23,10 +23,8 @@ public class Comment extends BaseEntity{
 	private String comment;
 	private boolean needToModerate;
 	
-	Comment(Person user) {
-		setId();
-		setCreateDate(new Date());
-		setCreatedBy(user);
+	public Comment(Person person) {
+		super(person);
 		commentAssessment = 0;
 		needToModerate = false;
 	}

@@ -5,9 +5,7 @@ import java.util.Date;
 public class RegistratedUser extends Person{
 
 	public RegistratedUser(Person administrator) {
-		setId();
-		setCreateDate(new Date());
-		setCreatedBy(administrator);
+		super(administrator);
 	}
 	
 }

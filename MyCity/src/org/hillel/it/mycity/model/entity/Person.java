@@ -12,6 +12,10 @@ public abstract class Person extends BaseEntity{
 	private Set<String> loginSet = new HashSet<>();
 	private Set<String> emailSet = new HashSet<>();
 	
+	public Person(Person person) {
+		super(person);
+	}
+
 	public void loginTest(String login) {
 		int size = loginSet.size();
 		loginSet.add(this.login);

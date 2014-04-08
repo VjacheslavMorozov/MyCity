@@ -4,10 +4,8 @@ import java.util.Date;
 
 public class NightClub extends RestaurantsAndNightClubs{
 	public NightClub(Administrator administrator){
+		super(administrator);
 		
-		setId();
-		setCreateDate(new Date());
-		setCreatedBy(administrator);
 		//commentsOfEstablishment = new Comment();
 		//assessmentsOfEstablishment = new Assessment();
 		
