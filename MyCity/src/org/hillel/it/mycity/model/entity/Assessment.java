@@ -5,6 +5,8 @@ import java.util.Date;
 public class Assessment extends BaseEntity{
 	
 	private int assessment;
+	private int personId;
+	private int establishementId;
 	
 	public Assessment(Person person) {
 		super(person);
