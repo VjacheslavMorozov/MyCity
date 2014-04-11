@@ -24,9 +24,9 @@ public interface ServiceMyCity {
 	 * будет обращаться к методу person.inGroup("admin"). 
 	 * 
 	 */ 
-	public void addEstablishmentRestaurant();
-	public void addEstablishmentNightClub(Administrator administrator);
-	public void addEstablishmentCinema(Administrator administrator);
+	public void addEstablishmentRestaurant(Restaurant restaurant);
+	public void addEstablishmentNightClub(NightClub nightClub);
+	public void addEstablishmentCinema(Cinema cinema);
 	
 	// READ Establishment
 	public List<Cinema> getAllCinemaEstablishment();
@@ -48,8 +48,8 @@ public interface ServiceMyCity {
 	// Person repository
 	// CREATE Person
 	public void addAdministrator(Administrator administrator);
-	public void addModerator(Administrator administrator);
-	public void addUser(Administrator administrator);
+	public void addModerator(Moderator moderator);
+	public void addUser(User user);
 
 	// READ Person
 	public List<Administrator> getAllAdministrators();

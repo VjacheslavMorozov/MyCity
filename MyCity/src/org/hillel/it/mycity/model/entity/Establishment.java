@@ -2,6 +2,8 @@ package org.hillel.it.mycity.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class Establishment extends BaseEntity{
 	private String nameOfEstablishment;
@@ -11,8 +13,7 @@ public abstract class Establishment extends BaseEntity{
 	private List<Comment> commentsOfEstablishment;
 	private List<Assessment> assessmentsOfEstablishment;
 	
-	public Establishment(Administrator administrator) {
-		super(administrator);
+	public Establishment() {
 		commentsOfEstablishment = new ArrayList<>();
 		assessmentsOfEstablishment = new ArrayList<>();
 	}
@@ -20,7 +21,6 @@ public abstract class Establishment extends BaseEntity{
 	public void setNameOfEstablishment(String nameOfEstablishment){
 		this.nameOfEstablishment = nameOfEstablishment;
 	}
-	
 
 	public String getNameOfEstablishment() {
 		return nameOfEstablishment;
@@ -35,8 +35,8 @@ public abstract class Establishment extends BaseEntity{
 	}
 	
 	public void setTelephoneOfEstablishment(String telephoneOfEstablishment) {
-		if(telephoneOfEstablishment.length() != 10){
-			System.out.println("Incorrect telephone number. It`s must be ten numbers");
+		if(!checkTelephoneOfEstablishment(telephoneOfEstablishment)) {
+			System.out.println("Incorrect format");
 			return;
 		}
 		this.telephoneOfEstablishment = telephoneOfEstablishment;
@@ -53,40 +53,39 @@ public abstract class Establishment extends BaseEntity{
 	public String getDescriptionOfEstablishment() {
 		return descriptionOfEstablishment;
 	}
-	
-	public void setCommentForEstablishment(String comment, Person user) {
-		Comment establishmentComment = new Comment(user);
+	/**
+	 * 
+	 * @param comment
+	 * @deprecated
+	 */
+	public void setCommentForEstablishment(String comment) {
+		Comment establishmentComment = new Comment();
 		try {
-			establishmentComment.setComment(comment, user);
+			establishmentComment.setComment(comment);
 		} catch (RuntimeException e) {
 			e.fillInStackTrace();
 		}
-		establishmentComment.setComment(comment, user);
+		establishmentComment.setComment(comment);
 		commentsOfEstablishment.add(establishmentComment);
 	}
 	
-	public void changeCommentForEstbalishment(String commentNew, int id, Person user) {
-		if(id < 1 || id > getIdCount()) {
-			throw new RuntimeException("Incorrect id");
-		}
+	public void changeCommentForEstbalishment(String commentNew, int id) {
+		checkId(id);
 		for(Comment comment: commentsOfEstablishment) {
 			if(comment.getId() == id) {
 				try {
-					comment.setComment(commentNew, user);
+					comment.setComment(commentNew);
 				} catch (RuntimeException e) {
 					e.fillInStackTrace();
 				}
-				comment.setComment(commentNew, user);
+				comment.setComment(commentNew);
 				return;
 			}
 		}
 	}
 	
 	public String getCommentById(int id) {
-		if(id < 1 || id > getIdCount()) {
-			throw new RuntimeException("Incorrect id");
-		}
-		
+		checkId(id);
 		for(Comment comment: commentsOfEstablishment) {
 			if(comment.getId() == id) {
 				return comment.getComment();
@@ -97,10 +96,7 @@ public abstract class Establishment extends BaseEntity{
 	}
 	
 	public void setPositiveAssessmentToComment(int id, Person user) {
-		if(id < 1 || id > getIdCount()) {
-			throw new RuntimeException("Incorrect id");
-		}
-		
+		checkId(id);
 		for(Comment comment: commentsOfEstablishment) {
 			if(comment.getId() == id) {
 				try {
@@ -115,10 +111,7 @@ public abstract class Establishment extends BaseEntity{
 	}
 	
 	public void setNegativeAssessmentToComment(int id, Person user) {
-		if(id < 1 || id > getIdCount()) {
-			throw new RuntimeException("Incorrect id");
-		}
-		
+		checkId(id);
 		for(Comment comment: commentsOfEstablishment) {
 			if(comment.getId() == id) {
 				try {
@@ -132,22 +125,19 @@ public abstract class Establishment extends BaseEntity{
 		}
 	}
 	
-	public void setAssessmentToEstablishment(int assessment, Person user) {
-		Assessment establishmentAssessment = new Assessment(user);
+	public void setAssessmentToEstablishment(int assessment) {
+		Assessment establishmentAssessment = new Assessment();
 		try {
-			establishmentAssessment.setAssessment(assessment, user);
+			establishmentAssessment.setAssessment(assessment);
 		} catch (Exception e) {
 			e.fillInStackTrace();
 		}
-		establishmentAssessment.setAssessment(assessment, user);
+		establishmentAssessment.setAssessment(assessment);
 		assessmentsOfEstablishment.add(establishmentAssessment);
 	}
 	
 	public int getAssessmentById(int id) {
-		if(id < 1 || id > getIdCount()) {
-			throw new RuntimeException("Incorrect id");
-		}
-		
+		checkId(id);
 		for(Assessment assessment: assessmentsOfEstablishment) {
 			if(assessment.getId() == id) {
 				return assessment.getAssessment();
@@ -156,22 +146,29 @@ public abstract class Establishment extends BaseEntity{
 		return 0;
 	}
 	
-	public void changeAssessmentForEstablishment(int assessmentNew, int id, Person user) {
-		if(id < 1 || id > getIdCount()) {
-			throw new RuntimeException("Incorrect id");
-		}
-		
+	public void changeAssessmentForEstablishment(int assessmentNew, int id) {
+		checkId(id);
 		for(Assessment assessment: assessmentsOfEstablishment) {
 			if(assessment.getId() == id) {
 				try {
-					assessment.setAssessment(assessmentNew, user);
+					assessment.setAssessment(assessmentNew);
 				} catch (Exception e) {
 					e.fillInStackTrace();
 				}
-				assessment.setAssessment(assessmentNew, user);
+				assessment.setAssessment(assessmentNew);
 				return;
 			}
 		}
-		
+	}
+	
+	/**
+	 * Check insert telephone number on regex. Standart format 0939580099
+	 * @param telephoneOfEstablishment
+	 * @return true if telephone number is in standart format
+	 */
+	public boolean checkTelephoneOfEstablishment(String telephoneOfEstablishment) {
+		Pattern telephonePattern = Pattern.compile("(^0{1} [6][3678] | [9][1-9] | 39 | 48 | 50) \\d{7}");
+		Matcher telephoneMatcher = telephonePattern.matcher(telephoneOfEstablishment);
+		return telephoneMatcher.find();
 	}
 }

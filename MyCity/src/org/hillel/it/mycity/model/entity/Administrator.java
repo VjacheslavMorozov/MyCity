@@ -4,23 +4,22 @@ import java.util.Date;
  
 public class Administrator extends Person{
 	
-	public Administrator() {
-		
-	}
-	public Administrator(Administrator administrator) {
-		super(administrator);
-	}
-	
-	public void addEstablishmentCinema() {
-		//TODO
+	public Cinema addEstablishmentCinema() {
+		Cinema cinema = new Cinema();
+		cinema.setCreatedBy(this);
+		return cinema;
 	}
 	
-	public void addEstablishmentRestaurant() {
-		//TODO
+	public Restaurant addEstablishmentRestaurant() {
+		Restaurant restaurant = new Restaurant();
+		restaurant.setCreatedBy(this);
+		return restaurant;
 	}
 	
-	public void addEstablishmentNightClub() {
-		//TODO
+	public NightClub addEstablishmentNightClub() {
+		NightClub nightClub = new NightClub();
+		nightClub.setCreatedBy(this);
+		return nightClub;
 	}
 	
 	public void deleteEstablishmentById(int id) {

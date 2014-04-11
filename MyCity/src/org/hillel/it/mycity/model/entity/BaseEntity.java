@@ -8,16 +8,10 @@ public abstract class BaseEntity {
 	private Date modifiedDate;
 	private Person createdBy;
 	private Person modifiedBy;
-	private static int idCount = 1;
-	
+	private int maxId;
+
 	public BaseEntity(){
-		
-	}
-	
-	public BaseEntity(Person person){
-		setId();
-		setCreateDate(new Date());
-		setCreatedBy(person);		
+		setCreateDate(new Date());	
 	}
 	
 	private void setCreateDate(Date createdDate){
@@ -36,7 +30,7 @@ public abstract class BaseEntity {
 		return modifiedDate;
 	}
 	
-	private void setCreatedBy(Person createdBy){
+	public void setCreatedBy(Person createdBy){
 		this.createdBy = createdBy;
 	}
 	
@@ -52,16 +46,21 @@ public abstract class BaseEntity {
 		return modifiedBy;
 	}
 	
-	protected void setId() {
-		id = idCount;
-		idCount++;
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public int getId() {
 		return id;
 	}
 	
-	public int getIdCount() {
-		return idCount;
+	public void setMaxId(int maxId) {
+		this.maxId = maxId;
+	}
+	
+	public void checkId(int id) {
+		if(id < 1 || maxId < id) {
+			throw new RuntimeException("Incorrect id");
+		}
 	}
 }

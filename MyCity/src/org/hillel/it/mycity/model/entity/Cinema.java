@@ -5,8 +5,8 @@ public class Cinema extends Establishment{
 	private int numberOfSeatsInHall;
 	private String cinemaTechnology;
 	
-	public Cinema(Administrator administrator) {
-		super(administrator);
+	public Cinema() {
+		super();
 	}
 	
 	public void setNumberOfHalls(int numberOfHalls) {

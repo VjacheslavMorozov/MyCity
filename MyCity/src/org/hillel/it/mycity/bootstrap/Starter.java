@@ -6,12 +6,15 @@ import org.hillel.it.mycity.model.entity.Group;
 import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.model.entity.PersonFactory;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
+import org.hillel.it.mycity.persistence.repository.UserRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryEstablishmentRepository;
+import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryUserRepository;
 import org.hillel.it.mycity.service.impl.ServiceImpl;
 
 public class Starter {
 	public static void main(String[] args) {
 		EstablishmentRepository inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
+		UserRepository inMemoryUserRepository = new InMemoryUserRepository();
 
 		// @timur Вход в систему
 		
@@ -19,17 +22,22 @@ public class Starter {
 		String password = "EnteredPassword";
 		Person loggedPerson = Person.logIn(username, password);
 		
-		ServiceImpl serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, loggedPerson);
+		ServiceImpl serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, loggedPerson);
 		
-		Administrator administrator = new Administrator(null);
+		Administrator administrator = new Administrator();
+		administrator.setCreatedBy(null);
+		administrator.setEMail("myMail");
+		administrator.setFirstName("Artem");
+		administrator.setLogin("ThisAdminLogin");
+		administrator.setLastName("Vlasov");
+		serviceImpl.addAdministrator(administrator);
+		administrator = serviceImpl.getAdministratorById(1);
 		
-		administrator.setLogin("MyLogin");
+		Cinema cinema = administrator.addEstablishmentCinema();
 		
-		serviceImpl.addEstablishmentCinema(administrator);
-		serviceImpl.addEstablishmentNightClub(administrator);
-		serviceImpl.addEstablishmentRestaurant();
+		serviceImpl.addEstablishmentCinema(cinema);
 		
-		serviceImpl.getCinemaEstablishmentById(2).setAddressOfEstablishment("Rodina str.");
+		System.out.println(serviceImpl.getCinemaEstablishmentById(1).getCreatedBy().getFirstName());
 		
 	}
 }

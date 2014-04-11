@@ -6,11 +6,6 @@ public abstract class RestaurantsAndNightClubs extends Establishment{
 	private Time timeClose = new Time();
 	private int averageCheck;
 	
-		
-	public RestaurantsAndNightClubs(Administrator administrator) {
-		super(administrator);
-	}
-	
 	public void setAverageCheck(int averageCheck) {
 		this.averageCheck = averageCheck;
 	}

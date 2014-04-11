@@ -6,36 +6,28 @@ import java.util.Set;
 public abstract class Person extends BaseEntity{
 	private String firstName;
 	private String lastName;
-	private String login;
+	private String username;
 	private String eMail;
 	private String password;
-	private Set<String> loginSet = new HashSet<>();
+	private Set<String> usernameSet = new HashSet<>();
 	private Set<String> emailSet = new HashSet<>();
 	private Group group;
 	
-	public Person() {
-	}
-
-	public Person(Administrator administrator) {
-		super(administrator);
-	}
-	
 	public boolean inGroup(Group group){
 		return group == this.group;
-		
 	}
 
 	public void loginTest(String login) {
-		int size = loginSet.size();
-		loginSet.add(this.login);
-		if(size == loginSet.size()) {
+		int size = usernameSet.size();
+		usernameSet.add(this.username);
+		if(size == usernameSet.size()) {
 			throw new RuntimeException("Login is ready used");
 		}
 	}
 	
 	public void emailTest(String eMail) {
 		int size = emailSet.size();
-		emailSet.add(this.login);
+		emailSet.add(this.username);
 		if(size == emailSet.size()) {
 			throw new RuntimeException("eMail is ready used");
 		}
@@ -57,17 +49,17 @@ public abstract class Person extends BaseEntity{
 		return lastName;
 	}
 	
-	public void setLogin(String login) {
+	public void setLogin(String username) {
 		try {
-			loginTest(login);
+			loginTest(username);
 		} catch (RuntimeException e) {
 			System.out.println("Try another login" + e);
 		}
-		this.login = login;
+		this.username = username;
 	}
 	
 	public String getLogin() {
-		return login;
+		return username;
 	}
 	
 	/**
@@ -79,7 +71,7 @@ public abstract class Person extends BaseEntity{
 	public static Person logIn(String username, String password){
 		// Смотрит есть ли пользователь с такими именем пользователя и паролем в БД. 
 		// В случае успешного входа создаем объект на этого пользователя.
-		return PersonFactory.getPerson(Group.User);
+		return PersonFactory.getPerson(Group.Administrator);
 	}
 	
 	public void setEMail(String eMail) {
@@ -101,5 +93,9 @@ public abstract class Person extends BaseEntity{
 	
 	public String getPassword() {
 		return password;
+	}
+	
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 }

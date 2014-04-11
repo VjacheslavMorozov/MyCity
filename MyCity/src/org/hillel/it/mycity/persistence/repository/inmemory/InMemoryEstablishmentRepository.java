@@ -15,28 +15,38 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	private List<Cinema> cinemas;
 	private List<NightClub> nightClubs;
 	private List<Restaurant> restaurants;
+	private int maxId;
 	
 	public InMemoryEstablishmentRepository() {
 		cinemas = new ArrayList<>();
 		nightClubs = new ArrayList<>();
 		restaurants = new ArrayList<>();
+		maxId = 1;
 	}
 	
 	@Override
 	public void addEstablishmentCinema(Cinema cinema) {
+		cinema.setId(maxId);
+		cinema.setMaxId(maxId+1);
 		cinemas.add(cinema);
+		maxId++;
+		
 	}
 
 	@Override
 	public void addEstablishmentNightClub(NightClub nightClub) {
+		nightClub.setId(maxId);
+		nightClub.setMaxId(maxId+1);
 		nightClubs.add(nightClub);
+		maxId++;
 	}
 
 	@Override
 	public void addEstablishmentRestaurant(Restaurant restaurant) {
-		
+		restaurant.setId(maxId);
+		restaurant.setMaxId(maxId+1);
 		restaurants.add(restaurant);
-		
+		maxId++;
 	}
 	
 	public <T> T getEstablishmentById(int id, Class<T> type) {
@@ -179,19 +189,5 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		nightClubs.clear();
 		restaurants.clear();
 		
-	}
-	
-	public int getLastId() {
-		if(cinemas.isEmpty() && nightClubs.isEmpty() && restaurants.isEmpty()) {
-			System.out.println("There is no Establishment elements");
-			return 0;
-		}
-		if(!cinemas.isEmpty()) {
-			return cinemas.get(cinemas.size()-1).getIdCount();
-		} else if(!nightClubs.isEmpty()) {
-			return nightClubs.get(nightClubs.size()-1).getIdCount();
-		} else {
-			return restaurants.get(restaurants.size()-1).getIdCount();
-		}
 	}
 }

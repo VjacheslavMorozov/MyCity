@@ -17,26 +17,13 @@ public class Comment extends BaseEntity{
 	private String comment;
 	private boolean needToModerate;
 	
-	public Comment(Person person) {
-		super(person);
+	public Comment() {
 		commentAssessment = 0;
 		needToModerate = false;
 	}
 	
-	public boolean checkUser(Person user) {
-		if(getCreatedBy().getId() != user.getId() && !user.toString().contains("Administrator")) {
-			return false;
-		}
-		return true;
-	}
-	
-	public void setComment(String comment, Person user) {
-		if(!checkUser(user)) {
-			throw new RuntimeException("This user cannot set or change this Comment");
-		}
+	public void setComment(String comment) {
 		this.comment = comment;
-		setModifiedDate(new Date());
-		setModifiedBy(user);
 	}
 	
 	public String getComment() {
@@ -44,16 +31,10 @@ public class Comment extends BaseEntity{
 	}
 	
 	public void setCommentPositiveAssessment(Person user) {
-		if(!checkUser(user)) {
-			throw new RuntimeException("This user cannot set or change this Comment");
-		}
 		++commentAssessment;
 	}
 	
 	public void setCommentNegativeAssessment(Person user) {
-		if(!checkUser(user)) {
-			throw new RuntimeException("This user cannot set or change this Comment");
-		}
 		--commentAssessment;
 	}
 	
@@ -62,9 +43,6 @@ public class Comment extends BaseEntity{
 	}
 	
 	public void setCommentToModerate(Person user) {
-		if(user.toString().contains("RegistratedUser")) {
-			throw new RuntimeException("This user cannot set comment to moderation");
-		}
 		needToModerate = true;
 		
 	}

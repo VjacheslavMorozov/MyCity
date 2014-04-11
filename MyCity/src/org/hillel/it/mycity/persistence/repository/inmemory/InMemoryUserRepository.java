@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Administrator;
+import org.hillel.it.mycity.model.entity.Group;
 import org.hillel.it.mycity.model.entity.Moderator;
 import org.hillel.it.mycity.model.entity.User;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
@@ -14,31 +15,42 @@ public class InMemoryUserRepository implements UserRepository{
 	private List<Administrator> administrators;
 	private List<Moderator> moderators;
 	private List<User> users;
+	private int maxId;
 	
 	public InMemoryUserRepository() {
 		administrators = new ArrayList<>();
 		moderators = new ArrayList<>();
 		users = new ArrayList<>();
+		maxId = 1;
 	}
 
 	@Override
 	public void addRegistratedUser(User user) {
+		user.setGroup(Group.User);
+		user.setId(maxId);
 		users.add(user);
+		maxId++;
 	}
 
 	@Override
 	public void addModerator(Moderator moderator) {
+		moderator.setGroup(Group.Moderator);
+		moderator.setId(maxId);
 		moderators.add(moderator);
+		maxId++;
 	}
 
 	@Override
 	public void addAdministrator(Administrator administrator) {
+		administrator.setGroup(Group.Administrator);
+		administrator.setId(maxId);
 		administrators.add(administrator);
+		maxId++;
 	}
 
 	@Override
 	public void deleteUserById(int id) {
-		if(id < 1 || id > getLastId()) {
+		if(id < 1 || id > maxId) {
 			System.out.println("Incorrect Id");
 			return;
 		}
@@ -130,26 +142,11 @@ public class InMemoryUserRepository implements UserRepository{
 	}
 
 	@Override
-	public List<User> getAllRegistratedUsers() {
+	public List<User> getAllUsers() {
 		if(users.isEmpty()) {
 			return null;
 		}
 		return users;
-	}
-
-	@Override
-	public int getLastId() {
-		if(administrators.isEmpty() && moderators.isEmpty() && users.isEmpty()) {
-			System.out.println("There is no Establishment elements");
-			return 0;
-		}
-		if(!administrators.isEmpty()) {
-			return administrators.get(administrators.size()-1).getIdCount();
-		} else if(!moderators.isEmpty()) {
-			return moderators.get(moderators.size()-1).getIdCount();
-		} else {
-			return users.get(users.size()-1).getIdCount();
-		}
 	}
 
 	@Override

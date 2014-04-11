@@ -11,45 +11,37 @@ import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.model.entity.Restaurant;
 import org.hillel.it.mycity.model.entity.User;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
+import org.hillel.it.mycity.persistence.repository.UserRepository;
 import org.hillel.it.mycity.service.ServiceMyCity;
 
 public class ServiceImpl implements ServiceMyCity {
 	private EstablishmentRepository establishmentRepository;
+	private UserRepository userRepository;
 	private Person loggedPerson; 
 	
-	public ServiceImpl(EstablishmentRepository establishmentRepository, Person loggedPerson) {
+	public ServiceImpl(EstablishmentRepository establishmentRepository, UserRepository userRepository,Person loggedPerson) {
 		this.establishmentRepository = establishmentRepository;
+		this.userRepository = userRepository;
 		this.loggedPerson = loggedPerson;
 	}
 	
 	// CREATE Establishment
 	@Override
-	public void addEstablishmentRestaurant() {
+	public void addEstablishmentRestaurant(Restaurant restaurant) {
 		if( this.loggedPerson.inGroup(Group.Administrator) == false ) {
 			System.out.println("Administrator has no login");
 			return;
 		}
-		Restaurant restaurant = new Restaurant((Administrator)loggedPerson);
 		establishmentRepository.addEstablishmentRestaurant(restaurant);
 	}
 
 	@Override
-	public void addEstablishmentNightClub(Administrator administrator) {
-		if(administrator.getLogin() == null) {
-			System.out.println("Administrator has no login");
-			return;
-		}
-		NightClub nightClub = new NightClub(administrator);
+	public void addEstablishmentNightClub(NightClub nightClub) {
 		establishmentRepository.addEstablishmentNightClub(nightClub);
 	}
 
 	@Override
-	public void addEstablishmentCinema(Administrator administrator) {
-		if(administrator.getLogin() == null) {
-			System.out.println("Administrator has no login");
-			return;
-		}
-		Cinema cinema = new Cinema(administrator);
+	public void addEstablishmentCinema(Cinema cinema) {
 		establishmentRepository.addEstablishmentCinema(cinema);
 	}
 	
@@ -110,74 +102,59 @@ public class ServiceImpl implements ServiceMyCity {
 	public Restaurant getRestaurantEstablishmentById(int id) {
 		return establishmentRepository.getEstablishmentById(id, Restaurant.class);
 	}
-	
-	public int getLastId() {
-		return establishmentRepository.getLastId();
-	}
 
 	@Override
 	public void addAdministrator(Administrator administrator) {
-		// TODO Auto-generated method stub
-		
+		userRepository.addAdministrator(administrator);
 	}
 
 	@Override
-	public void addModerator(Administrator administrator) {
-		// TODO Auto-generated method stub
-		
+	public void addModerator(Moderator moderator) {
+		userRepository.addModerator(moderator);
 	}
 
 	@Override
-	public void addUser(Administrator administrator) {
-		// TODO Auto-generated method stub
-		
+	public void addUser(User user) {
+		userRepository.addRegistratedUser(user);
 	}
 
 	@Override
 	public List<Administrator> getAllAdministrators() {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getAllAdministrators();
 	}
 
 	@Override
 	public List<Moderator> getAllModerators() {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getAllModerators();
 	}
 
 	@Override
 	public List<User> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getAllUsers();
 	}
 
 	@Override
 	public void deleteAllUsers() {
-		// TODO Auto-generated method stub
-		
+		userRepository.deleteAllUsers();
 	}
 
 	@Override
 	public void deleteUserById(int id) {
-		// TODO Auto-generated method stub
-		
+		userRepository.deleteUserById(id);
 	}
 
 	@Override
 	public Administrator getAdministratorById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getUserById(id, Administrator.class);
 	}
 
 	@Override
 	public Moderator getModeratorById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getUserById(id, Moderator.class);
 	}
 
 	@Override
 	public User getUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getUserById(id, User.class);
 	}
 }
