@@ -167,7 +167,7 @@ public abstract class Establishment extends BaseEntity{
 	 * @return true if telephone number is in standart format
 	 */
 	public boolean checkTelephoneOfEstablishment(String telephoneOfEstablishment) {
-		Pattern telephonePattern = Pattern.compile("(^0{1} [6][3678] | [9][1-9] | 39 | 48 | 50) \\d{7}");
+		Pattern telephonePattern = Pattern.compile("(^0([6][3678]|[9][1-9]|39|48|50))\\d{7}");
 		Matcher telephoneMatcher = telephonePattern.matcher(telephoneOfEstablishment);
 		return telephoneMatcher.find();
 	}

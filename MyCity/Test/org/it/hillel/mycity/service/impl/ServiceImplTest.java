@@ -54,18 +54,37 @@ public class ServiceImplTest {
 		restaurant = administrator.addEstablishmentRestaurant();
 		restaurant.setAddressOfEstablishment("His address");
 		restaurant.setNameOfEstablishment("His name");
+		restaurant.setTelephoneOfEstablishment("0580394003");
 		restaurant.setTelephoneOfEstablishment("0638678900");
+		restaurant.setTimeClose(24, 59);
+		restaurant.setTimeOpen(23, 61);
+		restaurant.setTimeClose(23, 59);
+		restaurant.setTimeOpen(7, 0);
 		serviceImpl.addEstablishmentRestaurant(restaurant);
 		restaurant = serviceImpl.getRestaurantEstablishmentById(1);
 		System.out.println(restaurant.getAddressOfEstablishment());
-	}
-	/*
-	@Test
-	public void addEstablishmentNightClubTest() {
-		
+		System.out.println(restaurant.getNameOfEstablishment());
+		System.out.println(restaurant.getTimeCloseInMinute());
+		System.out.println(restaurant.getTimeOpenInMinute());
+		System.out.println(restaurant.getTelephoneOfEstablishment());
 	}
 	
 	@Test
+	public void addEstablishmentNightClubTest() {
+		Administrator administrator = new Administrator();
+		serviceImpl.addAdministrator(administrator);
+		NightClub nightClub = new NightClub();
+		nightClub = administrator.addEstablishmentNightClub();
+		nightClub.setAverageCheck(150);
+		nightClub.setDescriptionOfEstablishment("Beautiful night club");
+		serviceImpl.addEstablishmentNightClub(nightClub);
+		nightClub = serviceImpl.getNightClubEstablishmentById(2);
+		System.out.println(nightClub.getId());
+		System.out.println(nightClub.getDescriptionOfEstablishment());
+		System.out.println(nightClub.getAverageCheck());
+	}
+	
+	/*@Test
 	public void addEstablishmentCinemaTest() {
 		System.out.println("Add Restaurant:");
 		serviceImpl.addEstablishmentCinema(administrator);

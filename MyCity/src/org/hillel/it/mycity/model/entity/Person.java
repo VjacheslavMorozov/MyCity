@@ -71,6 +71,7 @@ public abstract class Person extends BaseEntity{
 	public static Person logIn(String username, String password){
 		// Смотрит есть ли пользователь с такими именем пользователя и паролем в БД. 
 		// В случае успешного входа создаем объект на этого пользователя.
+		// Предлагаю вынести этот метод в класс InMemoryUserRepository
 		return PersonFactory.getPerson(Group.Administrator);
 	}
 	
