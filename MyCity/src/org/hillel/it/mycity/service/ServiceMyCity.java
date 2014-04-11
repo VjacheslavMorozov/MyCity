@@ -24,7 +24,7 @@ public interface ServiceMyCity {
 	 * будет обращаться к методу person.inGroup("admin"). 
 	 * 
 	 */ 
-	public void addEstablishmentRestaurant(Administrator administrator);
+	public void addEstablishmentRestaurant();
 	public void addEstablishmentNightClub(Administrator administrator);
 	public void addEstablishmentCinema(Administrator administrator);
 	

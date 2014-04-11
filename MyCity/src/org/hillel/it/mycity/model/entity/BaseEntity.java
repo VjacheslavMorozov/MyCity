@@ -10,6 +10,10 @@ public abstract class BaseEntity {
 	private Person modifiedBy;
 	private static int idCount = 1;
 	
+	public BaseEntity(){
+		
+	}
+	
 	public BaseEntity(Person person){
 		setId();
 		setCreateDate(new Date());

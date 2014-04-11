@@ -11,9 +11,18 @@ public abstract class Person extends BaseEntity{
 	private String password;
 	private Set<String> loginSet = new HashSet<>();
 	private Set<String> emailSet = new HashSet<>();
+	private Group group;
 	
+	public Person() {
+	}
+
 	public Person(Administrator administrator) {
 		super(administrator);
+	}
+	
+	public boolean inGroup(Group group){
+		return group == this.group;
+		
 	}
 
 	public void loginTest(String login) {
@@ -59,6 +68,18 @@ public abstract class Person extends BaseEntity{
 	
 	public String getLogin() {
 		return login;
+	}
+	
+	/**
+	 * Method that allows a person to log in. 
+	 * @param username
+	 * @param password
+	 * @return Object of Person type
+	 */
+	public static Person logIn(String username, String password){
+		// Смотрит есть ли пользователь с такими именем пользователя и паролем в БД. 
+		// В случае успешного входа создаем объект на этого пользователя.
+		return PersonFactory.getPerson(Group.User);
 	}
 	
 	public void setEMail(String eMail) {

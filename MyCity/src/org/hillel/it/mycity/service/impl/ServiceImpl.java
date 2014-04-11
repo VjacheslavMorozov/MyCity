@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Cinema;
+import org.hillel.it.mycity.model.entity.Group;
 import org.hillel.it.mycity.model.entity.Moderator;
 import org.hillel.it.mycity.model.entity.NightClub;
+import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.model.entity.Restaurant;
 import org.hillel.it.mycity.model.entity.User;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
@@ -13,18 +15,21 @@ import org.hillel.it.mycity.service.ServiceMyCity;
 
 public class ServiceImpl implements ServiceMyCity {
 	private EstablishmentRepository establishmentRepository;
+	private Person loggedPerson; 
 	
-	public ServiceImpl(EstablishmentRepository establishmentRepository) {
+	public ServiceImpl(EstablishmentRepository establishmentRepository, Person loggedPerson) {
 		this.establishmentRepository = establishmentRepository;
+		this.loggedPerson = loggedPerson;
 	}
 	
+	// CREATE Establishment
 	@Override
-	public void addEstablishmentRestaurant(Administrator administrator) {
-		if(administrator.getLogin() == null) {
+	public void addEstablishmentRestaurant() {
+		if( this.loggedPerson.inGroup(Group.Administrator) == false ) {
 			System.out.println("Administrator has no login");
 			return;
 		}
-		Restaurant restaurant = new Restaurant(administrator);
+		Restaurant restaurant = new Restaurant((Administrator)loggedPerson);
 		establishmentRepository.addEstablishmentRestaurant(restaurant);
 	}
 
@@ -48,10 +53,22 @@ public class ServiceImpl implements ServiceMyCity {
 		establishmentRepository.addEstablishmentCinema(cinema);
 	}
 	
+	// DELETE Establishment
 	public void deleteEstablishmentByType(String establishmentType) {
 		establishmentRepository.deleteEstablishmentByType(establishmentType);
 	}
-	
+
+	@Override
+	public void deleteAllEstablishments() {
+		establishmentRepository.deleteAllEstablishments();
+	}
+
+	@Override
+	public void deleteEstablishmentById(int id) {
+		establishmentRepository.deleteEstablishmentById(id);
+	}
+
+	// READ Establishment
 	@Override
 	public List<Cinema> getAllCinemaEstablishment(){
 		if(establishmentRepository.getAllCinemaEstablishment() == null) {
@@ -78,17 +95,7 @@ public class ServiceImpl implements ServiceMyCity {
 		}
 		return establishmentRepository.getAllRestaurantEstablishment();
 	}
-
-	@Override
-	public void deleteAllEstablishments() {
-		establishmentRepository.deleteAllEstablishments();
-	}
-
-	@Override
-	public void deleteEstablishmentById(int id) {
-		establishmentRepository.deleteEstablishmentById(id);
-	}
-
+	
 	@Override
 	public Cinema getCinemaEstablishmentById(int id) {
 		return establishmentRepository.getEstablishmentById(id, Cinema.class);

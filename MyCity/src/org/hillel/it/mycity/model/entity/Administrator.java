@@ -4,6 +4,9 @@ import java.util.Date;
  
 public class Administrator extends Person{
 	
+	public Administrator() {
+		
+	}
 	public Administrator(Administrator administrator) {
 		super(administrator);
 	}
