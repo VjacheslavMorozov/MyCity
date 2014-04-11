@@ -39,6 +39,7 @@ public class ServiceImplTest {
 		username = "EnteredUsername";
 		password = "EnteredPassword";
 		loggedPerson = Person.logIn(username, password);
+		loggedPerson.setGroup(Group.Administrator);
 		inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
 		inMemoryUserRepository = new InMemoryUserRepository();
 		serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, loggedPerson);
@@ -47,16 +48,21 @@ public class ServiceImplTest {
 	@Test
 	public void addEstablishmentRestaurantTest() {
 		Administrator administrator = new Administrator();
-		serviceImpl.addAdministrator(administrator);
 		serviceImpl.addEstablishmentRestaurant(administrator.addEstablishmentRestaurant());
+		serviceImpl.addAdministrator(administrator);
+		Restaurant restaurant = new Restaurant();
+		restaurant = administrator.addEstablishmentRestaurant();
+		restaurant.setAddressOfEstablishment("His address");
+		restaurant.setNameOfEstablishment("His name");
+		restaurant.setTelephoneOfEstablishment("0638678900");
+		serviceImpl.addEstablishmentRestaurant(restaurant);
+		restaurant = serviceImpl.getRestaurantEstablishmentById(1);
+		System.out.println(restaurant.getAddressOfEstablishment());
 	}
-	
-	/*@Test
+	/*
+	@Test
 	public void addEstablishmentNightClubTest() {
-		System.out.println("Add Night Club:");
-		serviceImpl.addEstablishmentNightClub(administrator);
-		administrator.setLogin("login");
-		serviceImpl.addEstablishmentNightClub(administrator);
+		
 	}
 	
 	@Test

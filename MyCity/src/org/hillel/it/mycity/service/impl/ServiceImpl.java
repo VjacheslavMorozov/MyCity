@@ -32,6 +32,10 @@ public class ServiceImpl implements ServiceMyCity {
 			System.out.println("Administrator has no login");
 			return;
 		}
+		if(restaurant.getCreatedBy().getId() == 0) {
+			System.out.println("This user cannot create object Establishment type");
+			return;
+		}
 		establishmentRepository.addEstablishmentRestaurant(restaurant);
 	}
 
