@@ -1,6 +1,8 @@
 package org.hillel.it.mycity.model.entity;
 
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public abstract class Person extends BaseEntity{
@@ -9,28 +11,15 @@ public abstract class Person extends BaseEntity{
 	private String username;
 	private String eMail;
 	private String password;
-	private Set<String> usernameSet = new HashSet<>();
-	private Set<String> emailSet = new HashSet<>();
 	private Group group;
 	
+	/**
+	 * Method that return group of class Person (Administrator, Moderator, User)
+	 * @param group It is eNum of groups
+	 * @return true if group of the person equals to group in argument otherwise return false  
+	 */
 	public boolean inGroup(Group group){
 		return group == this.group;
-	}
-
-	public void loginTest(String login) {
-		int size = usernameSet.size();
-		usernameSet.add(this.username);
-		if(size == usernameSet.size()) {
-			throw new RuntimeException("Login is ready used");
-		}
-	}
-	
-	public void emailTest(String eMail) {
-		int size = emailSet.size();
-		emailSet.add(this.username);
-		if(size == emailSet.size()) {
-			throw new RuntimeException("eMail is ready used");
-		}
 	}
 	
 	public void setFirstName(String firstName) {
@@ -50,11 +39,6 @@ public abstract class Person extends BaseEntity{
 	}
 	
 	public void setLogin(String username) {
-		try {
-			loginTest(username);
-		} catch (RuntimeException e) {
-			System.out.println("Try another login" + e);
-		}
 		this.username = username;
 	}
 	
@@ -76,11 +60,6 @@ public abstract class Person extends BaseEntity{
 	}
 	
 	public void setEMail(String eMail) {
-		try {
-			emailTest(eMail);
-		} catch (RuntimeException e) {
-			System.out.println("Try another email" + e);
-		}
 		this.eMail = eMail;
 	}
 	
@@ -99,4 +78,60 @@ public abstract class Person extends BaseEntity{
 	public void setGroup(Group group) {
 		this.group = group;
 	}
+	
+	/**
+	 * This method create Comment.
+	 * @param userComment String type comment that received from user
+	 * @return null if User that create comment is do not exist in Repository or return Comment.
+	 */
+	public Comment addComment(String userComment) {
+		try {
+			checkId(getId());
+		} catch (RuntimeException e) {
+			System.out.println("This user is does not exist");
+		}
+		Comment comment = new Comment();
+		comment.setCreatedBy(this);
+		comment.setComment(userComment);
+		return comment;
+	}
+	
+	/**
+	 * 
+	 * @param comment
+	 * @param userComment
+	 * @return
+	 */
+	public void changeComment(Comment comment, String userComment) {
+		if(comment.getCreatedBy() != this && !inGroup(Group.Administrator)) {
+			System.out.println("This user cannot change this comment");
+			return;
+		}
+		comment.setComment(userComment);
+		comment.setModifiedBy(this);
+		comment.setModifiedDate(new Date());
+	}
+	
+	public Assessment addAssessment(int userAssessment) {
+		try {
+			checkId(getId());
+		} catch (RuntimeException e) {
+			System.out.println("This user is does not exist");
+		}
+		Assessment assessment = new Assessment();
+		assessment.setCreatedBy(this);
+		assessment.setAssessment(userAssessment);
+		return assessment;
+	}
+	
+	public void changeAssessment(Assessment assessment, int userAssessment) {
+		if(assessment.getCreatedBy() != this) {
+			System.out.println("This user can not change this comment");
+			return;
+		}
+		assessment.setAssessment(userAssessment);
+		assessment.setModifiedBy(this);
+		assessment.setModifiedDate(new Date());
+	}
+	
 }
