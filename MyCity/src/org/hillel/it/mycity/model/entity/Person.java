@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hillel.it.mycity.helper.CryptoHelper;
+
 public abstract class Person extends BaseEntity{
 	private String firstName;
 	private String lastName;
@@ -68,7 +70,7 @@ public abstract class Person extends BaseEntity{
 	}
 	
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = CryptoHelper.shaOne(password);
 	}
 	
 	public String getPassword() {
