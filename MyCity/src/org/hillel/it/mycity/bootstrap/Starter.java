@@ -39,5 +39,9 @@ public class Starter {
 		
 		System.out.println(serviceImpl.getCinemaEstablishmentById(1).getCreatedBy().getFirstName());
 		
+		administrator.deleteEstablishmentById(1, serviceImpl);
+		
+		System.out.println(serviceImpl.getCinemaEstablishmentById(1).getCreatedBy().getFirstName());
+		
 	}
 }

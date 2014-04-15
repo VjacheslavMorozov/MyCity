@@ -16,6 +16,7 @@ public class Comment extends BaseEntity{
 	private int commentAssessment;
 	private String comment;
 	private boolean needToModerate;
+	private Establishment establishment;
 	
 	public Comment() {
 		commentAssessment = 0;
@@ -30,11 +31,12 @@ public class Comment extends BaseEntity{
 		return comment;
 	}
 	
-	public void setCommentPositiveAssessment(Person user) {
+	//наверно нужно добавить проверка, на количество вызовов метода одним пользователем. 
+	public void setCommentPositiveAssessment() {
 		++commentAssessment;
 	}
 	
-	public void setCommentNegativeAssessment(Person user) {
+	public void setCommentNegativeAssessment() {
 		--commentAssessment;
 	}
 	
@@ -43,14 +45,36 @@ public class Comment extends BaseEntity{
 	}
 	
 	public void setCommentToModerate(Person user) {
+		if(!user.inGroup(Group.Moderator) && !user.inGroup(Group.Administrator)) {
+			System.out.println("This user can`t mark comment to moderate");
+			return;
+		}
 		needToModerate = true;
-		
 	}
 	
 	public boolean checkCommentForModeration() {
-		if(needToModerate) {
-			return true;
+		return needToModerate;
+	}
+	
+	/**
+	 * This method add Establishment object to the Comment object. Check is this comment establishment 
+	 * is not empty.
+	 * @param establishment
+	 */
+	public void setEstablishment(Establishment establishment) {
+		if(checkDataNotNull(this.establishment)) {
+			System.out.println("You can not add additional Establishment to this Comment");
+			return;
 		}
-		return false;
+		this.establishment = establishment;
+	}
+	
+	/**
+	 * Method that return true if <code>Establishment</code> of this Comment object is not equals
+	 * to Establishment object that get by argument.
+	 * @param establishment
+	 */
+	public boolean checkEstablishment(Establishment establishment) {
+		return this.establishment.equals(establishment);
 	}
 }

@@ -1,6 +1,6 @@
 package org.hillel.it.mycity.model.entity;
 
-import java.util.Date;
+import org.hillel.it.mycity.service.impl.ServiceImpl;
  
 public class Administrator extends Person{
 	
@@ -22,15 +22,16 @@ public class Administrator extends Person{
 		return nightClub;
 	}
 	
-	public void deleteEstablishmentById(int id) {
+	//не уверен с передаваемыми аргумента, надо у Сергея узнать.
+	public void deleteEstablishmentById(int id, ServiceImpl serviceImpl) {
+		serviceImpl.deleteEstablishmentById(id);
+	}
+	
+	public void deleteCommentById(int id, ServiceImpl serviceImpl) {
 		//TODO
 	}
 	
-	public void deleteComment() {
-		//TODO
-	}
-	
-	public void editComment() {
+	public void editComment(String editComment, int id, ServiceImpl serviceImpl) {
 		//TODO
 	}
 	

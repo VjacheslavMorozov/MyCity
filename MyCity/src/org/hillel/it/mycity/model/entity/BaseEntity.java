@@ -8,13 +8,16 @@ public abstract class BaseEntity {
 	private Date modifiedDate;
 	private Person createdBy;
 	private Person modifiedBy;
-	private int maxId;
 
 	public BaseEntity(){
 		setCreateDate(new Date());	
 	}
 	
 	private void setCreateDate(Date createdDate){
+		if(checkDataNotNull(this.createdDate)) {
+			System.out.println("Created Date is alredy exist. You can not add another one.");
+			return;
+		}
 		this.createdDate = createdDate;
 	}
 	
@@ -31,6 +34,9 @@ public abstract class BaseEntity {
 	}
 	
 	public void setCreatedBy(Person createdBy){
+		if(checkDataNotNull(this.createdBy)) {
+			throw new RuntimeException("Created by user is alredy exist. You can not add another one.");
+		}
 		this.createdBy = createdBy;
 	}
 	
@@ -39,6 +45,9 @@ public abstract class BaseEntity {
 	}
 	
 	public void setModifiedBy(Person modifiedBy){
+		if(modifiedBy != createdBy && !modifiedBy.inGroup(Group.Administrator)) {
+			throw new RuntimeException("This person can not modify information");
+		}
 		this.modifiedBy = modifiedBy;
 	}
 	
@@ -47,6 +56,9 @@ public abstract class BaseEntity {
 	}
 	
 	public void setId(int id) {
+		if(this.id > 0) {
+			throw new RuntimeException("This Entity is alredy has an Id");
+		}
 		this.id = id;
 	}
 	
@@ -54,13 +66,17 @@ public abstract class BaseEntity {
 		return id;
 	}
 	
-	public void setMaxId(int maxId) {
-		this.maxId = maxId;
-	}
-	
+	//TODO нужно добавить проверка на maxId из нужного Repository
 	public void checkId(int id) {
-		if(id < 1 || maxId < id) {
+		if(id < 1) {
 			throw new RuntimeException("Incorrect id");
 		}
+	}
+	
+	public <T>boolean checkDataNotNull(T t){
+		if(t != null) {
+			return true;
+		}
+		return false;
 	}
 }
