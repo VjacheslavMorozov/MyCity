@@ -62,6 +62,7 @@ public interface ServiceMyCity {
 
 	// UPDATE Person
 	// @timur need to add update Person methods
+	// @Artem а зачем, если можно вызвать метод get<Person> и уже у этого Объекта изменить данные.
 
 	// DELETE Person
 	public void deleteAllUsers();

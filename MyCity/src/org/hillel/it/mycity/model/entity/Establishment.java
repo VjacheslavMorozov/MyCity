@@ -53,112 +53,33 @@ public abstract class Establishment extends BaseEntity{
 	public String getDescriptionOfEstablishment() {
 		return descriptionOfEstablishment;
 	}
+	
 	/**
-	 * 
+	 * Method that set comment for Establishment. checkEstablishment - check if this comment is belongs 
+	 * to this Establishment (if it was changed). checkId - check if this comment is created in Repository
+	 * or have correct id;
 	 * @param comment
-	 * @deprecated
 	 */
-	public void setCommentForEstablishment(String comment) {
-		Comment establishmentComment = new Comment();
+	public void setComment(Comment comment) {
 		try {
-			establishmentComment.setComment(comment);
+			comment.checkEstablishment(this);
+			comment.checkId(comment.getId());
 		} catch (RuntimeException e) {
-			e.fillInStackTrace();
+			System.out.println("Problem with comment: " + e);
 		}
-		establishmentComment.setComment(comment);
-		commentsOfEstablishment.add(establishmentComment);
+		comment.setEstablishment(this);
+		commentsOfEstablishment.add(comment);
 	}
 	
-	public void changeCommentForEstbalishment(String commentNew, int id) {
-		checkId(id);
-		for(Comment comment: commentsOfEstablishment) {
-			if(comment.getId() == id) {
-				try {
-					comment.setComment(commentNew);
-				} catch (RuntimeException e) {
-					e.fillInStackTrace();
-				}
-				comment.setComment(commentNew);
-				return;
-			}
-		}
-	}
-	
-	public String getCommentById(int id) {
-		checkId(id);
-		for(Comment comment: commentsOfEstablishment) {
-			if(comment.getId() == id) {
-				return comment.getComment();
-			}
-		}
-		
-		return null;
-	}
-	
-	public void setPositiveAssessmentToComment(int id, Person user) {
-		checkId(id);
-		for(Comment comment: commentsOfEstablishment) {
-			if(comment.getId() == id) {
-				try {
-					comment.setCommentPositiveAssessment(user);
-				} catch (RuntimeException e) {
-					e.fillInStackTrace();
-				}
-				comment.setCommentPositiveAssessment(user);
-				return;
-			}
-		}
-	}
-	
-	public void setNegativeAssessmentToComment(int id, Person user) {
-		checkId(id);
-		for(Comment comment: commentsOfEstablishment) {
-			if(comment.getId() == id) {
-				try {
-					comment.setCommentNegativeAssessment(user);
-				} catch (RuntimeException e) {
-					e.fillInStackTrace();
-				}
-				comment.setCommentNegativeAssessment(user);
-				return;
-			}
-		}
-	}
-	
-	public void setAssessmentToEstablishment(int assessment) {
-		Assessment establishmentAssessment = new Assessment();
+	public void setAssessment(Assessment assessment) {
 		try {
-			establishmentAssessment.setAssessment(assessment);
-		} catch (Exception e) {
-			e.fillInStackTrace();
+			assessment.checkEstablishment(this);
+			assessment.checkId(assessment.getId());
+		} catch (RuntimeException e) {
+			System.out.println("Problem with comment: " + e);
 		}
-		establishmentAssessment.setAssessment(assessment);
-		assessmentsOfEstablishment.add(establishmentAssessment);
-	}
-	
-	public int getAssessmentById(int id) {
-		checkId(id);
-		for(Assessment assessment: assessmentsOfEstablishment) {
-			if(assessment.getId() == id) {
-				return assessment.getAssessment();
-			}
-		}
-		return 0;
-	}
-	
-	public void changeAssessmentForEstablishment(int assessmentNew, int id) {
-		checkId(id);
-		for(Assessment assessment: assessmentsOfEstablishment) {
-			if(assessment.getId() == id) {
-				try {
-					assessment.setAssessment(assessmentNew);
-				} catch (Exception e) {
-					e.fillInStackTrace();
-				}
-				assessment.setAssessment(assessmentNew);
-				return;
-			}
-		}
+		assessment.setEstablishment(this);
+		assessmentsOfEstablishment.add(assessment);
 	}
 	
 	/**

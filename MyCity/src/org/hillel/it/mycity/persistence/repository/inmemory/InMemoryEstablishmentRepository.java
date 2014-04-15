@@ -26,27 +26,20 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	
 	@Override
 	public void addEstablishmentCinema(Cinema cinema) {
-		cinema.setId(maxId);
-		cinema.setMaxId(maxId+1);
+		cinema.setId(maxId++);
 		cinemas.add(cinema);
-		maxId++;
-		
 	}
 
 	@Override
 	public void addEstablishmentNightClub(NightClub nightClub) {
-		nightClub.setId(maxId);
-		nightClub.setMaxId(maxId+1);
+		nightClub.setId(maxId++);
 		nightClubs.add(nightClub);
-		maxId++;
 	}
 
 	@Override
 	public void addEstablishmentRestaurant(Restaurant restaurant) {
-		restaurant.setId(maxId);
-		restaurant.setMaxId(maxId+1);
+		restaurant.setId(maxId++);
 		restaurants.add(restaurant);
-		maxId++;
 	}
 	
 	public <T> T getEstablishmentById(int id, Class<T> type) {
