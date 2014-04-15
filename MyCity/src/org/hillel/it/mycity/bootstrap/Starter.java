@@ -1,5 +1,8 @@
 package org.hillel.it.mycity.bootstrap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Cinema;
 import org.hillel.it.mycity.model.entity.Group;
@@ -15,6 +18,16 @@ public class Starter {
 	public static void main(String[] args) {
 		EstablishmentRepository inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
 		UserRepository inMemoryUserRepository = new InMemoryUserRepository();
+
+		// example input data
+		List<Person> admins = new ArrayList<>();
+		admins.add(new Administrator("Vlasov","Artem","username","password"));
+		admins.add(new Administrator("Aminev","Timur","tim8917","mypass"));
+		for(Person admin : admins){
+			System.out.println(admin);			
+		}
+		
+
 
 		// @timur Вход в систему
 		

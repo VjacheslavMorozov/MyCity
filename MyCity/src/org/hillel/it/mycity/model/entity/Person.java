@@ -8,12 +8,12 @@ import java.util.Set;
 import org.hillel.it.mycity.helper.CryptoHelper;
 
 public abstract class Person extends BaseEntity{
-	private String firstName;
-	private String lastName;
-	private String username;
-	private String eMail;
-	private String password;
-	private Group group;
+	protected String firstName;
+	protected String lastName;
+	protected String username;
+	protected String eMail;
+	protected String password;
+	protected Group group;
 	
 	/**
 	 * Method that return group of class Person (Administrator, Moderator, User)

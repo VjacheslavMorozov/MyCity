@@ -4,6 +4,18 @@ import org.hillel.it.mycity.service.impl.ServiceImpl;
  
 public class Administrator extends Person{
 	
+	
+	
+	public Administrator() {
+	}
+
+	public Administrator(String lastName, String firstName, String username, String password){
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.username = username;
+		this.setPassword(password);		
+	}
+	
 	public Cinema addEstablishmentCinema() {
 		Cinema cinema = new Cinema();
 		cinema.setCreatedBy(this);
@@ -38,4 +50,13 @@ public class Administrator extends Person{
 	public void editEstablishmentInformation() {
 		//TODO
 	}
+
+	@Override
+	public String toString() {
+		return "Administrator [firstName=" + firstName + ", lastName="
+				+ lastName + ", username=" + username + ", password="
+				+ password + "]";
+	}
+	
+	
 }
