@@ -17,6 +17,7 @@ import org.hillel.it.mycity.persistence.repository.UserRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryCommentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryEstablishmentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryUserRepository;
+import org.hillel.it.mycity.persistence.repository.inmemory.SerializeEstablishmentRepository;
 import org.hillel.it.mycity.service.impl.ServiceImpl;
 
 public class Starter {
@@ -54,6 +55,15 @@ public class Starter {
 		restaurant = serviceImpl.getRestaurantEstablishmentById(1);
 		
 		System.out.println(restaurant.getAddressOfEstablishment() + " " + restaurant.getNameOfEstablishment() + " " + restaurant.getId());
+		
+		EstablishmentRepository serializeEstablishmentRepository = new SerializeEstablishmentRepository();
+		
+		Cinema cinema = new Cinema();
+		cinema.setAddressOfEstablishment("Street");
+		cinema.setCinemaTechnology("3D");
+		cinema.setNameOfEstablishment("Rodina");
+		
+		serializeEstablishmentRepository.addEstablishmentCinema(cinema);
 		
 	}
 }

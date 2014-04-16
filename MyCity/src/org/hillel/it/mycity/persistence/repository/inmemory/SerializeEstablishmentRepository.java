@@ -32,10 +32,10 @@ public class SerializeEstablishmentRepository implements EstablishmentRepository
 		nightClubs = new ArrayList<>();
 		cinemas = new ArrayList<>();
 		maxId = 1;
-		serializeRestaurantsFile = new File("/Users/artemvlasov/Google Диск/serializeRestaurants.bin");
-		serializeNightClubsFile = new File("/Users/artemvlasov/Google Диск/serializeNightClubs.bin");
-		serializeCinemasFile = new File("/Users/artemvlasov/Google Диск/serializeCinemas.bin");
-		serializeMaxIdFile = new File("/Users/artemvlasov/Google Диск/maxId.bin");
+		serializeRestaurantsFile = new File("/Users/artemvlasov/git/MyCity/MyCity/SerializeData/serializeRestaurants.bin");
+		serializeNightClubsFile = new File("/Users/artemvlasov/git/MyCity/MyCity/SerializeData/serializeNightClubs.bin");
+		serializeCinemasFile = new File("/Users/artemvlasov/git/MyCity/MyCity/SerializeData/serializeCinemas.bin");
+		serializeMaxIdFile = new File("/Users/artemvlasov/git/MyCity/MyCity/SerializeData/maxId.bin");
 	}
 	
 
@@ -53,7 +53,8 @@ public class SerializeEstablishmentRepository implements EstablishmentRepository
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-		
+		cinema.setId(maxId);
+		cinemas.add(cinema);
 	}
 
 	@Override
