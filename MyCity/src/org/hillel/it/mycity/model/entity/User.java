@@ -4,5 +4,7 @@ import java.util.Date;
 
 public class User extends Person{
 	
-	//можно вынести в класс Person и сделать проверку на группы и на ID
+	public User(String email, String password) {
+		super(email, password);
+	}
 }

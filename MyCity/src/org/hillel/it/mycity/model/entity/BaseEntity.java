@@ -33,7 +33,11 @@ public abstract class BaseEntity {
 		return modifiedDate;
 	}
 	
-	public void setCreatedBy(Person createdBy){
+	/**
+	 * Add createdBy person to the object. Check if this object field createdBy is no empty
+	 * @param createdBy
+	 */
+	protected void setCreatedBy(Person createdBy){
 		if(checkDataNotNull(this.createdBy)) {
 			throw new RuntimeException("Created by user is alredy exist. You can not add another one.");
 		}
@@ -51,7 +55,7 @@ public abstract class BaseEntity {
 		this.modifiedBy = modifiedBy;
 	}
 	
-	public Person getModifiedBy(){
+	protected Person getModifiedBy(){
 		return modifiedBy;
 	}
 	

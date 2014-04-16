@@ -4,16 +4,27 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.hillel.it.mycity.helper.CryptoHelper;
 
 public abstract class Person extends BaseEntity{
-	protected String firstName;
-	protected String lastName;
-	protected String username;
-	protected String eMail;
-	protected String password;
-	protected Group group;
+	private String firstName;
+	private String lastName;
+	private String username;
+	private String email;
+	private String password;
+	private Group group;
+	private boolean emailVerified; //прошел ли email проверку на подлинность
+	
+	public Person(String email, String password) {
+		setEmail(email);
+		setPassword(password);
+		emailVerified = false;
+	}
 	
 	/**
 	 * Method that return group of class Person (Administrator, Moderator, User)
@@ -39,12 +50,15 @@ public abstract class Person extends BaseEntity{
 	public String getLastName() {
 		return lastName;
 	}
-	
-	public void setLogin(String username) {
+
+	public void setUsername(String username) {
+		if(!checkUserName(username)) {
+			return;
+		}
 		this.username = username;
 	}
 	
-	public String getLogin() {
+	public String getUsername() {
 		return username;
 	}
 	
@@ -53,6 +67,7 @@ public abstract class Person extends BaseEntity{
 	 * @param username
 	 * @param password
 	 * @return Object of Person type
+	 * @deprecated
 	 */
 	public static Person logIn(String username, String password){
 		// Смотрит есть ли пользователь с такими именем пользователя и паролем в БД. 
@@ -61,18 +76,29 @@ public abstract class Person extends BaseEntity{
 		return PersonFactory.getPerson(Group.Administrator);
 	}
 	
-	public void setEMail(String eMail) {
-		this.eMail = eMail;
+	/**
+	 * Set email of this object, from email in argument if it pass the validation
+	 * (Apache Commons Validator - EmailValidator)
+	 * @param email 
+	 */
+	public void setEmail(String email) {
+		if(!EmailValidator.getInstance().isValid(email)) {
+			System.out.println("This email is invalid");
+			return;
+		}
+		this.email = email;
 	}
 	
-	public String getEMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
 	
 	public void setPassword(String password) {
 		this.password = CryptoHelper.shaOne(password);
 	}
 	
+	//может сделать проверку на получение password?
+	//то есть его может получить только Administrator или его User
 	public String getPassword() {
 		return password;
 	}
@@ -134,6 +160,32 @@ public abstract class Person extends BaseEntity{
 		assessment.setAssessment(userAssessment);
 		assessment.setModifiedBy(this);
 		assessment.setModifiedDate(new Date());
+	}
+	
+	/**
+	 * Method <code>checkUserName</code> return true if <code>userName</code> is pass all checks. False if
+	 * <code>userName</code> length less than 4 symbols or <code>userName</code> is Empty (== null)
+	 * or if <code>userName</code> starts with space symbol.
+	 * @param userName
+	 * @return
+	 */
+	private boolean checkUserName(String username) {
+		if(username.length() <= 3 || username.isEmpty()) {
+			System.out.println("Username cat not be less than 3 symbols");
+			return false;
+		}
+		Pattern pattern = Pattern.compile("^\\S\\w");
+		Matcher matcher = pattern.matcher(username);
+		if(!matcher.find()) {
+			System.out.println("Username can not contains space symbol as a first character.");
+			return false;
+		}
+		return true;
+		
+	}
+	
+	public void setEmailVarified() {
+		emailVerified = true;
 	}
 	
 }

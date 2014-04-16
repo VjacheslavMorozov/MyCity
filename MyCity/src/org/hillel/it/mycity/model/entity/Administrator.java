@@ -2,19 +2,20 @@ package org.hillel.it.mycity.model.entity;
 
 import org.hillel.it.mycity.service.impl.ServiceImpl;
  
-public class Administrator extends Person{
+public class Administrator extends Person {
 	
-	
-	
-	public Administrator() {
+	public Administrator(String email, String password) {
+		super(email, password);
 	}
-
-	public Administrator(String lastName, String firstName, String username, String password){
+	
+	//лучше делать через Setter и вынести этот конструктор в базовый класс Person. И оставить только
+	//главные поля - password и email
+	/*public Administrator(String lastName, String firstName, String username, String password){
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.username = username;
 		this.setPassword(password);		
-	}
+	}*/
 	
 	public Cinema addEstablishmentCinema() {
 		Cinema cinema = new Cinema();
@@ -53,9 +54,9 @@ public class Administrator extends Person{
 
 	@Override
 	public String toString() {
-		return "Administrator [firstName=" + firstName + ", lastName="
-				+ lastName + ", username=" + username + ", password="
-				+ password + "]";
+		return "Administrator [firstName=" + getFirstName() + ", lastName="
+				+ getLastName() + ", username=" + getUsername() + ", password="
+				+ getPassword() + "]";
 	}
 	
 	

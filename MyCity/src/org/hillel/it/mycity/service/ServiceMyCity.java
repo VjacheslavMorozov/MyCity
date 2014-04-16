@@ -1,9 +1,13 @@
 package org.hillel.it.mycity.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Cinema;
+import org.hillel.it.mycity.model.entity.Comment;
+import org.hillel.it.mycity.model.entity.Establishment;
 import org.hillel.it.mycity.model.entity.Moderator;
 import org.hillel.it.mycity.model.entity.NightClub;
 import org.hillel.it.mycity.model.entity.Person;
@@ -67,5 +71,21 @@ public interface ServiceMyCity {
 	// DELETE Person
 	public void deleteAllUsers();
 	public void deleteUserById(int id);
+	
+	//CommentRepository
+	//CREATE Comment
+	public void addComment(Comment comment);
+	
+	//READ Comment
+	public void deleteComment(int id);
+	public void deleteComments(Person user);
+	public void deleteComments(Establishment establishment);
+	public void deleteComments(Establishment establishment, Person user);
+
+	//DELETE Comment
+	public Comment getComment(int id);
+	public List<Comment> getComments(Person user);
+	public List<Comment> getComments(Establishment establishment);
+	public List<Comment> getComments(Establishment establishment, Person user);
 	
 }
