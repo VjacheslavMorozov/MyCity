@@ -1,6 +1,7 @@
 package org.hillel.it.mycity.persistence.repository.inmemory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -13,28 +14,33 @@ import org.hillel.it.mycity.persistence.repository.AssessmentRepository;
 public class InMemoryAssessmentRepository implements AssessmentRepository{
 	
 	private List<Assessment> assessments;
+	private List<Assessment> unmodifiableAssessments;
 	private int maxId;
 	
 	public InMemoryAssessmentRepository() {
 		assessments = new ArrayList<>();
+		unmodifiableAssessments = Collections.unmodifiableList(assessments);
 		maxId = 1;
 	}
 
 	@Override
 	public void addAssessment(Assessment assessment) {
-		if(assessment.getId() > 0) {
-			System.out.println("This assessment is already exist in memory");
-			return;
+		if(validAssessment(assessment)) {
+			throw new RuntimeException("This assessment is already exist in memory");
 		}
 		assessment.setId(maxId++);
 		assessments.add(Objects.requireNonNull(assessment, "This object does not cointains any information"));
 	}
+	
+	public boolean validAssessment(Assessment assessment) {
+		if(assessment.getId() > 0) {
+			return false;
+		}
+		return true;
+	}
 
 	@Override
 	public void deleteAssessment(int id) {
-		if(!checkData()) {
-			return;
-		}
 		Iterator<Assessment> iterator = assessments.iterator();
 		while (iterator.hasNext()) {
 			if(iterator.next().getId() == id) {
@@ -46,9 +52,6 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 
 	@Override
 	public void deleteAssessment(Person user) {
-		if(!checkData()) {
-			return;
-		}
 		Iterator<Assessment> iterator = assessments.iterator();
 		while (iterator.hasNext()) {
 			if(iterator.next().equals(user)) {
@@ -59,9 +62,6 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 
 	@Override
 	public void deleteAssessment(Establishment establishment) {
-		if(!checkData()) {
-			return;
-		}
 		Iterator<Assessment> iterator = assessments.iterator();
 		while (iterator.hasNext()) {
 			if(iterator.next().checkEstablishment(establishment)) {
@@ -72,9 +72,6 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 
 	@Override
 	public Assessment getAssessment(int id) {
-		if(!checkData()) {
-			return null;
-		}
 		for(Assessment assessment: assessments){
 			if(assessment.getId() == id) {
 				return assessment;
@@ -85,45 +82,28 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 
 	@Override
 	public List<Assessment> getAssessments(Person user) {
-		if(!checkData()) {
-			return null;
-		}
-		List<Assessment> newAssessments = new ArrayList<>();
-		for(Assessment assessment: assessments){
+		List<Assessment> assessments = new ArrayList<>();
+		for(Assessment assessment: unmodifiableAssessments){
 			if(assessment.getCreatedBy().equals(user)) {
-				newAssessments.add(assessment);
+				assessments.add(assessment);
 			}
-		}
-		return newAssessments;
-	}
-
-	@Override
-	public List<Assessment> getAssessments(Establishment establishment) {
-		if(!checkData()) {
-			return null;
-		}
-		List<Assessment> newAssessments = new ArrayList<>();
-		for(Assessment assessment: assessments){
-			if(assessment.checkEstablishment(establishment)) {
-				newAssessments.add(assessment);
-			}
-		}
-		return newAssessments;
-	}
-
-	@Override
-	public List<Assessment> getAssessments() {
-		if(!checkData()) {
-			return null;
 		}
 		return assessments;
 	}
 
-	public boolean checkData() {
-		if(assessments.isEmpty()) {
-			System.out.println("There is no data to delete");
-			return false;
+	@Override
+	public List<Assessment> getAssessments(Establishment establishment) {
+		List<Assessment> assessments = new ArrayList<>();
+		for(Assessment assessment: unmodifiableAssessments){
+			if(assessment.checkEstablishment(establishment)) {
+				assessments.add(assessment);
+			}
 		}
-		return true;
+		return assessments;
+	}
+
+	@Override
+	public List<Assessment> getAssessments() {
+		return unmodifiableAssessments;
 	}
 }

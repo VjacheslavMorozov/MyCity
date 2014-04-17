@@ -11,12 +11,16 @@ public interface EstablishmentRepository {
 	public void addEstablishmentCinema(Cinema cinema);
 	public void addEstablishmentNightClub(NightClub nightClub);
 	public void addEstablishmentRestaurant(Restaurant restaurant);
+	public Cinema getCinema(int id);
+	public Restaurant getRestaurant(int id);
+	public NightClub getNightClub(int id);
 	public List<Cinema> getAllCinemaEstablishment();
 	public List<NightClub> getAllNightClubEstablishment();
 	public List<Restaurant> getAllRestaurantEstablishment();
-	public void deleteEstablishmentByType(String establishmentType);
+	public void deleteCinemas();
+	public void deleteNightClubs();
+	public void deleteRestaurants();
 	public void deleteAllEstablishments();
-	public void deleteEstablishmentById(int id);
-	public <T> T getEstablishmentById(int id, Class<T> type);
+	public void deleteEstablishment(int id);
 	
 }
