@@ -3,9 +3,11 @@ package org.hillel.it.mycity.persistence.repository.inmemory;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.hillel.it.mycity.model.entity.Comment;
 import org.hillel.it.mycity.model.entity.Establishment;
+import org.hillel.it.mycity.model.entity.Group;
 import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.persistence.repository.CommentRepository;
 
@@ -23,8 +25,12 @@ public class InMemoryCommentRepository implements CommentRepository{
 
 	@Override
 	public void addComment(Comment comment) {
+		if(comment.getId() > 0) {
+			System.out.println("This assessment is already exist in memory");
+			return;
+		}
 		comment.setId(maxId++);
-		comments.add(comment);
+		comments.add(Objects.requireNonNull(comment, "This object does not cointains any information"));
 	}
 
 	@Override
@@ -34,9 +40,9 @@ public class InMemoryCommentRepository implements CommentRepository{
 		}
 		Iterator<Comment> iterator = comments.iterator();
 		while (iterator.hasNext()) {
-			Comment comment = (Comment) iterator.next();
-			if(comment.getId() == id) {
+			if(iterator.next().getId() == id) {
 				iterator.remove();
+				return;
 			}
 		}
 	}
@@ -98,10 +104,10 @@ public class InMemoryCommentRepository implements CommentRepository{
 
 	@Override
 	public List<Comment> getComments(Person user) {
-		List<Comment> commentsGet = new ArrayList<>(); 
 		if(checkArrayIsEmpty()) {
 			return null;
 		}
+		List<Comment> commentsGet = new ArrayList<>(); 
 		for(Comment comment: comments) {
 			if(comment.getCreatedBy().equals(user)) {
 				commentsGet.add(comment);
@@ -112,10 +118,10 @@ public class InMemoryCommentRepository implements CommentRepository{
 
 	@Override
 	public List<Comment> getComments(Establishment establishment) {
-		List<Comment> commentsGet = new ArrayList<>(); 
 		if(checkArrayIsEmpty()) {
 			return null;
 		}
+		List<Comment> commentsGet = new ArrayList<>(); 
 		for(Comment comment: comments) {
 			if(comment.checkEstablishment(establishment)) {
 				commentsGet.add(comment);
@@ -126,10 +132,10 @@ public class InMemoryCommentRepository implements CommentRepository{
 
 	@Override
 	public List<Comment> getComments(Establishment establishment, Person user) {
-		List<Comment> commentsGet = new ArrayList<>(); 
 		if(checkArrayIsEmpty()) {
 			return null;
 		}
+		List<Comment> commentsGet = new ArrayList<>(); 
 		for(Comment comment: comments) {
 			if(comment.checkEstablishment(establishment) && comment.getCreatedBy().equals(user)) {
 				commentsGet.add(comment);
@@ -144,5 +150,13 @@ public class InMemoryCommentRepository implements CommentRepository{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Comment> getComments() {
+		if(!checkArrayIsEmpty()) {
+			return null;
+		}
+		return comments;
 	}
 }

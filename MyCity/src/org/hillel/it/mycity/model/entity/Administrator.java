@@ -35,21 +35,16 @@ public class Administrator extends Person {
 		return nightClub;
 	}
 	
-	//не уверен с передаваемыми аргумента, надо у Сергея узнать.
 	public void deleteEstablishmentById(int id, ServiceImpl serviceImpl) {
 		serviceImpl.deleteEstablishmentById(id);
 	}
 	
 	public void deleteCommentById(int id, ServiceImpl serviceImpl) {
-		//TODO
+		//TODO Не уверен в получаемых аргументах, нужно узнать у Сергея
 	}
 	
 	public void editComment(String editComment, int id, ServiceImpl serviceImpl) {
-		//TODO
-	}
-	
-	public void editEstablishmentInformation() {
-		//TODO
+		//TODO Надо понять, как правильно это сделать!
 	}
 
 	@Override

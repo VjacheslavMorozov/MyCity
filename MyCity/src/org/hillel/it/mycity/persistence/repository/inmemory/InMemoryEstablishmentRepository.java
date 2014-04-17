@@ -26,20 +26,32 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	
 	@Override
 	public void addEstablishmentCinema(Cinema cinema) {
+		if(cinema.getId() > 0) {
+			System.out.println("This assessment is already exist in memory");
+			return;
+		}
 		cinema.setId(maxId++);
-		cinemas.add(cinema);
+		cinemas.add(Objects.requireNonNull(cinema, "This object does not cointains any information"));
 	}
 
 	@Override
 	public void addEstablishmentNightClub(NightClub nightClub) {
+		if(nightClub.getId() > 0) {
+			System.out.println("This assessment is already exist in memory");
+			return;
+		}
 		nightClub.setId(maxId++);
-		nightClubs.add(nightClub);
+		nightClubs.add(Objects.requireNonNull(nightClub, "This object does not cointains any information"));
 	}
 
 	@Override
 	public void addEstablishmentRestaurant(Restaurant restaurant) {
+		if(restaurant.getId() > 0) {
+			System.out.println("This assessment is already exist in memory");
+			return;
+		}
 		restaurant.setId(maxId++);
-		restaurants.add(restaurant);
+		restaurants.add(Objects.requireNonNull(restaurant, "This object does not cointains any information"));
 	}
 	
 	public <T> T getEstablishmentById(int id, Class<T> type) {

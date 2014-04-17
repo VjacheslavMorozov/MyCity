@@ -18,7 +18,10 @@ public abstract class Person extends BaseEntity{
 	private String email;
 	private String password;
 	private Group group;
-	private boolean emailVerified; //прошел ли email проверку на подлинность
+	private boolean emailVerified; //прошел ли email проверку на подлинность, можно использовать
+	//при вызове методов добавления и удаление файлов.
+	//private boolean deleted - есть пользователь удалил аккаунт, сообщения остаются, если их не удаляют
+	//в ручную, но удаляются оценки.
 	
 	public Person(String email, String password) {
 		setEmail(email);

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Administrator;
+import org.hillel.it.mycity.model.entity.Assessment;
 import org.hillel.it.mycity.model.entity.Cinema;
 import org.hillel.it.mycity.model.entity.Comment;
 import org.hillel.it.mycity.model.entity.Establishment;
@@ -76,16 +77,31 @@ public interface ServiceMyCity {
 	//CREATE Comment
 	public void addComment(Comment comment);
 	
-	//READ Comment
+	//DELETE Comment
 	public void deleteComment(int id);
 	public void deleteComments(Person user);
 	public void deleteComments(Establishment establishment);
 	public void deleteComments(Establishment establishment, Person user);
 
-	//DELETE Comment
+	//READ Comment
 	public Comment getComment(int id);
 	public List<Comment> getComments(Person user);
 	public List<Comment> getComments(Establishment establishment);
 	public List<Comment> getComments(Establishment establishment, Person user);
+	public List<Comment> getComments();
+
+	//AssessmentRepository
+	//CREATE Assessment
+	public void addAssessment(Assessment assessment);
 	
+	//DELETE Assessment
+	public void deleteAssessment(int id);
+	public void deleteAssessment(Person user);
+	public void deleteAssessment(Establishment establishment);
+	
+	//READ Assessment
+	public Assessment getAssessment(int id);
+	public List<Assessment> getAssessments(Person user);
+	public List<Assessment> getAssessments(Establishment establishment);
+	public List<Assessment> getAssessments();
 }

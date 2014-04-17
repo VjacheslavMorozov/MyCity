@@ -16,4 +16,5 @@ public interface CommentRepository {
 	public List<Comment> getComments(Person user);
 	public List<Comment> getComments(Establishment establishment);
 	public List<Comment> getComments(Establishment establishment, Person user);
+	public List<Comment> getComments();
 }

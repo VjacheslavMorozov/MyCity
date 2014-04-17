@@ -23,9 +23,7 @@ public class Assessment extends BaseEntity{
 		this.establishment = establishment;
 	}
 	
-	public void checkEstablishment(Establishment establishment) {
-		if(!this.establishment.equals(establishment) ) {
-			throw new RuntimeException("Incorrect Establishment");
-		}
+	public boolean checkEstablishment(Establishment establishment) {
+		return this.establishment.equals(establishment);
 	}
 }

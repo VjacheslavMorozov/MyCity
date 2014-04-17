@@ -1,5 +1,6 @@
 package org.hillel.it.mycity.bootstrap;
 
+import java.io.IOException;
 import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +57,20 @@ public class Starter {
 		
 		System.out.println(restaurant.getAddressOfEstablishment() + " " + restaurant.getNameOfEstablishment() + " " + restaurant.getId());
 		
-		EstablishmentRepository serializeEstablishmentRepository = new SerializeEstablishmentRepository();
+		SerializeEstablishmentRepository serializeEstablishmentRepository = new SerializeEstablishmentRepository();
 		
 		Cinema cinema = new Cinema();
 		cinema.setAddressOfEstablishment("Street");
-		cinema.setCinemaTechnology("3D");
 		cinema.setNameOfEstablishment("Rodina");
-		
 		serializeEstablishmentRepository.addEstablishmentCinema(cinema);
 		
+		/*try {
+			serializeEstablishmentRepository.deserializeData();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(serializeEstablishmentRepository.getEstablishmentById(1, Cinema.class).getNameOfEstablishment());*/
 	}
 }

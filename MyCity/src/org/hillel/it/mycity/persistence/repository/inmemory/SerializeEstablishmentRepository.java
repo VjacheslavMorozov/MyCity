@@ -14,10 +14,11 @@ import org.hillel.it.mycity.model.entity.NightClub;
 import org.hillel.it.mycity.model.entity.Restaurant;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 
+@Deprecated
 public class SerializeEstablishmentRepository implements EstablishmentRepository{
 	private List<Restaurant> restaurants;
 	private List<NightClub> nightClubs;
-	private List<Cinema> cinemas;
+	private ArrayList<Cinema> cinemas;
 	private int maxId;
 	private File serializeRestaurantsFile;
 	private File serializeNightClubsFile;
@@ -47,14 +48,14 @@ public class SerializeEstablishmentRepository implements EstablishmentRepository
 			System.out.println(e);
 		}
 		cinemas.add(cinema);
-		SerializationUtils.serialize(serializeCinemasFile, stream);
+		cinema.setId(maxId);
+		SerializationUtils.serialize(cinemas, stream);
 		try {
 			stream.close();
 		} catch (IOException e) {
-			System.out.println(e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		cinema.setId(maxId);
-		cinemas.add(cinema);
 	}
 
 	@Override
@@ -113,12 +114,6 @@ public class SerializeEstablishmentRepository implements EstablishmentRepository
 	
 	public void deserializeData() throws IOException{
 		data = FileUtils.readFileToByteArray(serializeCinemasFile);
-		cinemas = SerializationUtils.deserialize(data);
-		data = FileUtils.readFileToByteArray(serializeNightClubsFile);
-		nightClubs = SerializationUtils.deserialize(data);
-		data = FileUtils.readFileToByteArray(serializeRestaurantsFile);
-		restaurants = SerializationUtils.deserialize(data);
-		data = FileUtils.readFileToByteArray(serializeMaxIdFile);
-		maxId = SerializationUtils.deserialize(data);
+		cinemas  = SerializationUtils.deserialize(data);
 	}
 }
