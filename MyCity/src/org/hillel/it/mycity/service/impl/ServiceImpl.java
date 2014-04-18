@@ -2,6 +2,8 @@ package org.hillel.it.mycity.service.impl;
 
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Assessment;
 import org.hillel.it.mycity.model.entity.BaseEntity;
@@ -19,6 +21,7 @@ import org.hillel.it.mycity.persistence.repository.CommentRepository;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
 import org.hillel.it.mycity.service.ServiceMyCity;
+import org.w3c.dom.ranges.RangeException;
 
 public class ServiceImpl implements ServiceMyCity {
 	private EstablishmentRepository establishmentRepository;
@@ -36,209 +39,244 @@ public class ServiceImpl implements ServiceMyCity {
 	
 	// CREATE Establishment
 	@Override
-	public void addEstablishmentRestaurant(Restaurant restaurant) {
-		if(!checkUser(restaurant)) {
-			return;
+	public void addRestaurant(Restaurant restaurant) {
+		try {
+			checkUser(restaurant);
+			establishmentRepository.addRestaurant(restaurant);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		establishmentRepository.addEstablishmentRestaurant(restaurant);
+		
 	}
 
 	@Override
-	public void addEstablishmentNightClub(NightClub nightClub) {
-		if(!checkUser(nightClub)) {
-			return;
+	public void addNightClub(NightClub nightClub) {
+		try {
+			checkUser(nightClub);
+			establishmentRepository.addNightClub(nightClub);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		establishmentRepository.addEstablishmentNightClub(nightClub);
+		
 	}
 
 	@Override
-	public void addEstablishmentCinema(Cinema cinema) {
-		if(!checkUser(cinema)) {
-			return;
+	public void addCinema(Cinema cinema) {
+		try {
+			checkUser(cinema);
+			establishmentRepository.addCinema(cinema);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		establishmentRepository.addEstablishmentCinema(cinema);
 	}
 	
 	// DELETE Establishment
-	public void deleteEstablishmentByType(String establishmentType) {
-		establishmentRepository.deleteEstablishmentByType(establishmentType);
+
+	@Override
+	public void deleteEstablishments() {
+		establishmentRepository.deleteEstablishments();
 	}
 
 	@Override
-	public void deleteAllEstablishments() {
-		establishmentRepository.deleteAllEstablishments();
-	}
-
-	@Override
-	public void deleteEstablishmentById(int id) {
-		establishmentRepository.deleteEstablishmentById(id);
+	public void deleteEstablishment(int id) {
+		try {
+			establishmentRepository.deleteEstablishment(id);
+		} catch (NullPointerException e) {
+			System.out.println(e);
+			throw new NullPointerException();
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
+		}
 	}
 
 	// READ Establishment
 	@Override
-	public List<Cinema> getAllCinemaEstablishment(){
-		if(establishmentRepository.getAllCinemaEstablishment() == null) {
-			System.out.println("List of Cinema Establishments is empty");
-			return null;
-		}
-		return establishmentRepository.getAllCinemaEstablishment();
+	public List<Cinema> getCinemas(){
+		return establishmentRepository.getCinemas();
 	}
 	
 	@Override
-	public List<NightClub> getAllNightClubEstablishment() {
-		if(establishmentRepository.getAllNightClubEstablishment() == null) {
-			System.out.println("List of Night Club Establishments is empty");
-			return null;
-		}
-		return establishmentRepository.getAllNightClubEstablishment();
+	public List<NightClub> getNightClubs() {
+		return establishmentRepository.getNightClubs();
 	}
 	
 	@Override
-	public List<Restaurant> getAllRestaurantEstablishment() {
-		if(establishmentRepository.getAllRestaurantEstablishment() == null) {
-			System.out.println("List of Restaurant Establishments is empty");
-			return null;
-		}
-		return establishmentRepository.getAllRestaurantEstablishment();
+	public List<Restaurant> getRestaurants() {
+		return establishmentRepository.getRestaurants();
 	}
 	
 	@Override
-	public Cinema getCinemaEstablishmentById(int id) {
-		return establishmentRepository.getEstablishmentById(id, Cinema.class);
+	public Cinema getCinema(int id) {
+		try {
+			return establishmentRepository.getCinema(id);
+		} catch (NullPointerException e) {
+			throw new NullPointerException("Incorrect id");
+		}
 	}
 
 	@Override
-	public NightClub getNightClubEstablishmentById(int id) {
-		return establishmentRepository.getEstablishmentById(id, NightClub.class);
+	public NightClub getNightClub(int id) {
+		try {
+			return establishmentRepository.getNightClub(id);
+		} catch (NullPointerException e) {
+			throw new NullPointerException("Incorrect id");
+		}
 	}
 
 	@Override
-	public Restaurant getRestaurantEstablishmentById(int id) {
-		return establishmentRepository.getEstablishmentById(id, Restaurant.class);
+	public Restaurant getRestaurant(int id) {
+		try {
+			return establishmentRepository.getRestaurant(id);
+		} catch (NullPointerException e) {
+			throw new NullPointerException("Incorrect id");
+		}
 	}
 	
 	// CREATE Person
 	@Override
 	public void addAdministrator(Administrator administrator) {
-		userRepository.addAdministrator(administrator);
+		try {
+			userRepository.addAdministrator(administrator);
+		} catch (RuntimeException e) {
+			throw new RuntimeException("This user is already exist");
+		}
 	}
 
 	@Override
 	public void addModerator(Moderator moderator) {
-		userRepository.addModerator(moderator);
+		try {
+			userRepository.addModerator(moderator);
+		} catch (RuntimeException e) {
+			throw new RuntimeException("This user is already exist");
+		}
+		
 	}
 
 	@Override
 	public void addUser(User user) {
-		userRepository.addRegistratedUser(user);
+		try {
+			userRepository.addUser(user);
+		} catch (RuntimeException e) {
+			throw new RuntimeException("This user is already exist");
+		}
+		
 	}
 	
 	//READ Person
 	@Override
-	public List<Administrator> getAllAdministrators() {
-		return userRepository.getAllAdministrators();
+	public List<Administrator> getAdministrators() {
+		return userRepository.getAdministrators();
 	}
 
 	@Override
-	public List<Moderator> getAllModerators() {
-		return userRepository.getAllModerators();
+	public List<Moderator> getModerators() {
+		return userRepository.getModerators();
 	}
 
 	@Override
-	public List<User> getAllUsers() {
-		return userRepository.getAllUsers();
+	public List<User> getUsers() {
+		return userRepository.getUsers();
 	}
 	
 	@Override
-	public Administrator getAdministratorById(int id) {
-		return userRepository.getUserById(id, Administrator.class);
+	public Administrator getAdministrator(int id) {
+		try {
+			return userRepository.getAdministrator(id);
+		} catch (NullPointerException e) {
+			throw new NullPointerException("List of users is empty");
+		}
 	}
 
 	@Override
-	public Moderator getModeratorById(int id) {
-		return userRepository.getUserById(id, Moderator.class);
+	public Moderator getModerator(int id) {
+		try {
+			return userRepository.getModerator(id);
+		} catch (NullPointerException e) {
+			throw new NullPointerException("List of users is empty");
+		}
 	}
 
 	@Override
-	public User getUserById(int id) {
-		return userRepository.getUserById(id, User.class);
+	public User getUser(int id) {
+		try {
+			return userRepository.getUser(id);
+		} catch (NullPointerException e) {
+			throw new NullPointerException("List of users is empty");
+		}
 	}
 
 	//DELETE Person
 	@Override
-	public void deleteAllUsers() {
-		userRepository.deleteAllUsers();
+	public void deleteUsers() {
+		userRepository.deleteUsers();
 	}
 
 	@Override
-	public void deleteUserById(int id) {
-		userRepository.deleteUserById(id);
-	}
-	
-	public void setLoggedUser(Person user) {
-		loggedUser = user;
-	}
-	
-	private <T>boolean checkUser(T t) {
-		if(this.loggedUser.inGroup(Group.Administrator) == false ) {
-			System.out.println("Administrator has no login");
-			return false;
-		}
-		else if(((BaseEntity) t).getCreatedBy().getId() == 0) {
-			System.out.println("This user cannot create object");
-			return false;
-		}
-		else if(loggedUser == null) {
-			System.out.println("Users has no login into the system. Call setLoggedUser method");
-			return false;
-		}
-		return true;
+	public void deleteUser(int id) {
+		userRepository.deleteUser(id);
 	}
 
 	//CREATE Comment
 	@Override
 	public void addComment(Comment comment) {
-		if (!checkUser(comment)) {
-			return;
+		try {
+			checkUser(comment);
+			commentRepository.addComment(comment);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		commentRepository.addComment(comment);
 	}
 
 	//DELETE Comment
 	@Override
 	public void deleteComment(int id) {
-		if(!loggedUser.inGroup(Group.Administrator) && !loggedUser.getCreatedBy().equals(getComment(id))) {
-			System.out.println("You can not delete this comment");
-			return;
+		try {
+			checkUser(getComment(id));
+			commentRepository.deleteComment(id);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		commentRepository.deleteComment(id);
 	}
 
 	@Override
 	public void deleteComments(Person user) {
-		if(!loggedUser.inGroup(Group.Administrator)) {
-			System.out.println("This user has no rights to delete this");
-			return;
+		try {
+			checkUser(loggedUser);
+			commentRepository.deleteComments(user);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		commentRepository.deleteComments(user);
+		
 	}
 
 	@Override
 	public void deleteComments(Establishment establishment) {
-		if(!loggedUser.inGroup(Group.Administrator)) {
-			System.out.println("This user has no rights to delete this");
-			return;
+		try {
+			checkUser(loggedUser);
+			commentRepository.deleteComments(establishment);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		commentRepository.deleteComments(establishment);
 	}
 
 	@Override
 	public void deleteComments(Establishment establishment, Person user) {
-		if(!loggedUser.inGroup(Group.Administrator)) {
-			System.out.println("This user has no rights to delete this");
-			return;
+		try {
+			checkUser(loggedUser);
+			commentRepository.deleteComments(establishment,user);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		commentRepository.deleteComments(establishment,user);
+		
 	}
 
 	//READ Comment
@@ -270,58 +308,109 @@ public class ServiceImpl implements ServiceMyCity {
 	//CREATE Assessment
 	@Override
 	public void addAssessment(Assessment assessment) {
-		if (!checkUser(assessment)) {
-			return;
+		try {
+			checkUser(assessment);
+			assessmentRepository.addAssessment(assessment);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		assessmentRepository.addAssessment(assessment);
 	}
 
 	//DELETE Assessment
 	@Override
 	public void deleteAssessment(int id) {
-		if(!loggedUser.getCreatedBy().equals(assessmentRepository.getAssessment(id))) {
-			System.out.println("This user can not delete this object");
-			return;
+		try {
+			checkUser(loggedUser);
+			assessmentRepository.deleteAssessment(id);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		assessmentRepository.deleteAssessment(id);
 	}
 
 	@Override
 	public void deleteAssessment(Person user) {
-		if(!loggedUser.inGroup(Group.Administrator)) {
-			System.out.println("This user has no rights to delete this");
-			return;
+		try {
+			checkUser(loggedUser);
+			assessmentRepository.deleteAssessment(user);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		assessmentRepository.deleteAssessment(user);
 	}
 
 	@Override
 	public void deleteAssessment(Establishment establishment) {
-		if(!loggedUser.inGroup(Group.Administrator)) {
-			System.out.println("This user has no rights to delete this");
-			return;
+		try {
+			checkUser(loggedUser);
+			assessmentRepository.deleteAssessment(establishment);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
-		assessmentRepository.deleteAssessment(establishment);
+		
 	}
 
 	//READ Assessment
 	@Override
 	public Assessment getAssessment(int id) {
-		return assessmentRepository.getAssessment(id);
+		try {
+			checkUser(loggedUser);
+			return assessmentRepository.getAssessment(id);
+		} catch (NullPointerException e){
+			System.out.println(e);
+			throw new NullPointerException();
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
+		}
 	}
 
 	@Override
 	public List<Assessment> getAssessments(Person user) {
-		return assessmentRepository.getAssessments(user);
+		try {
+			checkUser(loggedUser);
+			return assessmentRepository.getAssessments(user);
+		} catch (NullPointerException e){
+			System.out.println(e);
+			throw new NullPointerException();
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
+		}
 	}
 
 	@Override
 	public List<Assessment> getAssessments(Establishment establishment) {
-		return assessmentRepository.getAssessments(establishment);
+		try {
+			checkUser(loggedUser);
+			return assessmentRepository.getAssessments(establishment);
+		} catch (NullPointerException e){
+			System.out.println(e);
+			throw new NullPointerException();
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
+		}
 	}
 
 	@Override
 	public List<Assessment> getAssessments() {
 		return assessmentRepository.getAssessments();
+	}
+	
+	public void setLoggedUser(Person user) {
+		loggedUser = user;
+	}
+	
+	private <T extends BaseEntity>void checkUser(T t) {
+		if(loggedUser.inGroup(Group.Administrator) == false && !(t.getClass() == Assessment.class) && !(t.getClass() == Comment.class)) {
+			throw new RuntimeException("Administrator has no login");
+		} else if(t.getCreatedBy().getId() == 0 || !loggedUser.equals(t.getCreatedBy())) {
+			throw new RuntimeException("This user cannot create/delete object");
+		} else if(loggedUser == null) {
+			throw new RuntimeException("Users has no login into the system. Call setLoggedUser method");
+		}
 	}
 }

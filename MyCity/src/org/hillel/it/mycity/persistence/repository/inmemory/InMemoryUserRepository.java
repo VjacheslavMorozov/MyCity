@@ -3,10 +3,12 @@ package org.hillel.it.mycity.persistence.repository.inmemory;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Group;
 import org.hillel.it.mycity.model.entity.Moderator;
+import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.model.entity.User;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
 
@@ -25,31 +27,53 @@ public class InMemoryUserRepository implements UserRepository{
 	}
 
 	@Override
-	public void addRegistratedUser(User user) {
-		user.setGroup(Group.User);
-		user.setId(maxId);
-		users.add(user);
-		maxId++;
+	public void addUser(User user) {
+		try {
+			validUser(user);
+			user.setGroup(Group.User);
+			user.setId(maxId);
+			users.add(user);
+			maxId++;
+		} catch (RuntimeException e) {
+			throw new RuntimeException();
+		}
 	}
 
 	@Override
 	public void addModerator(Moderator moderator) {
-		moderator.setGroup(Group.Moderator);
-		moderator.setId(maxId);
-		moderators.add(moderator);
-		maxId++;
+		try {
+			validUser(moderator);
+			moderator.setGroup(Group.Moderator);
+			moderator.setId(maxId);
+			moderators.add(moderator);
+			maxId++;
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
+		}
 	}
 
 	@Override
 	public void addAdministrator(Administrator administrator) {
-		administrator.setGroup(Group.Administrator);
-		administrator.setId(maxId);
-		administrators.add(administrator);
-		maxId++;
+		try {
+			validUser(administrator);
+			administrator.setGroup(Group.Administrator);
+			administrator.setId(maxId);
+			administrators.add(administrator);
+			maxId++;
+		} catch (RuntimeException e) {
+			throw new RuntimeException();
+		}
+	}
+	
+	public <T extends Person>void validUser(T t) {
+		if(t.getId() > 0) {
+			throw new RuntimeException();
+		}
 	}
 
 	@Override
-	public void deleteUserById(int id) {
+	public void deleteUser(int id) {
 		if(id < 1 || id > maxId) {
 			System.out.println("Incorrect Id");
 			return;
@@ -86,74 +110,73 @@ public class InMemoryUserRepository implements UserRepository{
 	}
 
 	@Override
-	public <T> T getUserById(int id, Class<T> type) {
-		if(id < 1) {
-			System.out.println("Incorrect id");
-			return null;
-		}
-		if(type.toString().contains("Administrator")) {
-			if(administrators.isEmpty()) {
-				System.out.println("Administrators array is empty");
-				return null;
-			}
-			for(int i = 0; i < administrators.size(); i++) {
-				if(administrators.get(i).getId() == id) {
-					return type.cast(administrators.get(i));
+	public List<Administrator> getAdministrators() {
+		List<Administrator> administrators = this.administrators; 
+		return administrators;
+	}
+
+	@Override
+	public List<Moderator> getModerators() {
+		List<Moderator> moderators = this.moderators;
+		return moderators;
+	}
+
+	@Override
+	public List<User> getUsers() {
+		List<User> users = this.users;
+		return users;
+	}
+
+	@Override
+	public void deleteUsers() {
+		administrators.clear();
+		moderators.clear();
+		users.clear();
+	}
+
+	@Override
+	public User getUser(int id) {
+		try {
+			Objects.requireNonNull(users);
+			for(User user : users) {
+				if (user.getId() == id) {
+					return user;
 				}
 			}
-		} else if(type.toString().contains("Moderator")) {
-			if(moderators.isEmpty()) {
-				System.out.println("Moderators array is empty");
-				return null;
-			}
-			for(int i = 0; i < moderators.size(); i++) {
-				if(moderators.get(i).getId() == id) {
-					return type.cast(moderators.get(i));	
-				}
-			}
-		} else if(type.toString().contains("User")){
-			if(users.isEmpty()) {
-				System.out.println("Users array is empty");
-				return null;
-			}
-			for(int i = 0; i < users.size(); i++) {
-				if(users.get(i).getId() == id) {
-					return type.cast(users.get(i));
-				}
-			}
+		} catch (NullPointerException e) {
+			throw new NullPointerException();
 		}
 		return null;
 	}
 
 	@Override
-	public List<Administrator> getAllAdministrators() {
-		if(administrators.isEmpty()) {
-			return null;
+	public Moderator getModerator(int id) {
+		try {
+			Objects.requireNonNull(moderators);
+			for(Moderator moderator : moderators) {
+				if (moderator.getId() == id) {
+					return moderator;
+				}
+			}
+		} catch (NullPointerException e) {
+			throw new NullPointerException();
 		}
-		return administrators;
+		return null;
 	}
 
 	@Override
-	public List<Moderator> getAllModerators() {
-		if(moderators.isEmpty()) {
-			return null;
+	public Administrator getAdministrator(int id) {
+		try {
+			Objects.requireNonNull(administrators);
+			for(Administrator administrator : administrators) {
+				if (administrator.getId() == id) {
+					return administrator;
+				}
+			}
+		} catch (NullPointerException e) {
+			throw new NullPointerException();
 		}
-		return moderators;
-	}
-
-	@Override
-	public List<User> getAllUsers() {
-		if(users.isEmpty()) {
-			return null;
-		}
-		return users;
-	}
-
-	@Override
-	public void deleteAllUsers() {
-		administrators.clear();
-		moderators.clear();
-		users.clear();
+		return null;
 	}
 
 }

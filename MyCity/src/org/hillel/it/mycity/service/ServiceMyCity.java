@@ -29,26 +29,22 @@ public interface ServiceMyCity {
 	 * будет обращаться к методу person.inGroup("admin"). 
 	 * 
 	 */ 
-	public void addEstablishmentRestaurant(Restaurant restaurant);
-	public void addEstablishmentNightClub(NightClub nightClub);
-	public void addEstablishmentCinema(Cinema cinema);
+	public void addRestaurant(Restaurant restaurant);
+	public void addNightClub(NightClub nightClub);
+	public void addCinema(Cinema cinema);
 	
 	// READ Establishment
-	public List<Cinema> getAllCinemaEstablishment();
-	public List<NightClub> getAllNightClubEstablishment();
-	public List<Restaurant> getAllRestaurantEstablishment();
+	public List<Cinema> getCinemas();
+	public List<NightClub> getNightClubs();
+	public List<Restaurant> getRestaurants();
 	
-	public Cinema getCinemaEstablishmentById(int id);
-	public NightClub getNightClubEstablishmentById(int id);
-	public Restaurant getRestaurantEstablishmentById(int id);
-
-	// UPDATE Establishment
-	// @timur need to add update Establishment methods
+	public Cinema getCinema(int id);
+	public NightClub getNightClub(int id);
+	public Restaurant getRestaurant(int id);
 
 	// DELETE Establishment
-	public void deleteAllEstablishments();
-	public void deleteEstablishmentById(int id);
-	public void deleteEstablishmentByType(String establishmentType);
+	public void deleteEstablishments();
+	public void deleteEstablishment(int id);
 	
 	// Person repository
 	// CREATE Person
@@ -57,21 +53,17 @@ public interface ServiceMyCity {
 	public void addUser(User user);
 
 	// READ Person
-	public List<Administrator> getAllAdministrators();
-	public List<Moderator> getAllModerators();
-	public List<User> getAllUsers();
+	public List<Administrator> getAdministrators();
+	public List<Moderator> getModerators();
+	public List<User> getUsers();
 
-	public Administrator getAdministratorById(int id);
-	public Moderator getModeratorById(int id);
-	public User getUserById(int id);
-
-	// UPDATE Person
-	// @timur need to add update Person methods
-	// @Artem а зачем, если можно вызвать метод get<Person> и уже у этого Объекта изменить данные.
+	public Administrator getAdministrator(int id);
+	public Moderator getModerator(int id);
+	public User getUser(int id);
 
 	// DELETE Person
-	public void deleteAllUsers();
-	public void deleteUserById(int id);
+	public void deleteUsers();
+	public void deleteUser(int id);
 	
 	//CommentRepository
 	//CREATE Comment

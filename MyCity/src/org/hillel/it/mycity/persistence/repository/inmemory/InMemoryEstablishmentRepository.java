@@ -37,7 +37,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	}
 	
 	@Override
-	public void addEstablishmentCinema(Cinema cinema) {
+	public void addCinema(Cinema cinema) {
 		if(!validEstablishment(cinema)) {
 			throw new RuntimeException("This establishment is already exist in memory");
 		}
@@ -47,7 +47,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	}
 
 	@Override
-	public void addEstablishmentNightClub(NightClub nightClub) {
+	public void addNightClub(NightClub nightClub) {
 		if(!validEstablishment(nightClub)) {
 			throw new RuntimeException("This establishment is already exist in memory");
 		}
@@ -57,7 +57,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	}
 
 	@Override
-	public void addEstablishmentRestaurant(Restaurant restaurant) {
+	public void addRestaurant(Restaurant restaurant) {
 		if(!validEstablishment(restaurant)) {
 			throw new RuntimeException("This establishment is already exist in memory");
 		}
@@ -73,74 +73,92 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		return true;
 	}
 	
-	public boolean validId(int id) {
+	public void validId(int id) {
 		if(id < 1) {
-			return false;
+			throw new RuntimeException("Incorrect id");
 		}
-		return true;
 	}
 
 	@Override
-	public List<Cinema> getAllCinemaEstablishment() {
+	public List<Cinema> getCinemas() {
 		return unmodifiableCinemas;
-		
 	}
 
 	@Override
-	public List<NightClub> getAllNightClubEstablishment() {
+	public List<NightClub> getNightClubs() {
 		return unmodifiableNightClubs;
 	}
 
 	@Override
-	public List<Restaurant> getAllRestaurantEstablishment() {
+	public List<Restaurant> getRestaurants() {
 		return unmodifiableRestaurants;
 	}
 	
 	@Override
 	public void deleteEstablishment(int id) {
-		if(!validId(id)) {
-			throw new RuntimeException("Incorrect Id");
+		try {
+			validId(id);
+		} catch (RuntimeException e) {
+			System.out.println(e);
+			throw new RuntimeException();
 		}
 		switch (estbalishmentMap.get(id)) {
 		case "Cinema":
-			Iterator<Cinema> iteratorCinemas = cinemas.iterator();
-			while (iteratorCinemas.hasNext()) {
-				if(iteratorCinemas.next().getId() == id) {
-					iteratorCinemas.remove();
-					estbalishmentMap.remove(id);
-					return;
+			try {
+				Objects.requireNonNull(cinemas);
+				Iterator<Cinema> iteratorCinemas = cinemas.iterator();
+				while (iteratorCinemas.hasNext()) {
+					if(iteratorCinemas.next().getId() == id) {
+						iteratorCinemas.remove();
+						estbalishmentMap.remove(id);
+						break;
+					}
 				}
+			} catch (NullPointerException e) {
+				System.out.println(e);
+				throw new NullPointerException();
 			}
 			break;
 		case "NightClub":
-			Iterator<NightClub> iteratorNightClubs = nightClubs.iterator();
-			while (iteratorNightClubs.hasNext()) {
-				if(iteratorNightClubs.next().getId() == id) {
-					iteratorNightClubs.remove();
-					estbalishmentMap.remove(id);
-					return;
+			try {
+				Objects.requireNonNull(nightClubs);
+				Iterator<NightClub> iteratorNightClubs = nightClubs.iterator();
+				while (iteratorNightClubs.hasNext()) {
+					if(iteratorNightClubs.next().getId() == id) {
+						iteratorNightClubs.remove();
+						estbalishmentMap.remove(id);
+						return;
+					}
 				}
+			} catch (NullPointerException e) {
+				System.out.println(e);
+				throw new NullPointerException();
 			}
 			break;
 		case "Restaurant":
-			Iterator<Restaurant> iteratorRestaurants = restaurants.iterator();
-			while (iteratorRestaurants.hasNext()) {
-				if(iteratorRestaurants.next().getId() == id) {
-					iteratorRestaurants.remove();
-					estbalishmentMap.remove(id);
-					return;
+			try {
+				Objects.requireNonNull(restaurants);
+				Iterator<Restaurant> iteratorRestaurants = restaurants.iterator();
+				while (iteratorRestaurants.hasNext()) {
+					if(iteratorRestaurants.next().getId() == id) {
+						iteratorRestaurants.remove();
+						estbalishmentMap.remove(id);
+						return;
+					}
 				}
+			} catch (NullPointerException e) {
+				System.out.println(e);
+				throw new NullPointerException();
 			}
 			break;
 		default:
 			throw new RuntimeException("There is no such id");
-			break;
 		}
 		
 	}
 
 	@Override
-	public void deleteAllEstablishments() {
+	public void deleteEstablishments() {
 		cinemas.clear();
 		nightClubs.clear();
 		restaurants.clear();
@@ -148,41 +166,70 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 
 	@Override
 	public Cinema getCinema(int id) {
-		for(Cinema cinema : cinemas) {
-			if(cinema.getId() == id) {
-				return cinema;
+		try {
+			validId(id);
+			Objects.requireNonNull(cinemas);
+			for(Cinema cinema : cinemas) {
+				if(cinema.getId() == id) {
+					return cinema;
+				}
 			}
+		} catch (NullPointerException e) {
+			throw new NullPointerException("Array list is empty");
+		} catch (RuntimeException e) {
+			throw new RuntimeException("Incorrect id");
 		}
 		return null;
 	}
 
 	@Override
 	public Restaurant getRestaurant(int id) {
-		// TODO Auto-generated method stub
+		try {
+			validId(id);
+			Objects.requireNonNull(restaurants);
+			for(Restaurant restaurant : restaurants) {
+				if(restaurant.getId() == id) {
+					return restaurant;
+				}
+			}
+		} catch (NullPointerException e) {
+			throw new NullPointerException("Array list is empty");
+		} catch (RuntimeException e) {
+			throw new RuntimeException("Incorrect id");
+		}
 		return null;
 	}
 
 	@Override
 	public NightClub getNightClub(int id) {
-		// TODO Auto-generated method stub
+		try {
+			validId(id);
+			Objects.requireNonNull(nightClubs);
+			for(NightClub nightClub : nightClubs) {
+				if(nightClub.getId() == id) {
+					return nightClub;
+				}
+			}
+		} catch (NullPointerException e) {
+			throw new NullPointerException("Array list is empty");
+		} catch (RuntimeException e) {
+			throw new RuntimeException("Incorrect id");
+		}
 		return null;
 	}
 
 	@Override
 	public void deleteCinemas() {
-		// TODO Auto-generated method stub
-		
+		cinemas.clear();
 	}
 
 	@Override
 	public void deleteNightClubs() {
-		// TODO Auto-generated method stub
-		
+		nightClubs.clear();
 	}
 
 	@Override
 	public void deleteRestaurants() {
-		// TODO Auto-generated method stub
-		
+		restaurants.clear();
 	}
 }
