@@ -45,10 +45,7 @@ public class Comment extends BaseEntity{
 	}
 	
 	public void setCommentToModerate(Person user) {
-		if(!user.inGroup(Group.Moderator) && !user.inGroup(Group.Administrator)) {
-			System.out.println("This user can`t mark comment to moderate");
-			return;
-		}
+		checkUserForComment(user);
 		needToModerate = true;
 	}
 	
@@ -62,19 +59,22 @@ public class Comment extends BaseEntity{
 	 * @param establishment
 	 */
 	public void setEstablishment(Establishment establishment) {
-		if(checkDataNotNull(this.establishment)) {
-			System.out.println("You can not add additional Establishment to this Comment");
-			return;
-		}
+		checkDataIsNotNull(this.establishment, "You can not add additional Establishment to this Comment");
 		this.establishment = establishment;
 	}
 	
 	/**
-	 * Method that return true if <code>Establishment</code> of this Comment object is not equals
+	 * Method that return true if <code>Establishment</code> of this Comment object is equals
 	 * to Establishment object that get by argument.
 	 * @param establishment
 	 */
 	public boolean checkEstablishment(Establishment establishment) {
 		return this.establishment.equals(establishment);
+	}
+	
+	public void checkUserForComment(Person user) {
+		if(!user.inGroup(Group.Moderator) && !user.inGroup(Group.Administrator)) {
+			throw new RuntimeException("This user can`t mark comment to moderate");
+		}
 	}
 }

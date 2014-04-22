@@ -17,34 +17,34 @@ public class Administrator extends Person {
 		this.setPassword(password);		
 	}*/
 	
-	public Cinema addEstablishmentCinema() {
+	public Cinema createEstablishmentCinema() {
 		Cinema cinema = new Cinema();
 		cinema.setCreatedBy(this);
 		return cinema;
 	}
 	
-	public Restaurant addEstablishmentRestaurant() {
+	public Restaurant createEstablishmentRestaurant() {
 		Restaurant restaurant = new Restaurant();
 		restaurant.setCreatedBy(this);
 		return restaurant;
 	}
 	
-	public NightClub addEstablishmentNightClub() {
+	public NightClub createEstablishmentNightClub() {
 		NightClub nightClub = new NightClub();
 		nightClub.setCreatedBy(this);
 		return nightClub;
 	}
 	
-	public void deleteEstablishmentById(int id, ServiceImpl serviceImpl) {
-		serviceImpl.deleteEstablishmentById(id);
+	public void deleteEstablishment(int id) {
+		
 	}
 	
-	public void deleteCommentById(int id, ServiceImpl serviceImpl) {
-		//TODO Не уверен в получаемых аргументах, нужно узнать у Сергея
+	public void deleteComment(int id) {
+	
 	}
 	
-	public void editComment(String editComment, int id, ServiceImpl serviceImpl) {
-		//TODO Надо понять, как правильно это сделать!
+	public void editComment(String editComment, int id) {
+		
 	}
 
 	@Override

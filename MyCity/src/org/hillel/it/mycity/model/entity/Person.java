@@ -79,16 +79,8 @@ public abstract class Person extends BaseEntity{
 		return PersonFactory.getPerson(Group.Administrator);
 	}
 	
-	/**
-	 * Set email of this object, from email in argument if it pass the validation
-	 * (Apache Commons Validator - EmailValidator)
-	 * @param email 
-	 */
 	public void setEmail(String email) {
-		if(!EmailValidator.getInstance().isValid(email)) {
-			System.out.println("This email is invalid");
-			return;
-		}
+		checkEmail(email);
 		this.email = email;
 	}
 	
@@ -115,12 +107,8 @@ public abstract class Person extends BaseEntity{
 	 * @param userComment String type comment that received from user
 	 * @return null if User that create comment is do not exist in Repository or return Comment.
 	 */
-	public Comment addComment(String userComment) {
-		try {
-			checkId(getId());
-		} catch (RuntimeException e) {
-			System.out.println("This user is does not exist");
-		}
+	public Comment createComment(String userComment) {
+		checkId(getId());
 		Comment comment = new Comment();
 		comment.setCreatedBy(this);
 		comment.setComment(userComment);
@@ -134,21 +122,14 @@ public abstract class Person extends BaseEntity{
 	 * @return
 	 */
 	public void changeComment(Comment comment, String userComment) {
-		if(comment.getCreatedBy() != this && !inGroup(Group.Administrator)) {
-			System.out.println("This user cannot change this comment");
-			return;
-		}
+		checkUserData(comment);
 		comment.setComment(userComment);
 		comment.setModifiedBy(this);
 		comment.setModifiedDate(new Date());
 	}
 	
-	public Assessment addAssessment(int userAssessment) {
-		try {
-			checkId(getId());
-		} catch (RuntimeException e) {
-			System.out.println("This user is does not exist");
-		}
+	public Assessment createAssessment(int userAssessment) {
+		checkId(getId());
 		Assessment assessment = new Assessment();
 		assessment.setCreatedBy(this);
 		assessment.setAssessment(userAssessment);
@@ -156,10 +137,7 @@ public abstract class Person extends BaseEntity{
 	}
 	
 	public void changeAssessment(Assessment assessment, int userAssessment) {
-		if(assessment.getCreatedBy() != this) {
-			System.out.println("This user can not change this comment");
-			return;
-		}
+		checkUserData(assessment);
 		assessment.setAssessment(userAssessment);
 		assessment.setModifiedBy(this);
 		assessment.setModifiedDate(new Date());
@@ -191,4 +169,25 @@ public abstract class Person extends BaseEntity{
 		emailVerified = true;
 	}
 	
+	public <T extends BaseEntity> void checkUserData(T t) {
+		if(t.getClass() == Comment.class) {
+			if(t.getCreatedBy() != this && !inGroup(Group.Administrator)) {
+				throw new RuntimeException("This user cannot change this comment");
+			}
+		} else if(t.getClass() == Assessment.class) {
+			if(t.getCreatedBy() != this) {
+				throw new RuntimeException("This user can not change this comment");
+			}
+		}
+	}
+	
+	/**
+	 * Check email on validation with help of Apache Commons Validator - EmailValidator.
+	 * @param email 
+	 */
+	public void checkEmail(String email) {
+		if(!EmailValidator.getInstance().isValid(email)) {
+			throw new RuntimeException("Incorrect email");
+		}
+	}
 }

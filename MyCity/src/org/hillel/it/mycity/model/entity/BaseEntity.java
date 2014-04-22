@@ -14,10 +14,6 @@ public abstract class BaseEntity {
 	}
 	
 	private void setCreateDate(Date createdDate){
-		if(checkDataNotNull(this.createdDate)) {
-			System.out.println("Created Date is alredy exist. You can not add another one.");
-			return;
-		}
 		this.createdDate = createdDate;
 	}
 	
@@ -38,9 +34,7 @@ public abstract class BaseEntity {
 	 * @param createdBy
 	 */
 	protected void setCreatedBy(Person createdBy){
-		if(checkDataNotNull(this.createdBy)) {
-			throw new RuntimeException("Created by user is alredy exist. You can not add another one.");
-		}
+		checkDataIsNotNull(this.createdBy, "CreatedBy user is alredy exist. You can not add another one.");
 		this.createdBy = createdBy;
 	}
 	
@@ -49,9 +43,7 @@ public abstract class BaseEntity {
 	}
 	
 	public void setModifiedBy(Person modifiedBy){
-		if(modifiedBy != createdBy && !modifiedBy.inGroup(Group.Administrator)) {
-			throw new RuntimeException("This person can not modify information");
-		}
+		checkUser(modifiedBy);
 		this.modifiedBy = modifiedBy;
 	}
 	
@@ -60,10 +52,7 @@ public abstract class BaseEntity {
 	}
 	
 	public void setId(int id) {
-		if(this.id > 0) {
-			throw new RuntimeException("This Entity is alredy has an Id");
-		}
-		this.id = id;
+		this.id = (this.id == 0 ? id : this.id);
 	}
 	
 	public int getId() {
@@ -77,10 +66,15 @@ public abstract class BaseEntity {
 		}
 	}
 	
-	public <T>boolean checkDataNotNull(T t){
+	public <T>void checkDataIsNotNull(T t, String exceptionText){
 		if(t != null) {
-			return true;
+			throw new RuntimeException(exceptionText);
 		}
-		return false;
+	}
+	
+	public void checkUser(Person modifiedBy) {
+		if(modifiedBy != createdBy && !modifiedBy.inGroup(Group.Administrator)) {
+			throw new RuntimeException("This person can not modify information");
+		}
 	}
 }

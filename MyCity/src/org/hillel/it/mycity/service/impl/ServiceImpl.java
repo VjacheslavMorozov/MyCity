@@ -40,37 +40,20 @@ public class ServiceImpl implements ServiceMyCity {
 	// CREATE Establishment
 	@Override
 	public void addRestaurant(Restaurant restaurant) {
-		try {
-			checkUser(restaurant);
-			establishmentRepository.addRestaurant(restaurant);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
-		
+		checkUser(restaurant);
+		establishmentRepository.addRestaurant(restaurant);	
 	}
 
 	@Override
 	public void addNightClub(NightClub nightClub) {
-		try {
-			checkUser(nightClub);
-			establishmentRepository.addNightClub(nightClub);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
-		
+		checkUser(nightClub);
+		establishmentRepository.addNightClub(nightClub);
 	}
 
 	@Override
 	public void addCinema(Cinema cinema) {
-		try {
-			checkUser(cinema);
-			establishmentRepository.addCinema(cinema);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
+		checkUser(cinema);
+		establishmentRepository.addCinema(cinema);
 	}
 	
 	// DELETE Establishment

@@ -11,15 +11,21 @@ import org.hillel.it.mycity.model.entity.Group;
 import org.hillel.it.mycity.model.entity.NightClub;
 import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.model.entity.Restaurant;
+import org.hillel.it.mycity.persistence.repository.AssessmentRepository;
+import org.hillel.it.mycity.persistence.repository.CommentRepository;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
+import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryAssessmentRepository;
+import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryCommentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryEstablishmentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryUserRepository;
 import org.hillel.it.mycity.service.impl.ServiceImpl;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runners.MethodSorters;
 
 
@@ -27,169 +33,34 @@ public class ServiceImplTest {
 	private static ServiceImpl serviceImpl;
 	private static EstablishmentRepository inMemoryEstablishmentRepository;
 	private static UserRepository inMemoryUserRepository;
-	private List<Cinema> cinemaList;
-	private List<Restaurant> restaurantList;
-	private List<NightClub> nightClubList;
-	private static Person loggedPerson;
-	private static String username;
-	private static String password;
+	private static CommentRepository inMemoryCommentRepository;
+	private static AssessmentRepository inMemoryAssessmentRepository;
 	
 	@BeforeClass
 	public static void beforeTest() {
-		username = "EnteredUsername";
-		password = "EnteredPassword";
-		loggedPerson = Person.logIn(username, password);
-		loggedPerson.setGroup(Group.Administrator);
 		inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
 		inMemoryUserRepository = new InMemoryUserRepository();
-		serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, loggedPerson);
+		inMemoryCommentRepository = new InMemoryCommentRepository();
+		inMemoryAssessmentRepository = new InMemoryAssessmentRepository();
+		serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, inMemoryCommentRepository, inMemoryAssessmentRepository);
+	}
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
+	@Test
+	public void addRestaurantTest() {
+		serviceImpl.addAdministrator(new Administrator("mymail@mail.com", "world"));
+		Administrator administrator = serviceImpl.getAdministrator(1);
+		serviceImpl.setLoggedUser(administrator);
+		serviceImpl.addRestaurant(administrator.createEstablishmentRestaurant());
 	}
 	
 	@Test
-	public void addEstablishmentRestaurantTest() {
-		Administrator administrator = new Administrator();
-		serviceImpl.addEstablishmentRestaurant(administrator.addEstablishmentRestaurant());
-		serviceImpl.addAdministrator(administrator);
-		Restaurant restaurant = new Restaurant();
-		restaurant = administrator.addEstablishmentRestaurant();
-		restaurant.setAddressOfEstablishment("His address");
-		restaurant.setNameOfEstablishment("His name");
-		restaurant.setTelephoneOfEstablishment("0580394003");
-		restaurant.setTelephoneOfEstablishment("0638678900");
-		restaurant.setTimeClose(24, 59);
-		restaurant.setTimeOpen(23, 61);
-		restaurant.setTimeClose(23, 59);
-		restaurant.setTimeOpen(7, 0);
-		serviceImpl.addEstablishmentRestaurant(restaurant);
-		restaurant = serviceImpl.getRestaurantEstablishmentById(1);
-		System.out.println(restaurant.getAddressOfEstablishment());
-		System.out.println(restaurant.getNameOfEstablishment());
-		System.out.println(restaurant.getTimeCloseInMinute());
-		System.out.println(restaurant.getTimeOpenInMinute());
-		System.out.println(restaurant.getTelephoneOfEstablishment());
+	public void addCinemaTest() {
+		serviceImpl.addAdministrator(new Administrator("mymail@mail.com", "world"));
+		Administrator administrator = serviceImpl.getAdministrator(1);
+		serviceImpl.setLoggedUser(administrator);
+		serviceImpl.addCinema(administrator.createEstablishmentCinema());
 	}
-	
-	@Test
-	public void addEstablishmentNightClubTest() {
-		Administrator administrator = new Administrator();
-		serviceImpl.addAdministrator(administrator);
-		NightClub nightClub = new NightClub();
-		nightClub = administrator.addEstablishmentNightClub();
-		nightClub.setAverageCheck(150);
-		nightClub.setDescriptionOfEstablishment("Beautiful night club");
-		serviceImpl.addEstablishmentNightClub(nightClub);
-		nightClub = serviceImpl.getNightClubEstablishmentById(2);
-		System.out.println(nightClub.getId());
-		System.out.println(nightClub.getDescriptionOfEstablishment());
-		System.out.println(nightClub.getAverageCheck());
-	}
-	
-	/*@Test
-	public void addEstablishmentCinemaTest() {
-		System.out.println("Add Restaurant:");
-		serviceImpl.addEstablishmentCinema(administrator);
-		administrator.setLogin("login");
-		serviceImpl.addEstablishmentCinema(administrator);
-	}
-	
-	@Test
-	public void getAllCinemaEstablishmentTest() {
-		System.out.println("Get all Cinema:");
-		administrator.setLogin("login");
-		cinemaList = new ArrayList<>();
-		assertNull(cinemaList = serviceImpl.getAllCinemaEstablishment());
-		serviceImpl.addEstablishmentCinema(administrator);
-		cinemaList = serviceImpl.getAllCinemaEstablishment();
-	}
-	
-	@Test
-	public void getAllNightClubEstablishmentTest() {
-		System.out.println("Get all NightClub:");
-		administrator.setLogin("login");
-		nightClubList = new ArrayList<>();
-		assertNull(nightClubList = serviceImpl.getAllNightClubEstablishment());
-		serviceImpl.addEstablishmentNightClub(administrator);
-		nightClubList = serviceImpl.getAllNightClubEstablishment();
-	}
-	
-	@Test
-	public void getAllRestaurantEstablishmentTest() {
-		System.out.println("Get all Restaurant:");
-		administrator.setLogin("login");
-		restaurantList = new ArrayList<>();
-		assertNull(restaurantList = serviceImpl.getAllRestaurantEstablishment());
-		serviceImpl.addEstablishmentRestaurant(administrator);
-		restaurantList = serviceImpl.getAllRestaurantEstablishment();
-	}
-	
-	@Test
-	public void deleteAllEstablishmentsTest() {
-		System.out.println("Delete all:");
-		administrator.setLogin("login");
-		serviceImpl.addEstablishmentCinema(administrator);
-		serviceImpl.addEstablishmentNightClub(administrator);
-		serviceImpl.addEstablishmentRestaurant(administrator);
-		serviceImpl.deleteAllEstablishments();
-	}
-	
-	@Test
-	public void deleteEstablishmentByIdTest() {
-		System.out.println("Delete by Id:");
-		administrator.setLogin("login");
-		serviceImpl.deleteEstablishmentById(0);
-		serviceImpl.deleteEstablishmentById(1);
-		serviceImpl.addEstablishmentCinema(administrator);
-		serviceImpl.addEstablishmentNightClub(administrator);
-		serviceImpl.addEstablishmentRestaurant(administrator);
-		serviceImpl.deleteEstablishmentById(serviceImpl.getLastId() - 3);
-		serviceImpl.addEstablishmentCinema(administrator);
-		serviceImpl.addEstablishmentCinema(administrator);
-		serviceImpl.deleteEstablishmentById(serviceImpl.getLastId() - 4);
-		serviceImpl.addEstablishmentNightClub(administrator);
-		serviceImpl.addEstablishmentNightClub(administrator);
-		serviceImpl.deleteEstablishmentById(serviceImpl.getLastId() - 5);
-		serviceImpl.addEstablishmentRestaurant(administrator);
-		serviceImpl.addEstablishmentRestaurant(administrator);
-		serviceImpl.addEstablishmentNightClub(administrator);
-		serviceImpl.addEstablishmentNightClub(administrator);
-		serviceImpl.deleteEstablishmentById(serviceImpl.getLastId() - 8);
-		
-	}
-	
-	@Test
-	public void getCinemaEstablishmentByIdTest() {
-		System.out.println("Get Cinema by id:");
-		administrator.setLogin("login");
-		assertNull(serviceImpl.getCinemaEstablishmentById(0));
-		assertNull(serviceImpl.getCinemaEstablishmentById(serviceImpl.getLastId() + 1));
-		serviceImpl.addEstablishmentCinema(administrator);
-		serviceImpl.getCinemaEstablishmentById(serviceImpl.getLastId() - 1);
-	}
-	
-	@Test
-	public void getNightClubEstablishmentByIdTest() {
-		System.out.println("Get Night Club by id:");
-		administrator.setLogin("login");
-		assertNull(serviceImpl.getNightClubEstablishmentById(serviceImpl.getLastId() + 1));
-		serviceImpl.addEstablishmentNightClub(administrator);
-		serviceImpl.getNightClubEstablishmentById(serviceImpl.getLastId() - 1);
-	}
-	
-	@Test
-	public void getRestaurantEstablishmentByIdTest() {
-		System.out.println("Get Restaurant by id:");
-		administrator.setLogin("login");
-		assertNull(serviceImpl.getRestaurantEstablishmentById(serviceImpl.getLastId() + 1));
-		serviceImpl.addEstablishmentRestaurant(administrator);
-		serviceImpl.getRestaurantEstablishmentById(serviceImpl.getLastId() - 1);
-	}
-	
-	@Test
-	public void deleteEstablishmentByTypeTest() {
-		System.out.println("Delete establishment by type:");
-		serviceImpl.deleteEstablishmentByType("cinema");
-		serviceImpl.deleteEstablishmentByType("restaurant");
-		serviceImpl.deleteEstablishmentByType("nightclub");
-		serviceImpl.deleteEstablishmentByType("cafe");
-	}*/
 }

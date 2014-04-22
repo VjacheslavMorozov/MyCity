@@ -12,13 +12,17 @@ import org.hillel.it.mycity.model.entity.Group;
 import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.model.entity.PersonFactory;
 import org.hillel.it.mycity.model.entity.Restaurant;
+import org.hillel.it.mycity.model.entity.User;
+import org.hillel.it.mycity.persistence.repository.AssessmentRepository;
 import org.hillel.it.mycity.persistence.repository.CommentRepository;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
+import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryAssessmentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryCommentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryEstablishmentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryUserRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.SerializeEstablishmentRepository;
+import org.hillel.it.mycity.service.ServiceMyCity;
 import org.hillel.it.mycity.service.impl.ServiceImpl;
 
 public class Starter {
@@ -26,51 +30,9 @@ public class Starter {
 		EstablishmentRepository inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
 		UserRepository inMemoryUserRepository = new InMemoryUserRepository();
 		CommentRepository inMemoryCommentRepository = new InMemoryCommentRepository();
-
-		// example input data
-		/*List<Person> admins = new ArrayList<>();
-		admins.add(new Administrator("Vlasov","Artem","username","password")); //такие объекты ничего не могу создать, так как у них нет ID
-		admins.add(new Administrator("Aminev","Timur","tim8917","mypass"));
-		for(Person admin : admins){
-			System.out.println(admin);			
-		}*/
-
-		// @timur Вход в систему
-		ServiceImpl serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, inMemoryCommentRepository);
+		AssessmentRepository inMemoryAssessmentRepository = new InMemoryAssessmentRepository();
 		
-		Administrator administrator = new Administrator("tim8917@gmail.com","mypass");
+		ServiceMyCity serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, inMemoryCommentRepository, inMemoryAssessmentRepository);
 		
-		// input data to UserRepository
-		serviceImpl.addAdministrator(administrator);
-		
-		administrator = serviceImpl.getAdministratorById(1);
-		
-		Restaurant restaurant = administrator.addEstablishmentRestaurant();
-		restaurant.setAddressOfEstablishment("Street");
-		restaurant.setNameOfEstablishment("Bellini");
-		
-		serviceImpl.setLoggedUser(administrator);
-		
-		serviceImpl.addEstablishmentRestaurant(restaurant);
-		
-		restaurant = serviceImpl.getRestaurantEstablishmentById(1);
-		
-		System.out.println(restaurant.getAddressOfEstablishment() + " " + restaurant.getNameOfEstablishment() + " " + restaurant.getId());
-		
-		SerializeEstablishmentRepository serializeEstablishmentRepository = new SerializeEstablishmentRepository();
-		
-		Cinema cinema = new Cinema();
-		cinema.setAddressOfEstablishment("Street");
-		cinema.setNameOfEstablishment("Rodina");
-		serializeEstablishmentRepository.addEstablishmentCinema(cinema);
-		
-		/*try {
-			serializeEstablishmentRepository.deserializeData();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println(serializeEstablishmentRepository.getEstablishmentById(1, Cinema.class).getNameOfEstablishment());*/
 	}
 }

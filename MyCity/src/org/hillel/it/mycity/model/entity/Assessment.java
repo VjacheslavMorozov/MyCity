@@ -16,14 +16,15 @@ public class Assessment extends BaseEntity{
 	}
 	
 	public void setEstablishment(Establishment establishment) {
-		if(checkDataNotNull(this.establishment)) {
-			System.out.println("You can not add additional Establishment to this Assessment");
-			return;
-		}
+		checkDataIsNotNull(this.establishment, "You cannot add another Establishment");
 		this.establishment = establishment;
 	}
 	
 	public boolean checkEstablishment(Establishment establishment) {
-		return this.establishment.equals(establishment);
+		if(!this.establishment.equals(establishment)) {
+			System.out.println("You can not add additional Establishment to this Assessment");
+			return false;
+		}
+		return true;
 	}
 }
