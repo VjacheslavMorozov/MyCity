@@ -34,7 +34,7 @@ public abstract class Establishment extends BaseEntity{
 		return addressOfEstablishment;
 	}
 	
-	public void setTelephoneOfEstablishment(String telephoneOfEstablishment) {
+	public void setTelephoneOfEstablishment(String telephoneOfEstablishment) throws ClassNotFoundException {
 		if(!checkTelephoneOfEstablishment(telephoneOfEstablishment)) {
 			System.out.println("Incorrect format");
 			return;
@@ -78,7 +78,7 @@ public abstract class Establishment extends BaseEntity{
 	 * @param telephoneOfEstablishment
 	 * @return true if telephone number is in standart format
 	 */
-	public boolean checkTelephoneOfEstablishment(String telephoneOfEstablishment) {
+	public boolean checkTelephoneOfEstablishment(String telephoneOfEstablishment) throws ClassNotFoundException{
 		Pattern telephonePattern = Pattern.compile("(^0([6][3678]|[9][1-9]|39|48|50))\\d{7}");
 		Matcher telephoneMatcher = telephonePattern.matcher(telephoneOfEstablishment);
 		return telephoneMatcher.find();

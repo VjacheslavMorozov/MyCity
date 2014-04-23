@@ -50,17 +50,34 @@ public class ServiceImplTest {
 	
 	@Test
 	public void addRestaurantTest() {
-		serviceImpl.addAdministrator(new Administrator("mymail@mail.com", "world"));
-		Administrator administrator = serviceImpl.getAdministrator(1);
-		serviceImpl.setLoggedUser(administrator);
-		serviceImpl.addRestaurant(administrator.createEstablishmentRestaurant());
+		serviceImpl.addAdministrator(new Administrator("mymail1@mail.com", "world"));
+		Administrator administrator1 = serviceImpl.getAdministrator(1);
+		serviceImpl.setLoggedUser(administrator1);
+		serviceImpl.addRestaurant(administrator1.createEstablishmentRestaurant());
 	}
 	
 	@Test
 	public void addCinemaTest() {
-		serviceImpl.addAdministrator(new Administrator("mymail@mail.com", "world"));
+		serviceImpl.addAdministrator(new Administrator("mymail2@mail.com", "world"));
 		Administrator administrator = serviceImpl.getAdministrator(1);
 		serviceImpl.setLoggedUser(administrator);
 		serviceImpl.addCinema(administrator.createEstablishmentCinema());
+	}
+	
+	@Test
+	public void addNightClubTest() {
+		serviceImpl.addAdministrator(new Administrator("mymail3@mail.com", "world"));
+		Administrator administrator = serviceImpl.getAdministrator(1);
+		serviceImpl.setLoggedUser(administrator);
+		serviceImpl.addNightClub(administrator.createEstablishmentNightClub());
+	}
+	
+	@Test
+	public void deleteEstalbishmentsTest() {
+		serviceImpl.addAdministrator(new Administrator("mymail4@mail.com", "world"));
+		Administrator administrator = serviceImpl.getAdministrator(1);
+		serviceImpl.setLoggedUser(administrator);
+		serviceImpl.addNightClub(administrator.createEstablishmentNightClub());
+		serviceImpl.deleteEstablishments();
 	}
 }
