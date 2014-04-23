@@ -1,8 +1,9 @@
 package org.hillel.it.mycity.model.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Serializable{
 	private int id;
 	private Date createdDate;
 	private Date modifiedDate;

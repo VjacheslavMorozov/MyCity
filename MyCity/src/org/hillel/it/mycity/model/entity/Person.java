@@ -1,5 +1,6 @@
 package org.hillel.it.mycity.model.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.hillel.it.mycity.helper.CryptoHelper;
 
-public abstract class Person extends BaseEntity{
+public abstract class Person extends BaseEntity implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private String firstName;
 	private String lastName;
 	private String username;

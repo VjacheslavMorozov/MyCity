@@ -21,12 +21,12 @@ import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryAssessmentRe
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryCommentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryEstablishmentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryUserRepository;
-import org.hillel.it.mycity.persistence.repository.inmemory.SerializeEstablishmentRepository;
+import org.hillel.it.mycity.persistence.repository.inmemory.SerializationUserRepository;
 import org.hillel.it.mycity.service.ServiceMyCity;
 import org.hillel.it.mycity.service.impl.ServiceImpl;
 
 public class Starter {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		EstablishmentRepository inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
 		UserRepository inMemoryUserRepository = new InMemoryUserRepository();
 		CommentRepository inMemoryCommentRepository = new InMemoryCommentRepository();
@@ -34,5 +34,20 @@ public class Starter {
 		
 		ServiceMyCity serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, inMemoryCommentRepository, inMemoryAssessmentRepository);
 		
+		SerializationUserRepository serilaizationUserRepository = new SerializationUserRepository();
+		
+		/*Administrator administrator = new Administrator("mymail@mail.com", "password");
+		
+		serilaizationUserRepository.addAdministrator(administrator);
+		serilaizationUserRepository.serializeData();*/
+		
+		serilaizationUserRepository.deserializeData();
+		
+		Administrator administrator = serilaizationUserRepository.getAdministrator(1);
+		
+		serviceImpl.setLoggedUser(administrator);
+		
+		administrator = serilaizationUserRepository.getAdministrator(1);
+		System.out.println(administrator.getEmail());
 	}
 }

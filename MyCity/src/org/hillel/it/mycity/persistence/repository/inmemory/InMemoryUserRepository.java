@@ -1,5 +1,9 @@
 package org.hillel.it.mycity.persistence.repository.inmemory;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +16,9 @@ import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.model.entity.User;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
 
-public class InMemoryUserRepository implements UserRepository{
+public class InMemoryUserRepository implements UserRepository, Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private List<Administrator> administrators;
 	private List<Moderator> moderators;
 	private List<User> users;
@@ -28,42 +33,29 @@ public class InMemoryUserRepository implements UserRepository{
 
 	@Override
 	public void addUser(User user) {
-		try {
 			validUser(user);
 			user.setGroup(Group.User);
 			user.setId(maxId);
 			users.add(user);
 			maxId++;
-		} catch (RuntimeException e) {
-			throw new RuntimeException();
-		}
 	}
 
 	@Override
 	public void addModerator(Moderator moderator) {
-		try {
 			validUser(moderator);
 			moderator.setGroup(Group.Moderator);
 			moderator.setId(maxId);
 			moderators.add(moderator);
 			maxId++;
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
 	}
 
 	@Override
 	public void addAdministrator(Administrator administrator) {
-		try {
 			validUser(administrator);
 			administrator.setGroup(Group.Administrator);
 			administrator.setId(maxId);
 			administrators.add(administrator);
 			maxId++;
-		} catch (RuntimeException e) {
-			throw new RuntimeException();
-		}
 	}
 	
 	public <T extends Person>void validUser(T t) {
@@ -138,13 +130,13 @@ public class InMemoryUserRepository implements UserRepository{
 	public User getUser(int id) {
 		try {
 			Objects.requireNonNull(users);
-			for(User user : users) {
-				if (user.getId() == id) {
-					return user;
-				}
-			}
 		} catch (NullPointerException e) {
 			throw new NullPointerException();
+		}
+		for(User user : users) {
+			if (user.getId() == id) {
+				return user;
+			}
 		}
 		return null;
 	}
@@ -178,5 +170,16 @@ public class InMemoryUserRepository implements UserRepository{
 		}
 		return null;
 	}
-
+	
+	protected void setAdministratorsDeserialization(List<Administrator> administrators) {
+		this.administrators = administrators;
+	}
+	
+	protected List<Administrator> getAdministratorsForSerialization() {
+		return administrators;
+	}
+	
+	public int getMaxId() {
+		return maxId;
+	}
 }

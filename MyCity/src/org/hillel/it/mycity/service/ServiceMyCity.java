@@ -96,4 +96,6 @@ public interface ServiceMyCity {
 	public List<Assessment> getAssessments(Person user);
 	public List<Assessment> getAssessments(Establishment establishment);
 	public List<Assessment> getAssessments();
+	
+	public void setLoggedUser(Person user);
 }
