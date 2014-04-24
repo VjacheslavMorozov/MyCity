@@ -19,5 +19,6 @@ public interface UserRepository {
 	public List<Moderator> getModerators();
 	public List<User> getUsers();
 	public void deleteUsers();
-	
+	public void setAdministratorsDeserialization(List<Administrator> administrators);
+	public List<Administrator> getAdministratorsForSerialization();
 }

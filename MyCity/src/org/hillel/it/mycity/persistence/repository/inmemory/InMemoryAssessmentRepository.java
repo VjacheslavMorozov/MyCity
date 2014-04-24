@@ -14,12 +14,10 @@ import org.hillel.it.mycity.persistence.repository.AssessmentRepository;
 public class InMemoryAssessmentRepository implements AssessmentRepository{
 	
 	private List<Assessment> assessments;
-	private List<Assessment> unmodifiableAssessments;
 	private int maxId;
 	
 	public InMemoryAssessmentRepository() {
 		assessments = new ArrayList<>();
-		unmodifiableAssessments = Collections.unmodifiableList(assessments);
 		maxId = 1;
 	}
 
@@ -73,14 +71,14 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 	@Override
 	public Assessment getAssessment(int id) {
 		try {
-			Objects.requireNonNull(assessments);
-			for(Assessment assessment: assessments){
-				if(assessment.getId() == id) {
-					return assessment;
-				}
-			}
+			assessmentsNotNull();
 		} catch (NullPointerException e) {
-			throw new NullPointerException("Array list is empty");
+			throw new NullPointerException();
+		}
+		for(Assessment assessment: assessments){
+			if(assessment.getId() == id) {
+				return assessment;
+			}
 		}
 		return null;
 	}
@@ -88,37 +86,43 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 	@Override
 	public List<Assessment> getAssessments(Person user) {
 		try {
-			Objects.requireNonNull(assessments);
+			assessmentsNotNull();
 		} catch (NullPointerException e) {
-			throw new NullPointerException("Array list is empty");
+			throw new NullPointerException();
 		}
 		List<Assessment> assessments = new ArrayList<>();
-		for(Assessment assessment: unmodifiableAssessments){
+		for(Assessment assessment: this.assessments){
 			if(assessment.getCreatedBy().equals(user)) {
 				assessments.add(assessment);
 			}
 		}
-		return assessments;
+		return Collections.unmodifiableList(assessments);
 	}
 
 	@Override
 	public List<Assessment> getAssessments(Establishment establishment) {
 		try {
-			Objects.requireNonNull(assessments);
+			assessmentsNotNull();
 		} catch (NullPointerException e) {
-			throw new NullPointerException("Array list is empty");
+			throw new NullPointerException();
 		}
 		List<Assessment> assessments = new ArrayList<>();
-		for(Assessment assessment: unmodifiableAssessments){
+		for(Assessment assessment: this.assessments){
 			if(assessment.checkEstablishment(establishment)) {
 				assessments.add(assessment);
 			}
 		}
-		return assessments;
+		return Collections.unmodifiableList(assessments);
 	}
 
 	@Override
 	public List<Assessment> getAssessments() {
-		return unmodifiableAssessments;
+		return Collections.unmodifiableList(assessments);
+	}
+	
+	private void assessmentsNotNull() {
+		if(assessments.isEmpty()) {
+			throw new NullPointerException("Assessment array is empty");
+		}
 	}
 }

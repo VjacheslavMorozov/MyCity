@@ -80,4 +80,22 @@ public class ServiceImplTest {
 		serviceImpl.addNightClub(administrator.createEstablishmentNightClub());
 		serviceImpl.deleteEstablishments();
 	}
+	
+	@Test
+	public void deleteEstablishment() {
+		serviceImpl.addAdministrator(new Administrator("mymail5@mail.com", "world"));
+		Administrator administrator = serviceImpl.getAdministrator(1);
+		serviceImpl.setLoggedUser(administrator);
+		serviceImpl.addNightClub(administrator.createEstablishmentNightClub());
+		serviceImpl.deleteEstablishment(1);
+	}
+	
+	@Test
+	public void getCinemas() {
+		serviceImpl.addAdministrator(new Administrator("mymail5@mail.com", "world"));
+		Administrator administrator = serviceImpl.getAdministrator(1);
+		serviceImpl.setLoggedUser(administrator);
+		serviceImpl.addCinema(administrator.createEstablishmentCinema());
+		assertNotNull(serviceImpl.getCinemas());
+	}
 }

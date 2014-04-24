@@ -17,12 +17,10 @@ import org.hillel.it.mycity.persistence.repository.CommentRepository;
 public class InMemoryCommentRepository implements CommentRepository{
 	
 	private List<Comment> comments;
-	private List<Comment> unmodifiableComments;
 	private int maxId;
 	
 	public InMemoryCommentRepository() {
 		comments = new ArrayList<>();
-		unmodifiableComments = Collections.unmodifiableList(comments);
 		maxId = 1;
 	}
 
@@ -87,7 +85,7 @@ public class InMemoryCommentRepository implements CommentRepository{
 	@Override
 	public Comment getComment(int id) {
 		try {
-			Objects.requireNonNull(comments);
+			commentsNotNull();
 		} catch (NullPointerException e) {
 			throw new NullPointerException("Array list is empty");
 		}
@@ -102,53 +100,59 @@ public class InMemoryCommentRepository implements CommentRepository{
 	@Override
 	public List<Comment> getComments(Person user) {
 		try {
-			Objects.requireNonNull(comments);
+			commentsNotNull();
 		} catch (NullPointerException e) {
 			throw new NullPointerException("Array list is empty");
 		}
 		List<Comment> comments = new ArrayList<>(); 
-		for(Comment comment: unmodifiableComments) {
+		for(Comment comment: this.comments) {
 			if(comment.getCreatedBy().equals(user)) {
 				comments.add(comment);
 			}
 		}
-		return comments;
+		return Collections.unmodifiableList(comments);
 	}
 
 	@Override
 	public List<Comment> getComments(Establishment establishment) {
 		try {
-			Objects.requireNonNull(comments);
+			commentsNotNull();
 		} catch (NullPointerException e) {
-			throw new NullPointerException("Array list is empty");
+			throw new NullPointerException();
 		}
 		List<Comment> comments = new ArrayList<>(); 
-		for(Comment comment: unmodifiableComments) {
+		for(Comment comment: this.comments) {
 			if(comment.checkEstablishment(establishment)) {
 				comments.add(comment);
 			}
 		}
-		return comments;
+		return Collections.unmodifiableList(comments);
 	}
 
 	@Override
 	public List<Comment> getComments(Establishment establishment, Person user) {
 		try {
-			Objects.requireNonNull(comments);
+			commentsNotNull();
 		} catch (NullPointerException e) {
-			throw new NullPointerException("Array list is empty");
+			throw new NullPointerException();
 		}
 		List<Comment> comments = new ArrayList<>(); 
-		for(Comment comment: unmodifiableComments) {
+		for(Comment comment: this.comments) {
 			if(comment.checkEstablishment(establishment) && comment.getCreatedBy().equals(user)) {
 				comments.add(comment);
 			}
 		}
-		return comments;
+		return Collections.unmodifiableList(comments);
 	}
 
 	@Override
 	public List<Comment> getComments() {
-		return unmodifiableComments;
+		return Collections.unmodifiableList(comments);
+	}
+	
+	private void commentsNotNull() {
+		if(comments.isEmpty()) {
+			throw new NullPointerException("Comments array is empty");
+		}
 	}
 }

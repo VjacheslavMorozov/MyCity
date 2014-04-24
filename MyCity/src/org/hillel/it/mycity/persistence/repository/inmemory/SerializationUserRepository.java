@@ -12,19 +12,21 @@ import java.util.List;
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
 
-public class SerializationUserRepository extends InMemoryUserRepository{
+public class SerializationUserRepository{
 	
 	private File file;
+	private UserRepository inMemoryUserRepository;
 	
-	public SerializationUserRepository() {
+	public SerializationUserRepository(UserRepository inMemoryUserRepository) {
 		file = new File("store.bin");
+		this.inMemoryUserRepository = inMemoryUserRepository;
 	}
 	public void serializeData() throws IOException {
 	
 		FileOutputStream fos = new FileOutputStream(file);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		
-		oos.writeObject(getAdministratorsForSerialization());
+		oos.writeObject(inMemoryUserRepository.getAdministratorsForSerialization());
 		oos.flush();
 		oos.close();
 	}
@@ -34,7 +36,7 @@ public class SerializationUserRepository extends InMemoryUserRepository{
 		FileInputStream fis = new FileInputStream(file);
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		
-		setAdministratorsDeserialization((List<Administrator>) ois.readObject());
+		inMemoryUserRepository.setAdministratorsDeserialization((List<Administrator>) ois.readObject());
 		ois.close();
 	}
 }

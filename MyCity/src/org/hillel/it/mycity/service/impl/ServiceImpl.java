@@ -206,60 +206,33 @@ public class ServiceImpl implements ServiceMyCity {
 	//CREATE Comment
 	@Override
 	public void addComment(Comment comment) {
-		try {
-			checkUser(comment);
-			commentRepository.addComment(comment);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
+		checkUser(comment);
+		commentRepository.addComment(comment);
 	}
 
 	//DELETE Comment
 	@Override
 	public void deleteComment(int id) {
-		try {
-			checkUser(getComment(id));
-			commentRepository.deleteComment(id);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
+		checkUser(getComment(id));
+		commentRepository.deleteComment(id);
 	}
 
 	@Override
 	public void deleteComments(Person user) {
-		try {
-			checkUser(loggedUser);
-			commentRepository.deleteComments(user);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
-		
+		checkUser(loggedUser);
+		commentRepository.deleteComments(user);
 	}
 
 	@Override
 	public void deleteComments(Establishment establishment) {
-		try {
-			checkUser(loggedUser);
-			commentRepository.deleteComments(establishment);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
+		checkUser(loggedUser);
+		commentRepository.deleteComments(establishment);
 	}
 
 	@Override
 	public void deleteComments(Establishment establishment, Person user) {
-		try {
-			checkUser(loggedUser);
-			commentRepository.deleteComments(establishment,user);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
-		
+		checkUser(loggedUser);
+		commentRepository.deleteComments(establishment,user);
 	}
 
 	//READ Comment
@@ -291,48 +264,27 @@ public class ServiceImpl implements ServiceMyCity {
 	//CREATE Assessment
 	@Override
 	public void addAssessment(Assessment assessment) {
-		try {
-			checkUser(assessment);
-			assessmentRepository.addAssessment(assessment);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
+		checkUser(assessment);
+		assessmentRepository.addAssessment(assessment);
 	}
 
 	//DELETE Assessment
 	@Override
 	public void deleteAssessment(int id) {
-		try {
-			checkUser(loggedUser);
-			assessmentRepository.deleteAssessment(id);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
+		checkUser(loggedUser);
+		assessmentRepository.deleteAssessment(id);
 	}
 
 	@Override
 	public void deleteAssessment(Person user) {
-		try {
-			checkUser(loggedUser);
-			assessmentRepository.deleteAssessment(user);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
+		checkUser(loggedUser);
+		assessmentRepository.deleteAssessment(user);
 	}
 
 	@Override
 	public void deleteAssessment(Establishment establishment) {
-		try {
-			checkUser(loggedUser);
-			assessmentRepository.deleteAssessment(establishment);
-		} catch (RuntimeException e) {
-			System.out.println(e);
-			throw new RuntimeException();
-		}
-		
+		checkUser(loggedUser);
+		assessmentRepository.deleteAssessment(establishment);
 	}
 
 	//READ Assessment
@@ -341,9 +293,6 @@ public class ServiceImpl implements ServiceMyCity {
 		try {
 			checkUser(loggedUser);
 			return assessmentRepository.getAssessment(id);
-		} catch (NullPointerException e){
-			System.out.println(e);
-			throw new NullPointerException();
 		} catch (RuntimeException e) {
 			System.out.println(e);
 			throw new RuntimeException();
@@ -355,9 +304,6 @@ public class ServiceImpl implements ServiceMyCity {
 		try {
 			checkUser(loggedUser);
 			return assessmentRepository.getAssessments(user);
-		} catch (NullPointerException e){
-			System.out.println(e);
-			throw new NullPointerException();
 		} catch (RuntimeException e) {
 			System.out.println(e);
 			throw new RuntimeException();
@@ -369,9 +315,6 @@ public class ServiceImpl implements ServiceMyCity {
 		try {
 			checkUser(loggedUser);
 			return assessmentRepository.getAssessments(establishment);
-		} catch (NullPointerException e){
-			System.out.println(e);
-			throw new NullPointerException();
 		} catch (RuntimeException e) {
 			System.out.println(e);
 			throw new RuntimeException();
@@ -387,6 +330,13 @@ public class ServiceImpl implements ServiceMyCity {
 		loggedUser = user;
 	}
 	
+	/**
+	 * Throw RuntimeException if loggerUser is not in Administrator Group and t is not belongs
+	 * to Assessment and Comment classes.
+	 * Throw RuntimeException if CreatedBy user is not add to the repository and if Logged User
+	 * and CreateBy user is not the same.
+	 * @param t
+	 */
 	private <T extends BaseEntity>void checkUser(T t) {
 		if(loggedUser.inGroup(Group.Administrator) == false && !(t.getClass() == Assessment.class) && !(t.getClass() == Comment.class)) {
 			throw new RuntimeException("Administrator has no login");

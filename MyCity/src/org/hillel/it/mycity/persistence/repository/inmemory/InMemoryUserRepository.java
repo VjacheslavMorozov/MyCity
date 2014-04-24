@@ -5,8 +5,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.hillel.it.mycity.model.entity.Administrator;
@@ -22,101 +25,95 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	private List<Administrator> administrators;
 	private List<Moderator> moderators;
 	private List<User> users;
+	private Map<Integer, String> userMap;
 	private int maxId;
 	
 	public InMemoryUserRepository() {
 		administrators = new ArrayList<>();
 		moderators = new ArrayList<>();
 		users = new ArrayList<>();
+		userMap = new HashMap<Integer, String>();
 		maxId = 1;
 	}
 
 	@Override
 	public void addUser(User user) {
-			validUser(user);
-			user.setGroup(Group.User);
-			user.setId(maxId);
-			users.add(user);
-			maxId++;
+		validUser(user);
+		user.setGroup(Group.User);
+		userMap.put(maxId, "User");
+		user.setId(maxId++);
+		users.add(user);
 	}
 
 	@Override
 	public void addModerator(Moderator moderator) {
-			validUser(moderator);
-			moderator.setGroup(Group.Moderator);
-			moderator.setId(maxId);
-			moderators.add(moderator);
-			maxId++;
+		validUser(moderator);
+		moderator.setGroup(Group.Moderator);
+		userMap.put(maxId, "Moderator");
+		moderator.setId(maxId++);
+		moderators.add(moderator);
 	}
 
 	@Override
 	public void addAdministrator(Administrator administrator) {
-			validUser(administrator);
-			administrator.setGroup(Group.Administrator);
-			administrator.setId(maxId);
-			administrators.add(administrator);
-			maxId++;
-	}
-	
-	public <T extends Person>void validUser(T t) {
-		if(t.getId() > 0) {
-			throw new RuntimeException();
-		}
+		validUser(administrator);
+		administrator.setGroup(Group.Administrator);
+		userMap.put(maxId, "Administrator");
+		administrator.setId(maxId++);
+		administrators.add(administrator);
 	}
 
 	@Override
 	public void deleteUser(int id) {
-		if(id < 1 || id > maxId) {
-			System.out.println("Incorrect Id");
-			return;
-		}
-		if(administrators.isEmpty() && moderators.isEmpty() && users.isEmpty()) {
-			System.out.println("All user arrays is empty");
-			return;
-		}
-		if(!administrators.isEmpty()) {
-			Iterator<Administrator> iterator = administrators.iterator();
-			while(iterator.hasNext()) {
-				if(iterator.next().getId() == id) {
-					iterator.remove();
+		validId(id);
+		
+		switch (userMap.get(id)) {
+		case "User":
+			objectNotNull(users);
+			Iterator<User> iteratorUsers = users.iterator();
+			while(iteratorUsers.hasNext()) {
+				if(iteratorUsers.next().getId() == id) {
+					iteratorUsers.remove();
 					return;
 				}
 			}
-		} else if(!moderators.isEmpty()) {
-			Iterator<Moderator> iterator = moderators.iterator();
-			while (iterator.hasNext()) {
-				if(iterator.next().getId() == id) {
-					iterator.remove();
+			break;
+		case "Moderator":
+			objectNotNull(moderators);
+			Iterator<Moderator> iteratorModerators = moderators.iterator();
+			while (iteratorModerators.hasNext()) {
+				if(iteratorModerators.next().getId() == id) {
+					iteratorModerators.remove();
 					return;
 				}
 			}
-		} else if(!users.isEmpty()) {
-			Iterator<User> iterator = users.iterator();
-			while (iterator.hasNext()) {
-				if(iterator.next().getId() == id) {
-					iterator.remove();
+			break;
+		case "Administrator":
+			objectNotNull(administrators);
+			Iterator<Administrator> iteratorAdministrators = administrators.iterator();
+			while (iteratorAdministrators.hasNext()) {
+				if(iteratorAdministrators.next().getId() == id) {
+					iteratorAdministrators.remove();
 					return;
 				}
 			}
+			break;
 		}
 	}
 
 	@Override
 	public List<Administrator> getAdministrators() {
-		List<Administrator> administrators = this.administrators; 
-		return administrators;
+		return Collections.unmodifiableList(administrators);
 	}
 
 	@Override
 	public List<Moderator> getModerators() {
-		List<Moderator> moderators = this.moderators;
-		return moderators;
+		return Collections.unmodifiableList(moderators);
 	}
 
 	@Override
 	public List<User> getUsers() {
-		List<User> users = this.users;
-		return users;
+		return Collections.unmodifiableList(users);
 	}
 
 	@Override
@@ -128,10 +125,9 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 
 	@Override
 	public User getUser(int id) {
-		try {
-			Objects.requireNonNull(users);
-		} catch (NullPointerException e) {
-			throw new NullPointerException();
+		objectNotNull(users);
+		if(!checkGroup(id, "User")) {
+			return null;
 		}
 		for(User user : users) {
 			if (user.getId() == id) {
@@ -143,43 +139,67 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 
 	@Override
 	public Moderator getModerator(int id) {
-		try {
-			Objects.requireNonNull(moderators);
-			for(Moderator moderator : moderators) {
-				if (moderator.getId() == id) {
-					return moderator;
-				}
+		objectNotNull(moderators);
+		if(!checkGroup(id, "Moderator")) {
+			return null;
+		}
+		for(Moderator moderator : moderators) {
+			if (moderator.getId() == id) {
+				return moderator;
 			}
-		} catch (NullPointerException e) {
-			throw new NullPointerException();
 		}
 		return null;
 	}
 
 	@Override
 	public Administrator getAdministrator(int id) {
-		try {
-			Objects.requireNonNull(administrators);
-			for(Administrator administrator : administrators) {
-				if (administrator.getId() == id) {
-					return administrator;
-				}
+		objectNotNull(administrators);
+		if(!checkGroup(id, "Administrator")) {
+			return null;
+		}
+		for(Administrator administrator : administrators) {
+			if (administrator.getId() == id) {
+				return administrator;
 			}
-		} catch (NullPointerException e) {
-			throw new NullPointerException();
 		}
 		return null;
 	}
 	
-	protected void setAdministratorsDeserialization(List<Administrator> administrators) {
+	public void setAdministratorsDeserialization(List<Administrator> administrators) {
 		this.administrators = administrators;
 	}
 	
-	protected List<Administrator> getAdministratorsForSerialization() {
+	public List<Administrator> getAdministratorsForSerialization() {
 		return administrators;
 	}
 	
 	public int getMaxId() {
 		return maxId;
+	}
+	
+	private <T extends List>void objectNotNull(T t) {
+		if(t.isEmpty()) {
+			throw new NullPointerException("ArrayLists is empty");
+		}
+	}
+	
+	private <T extends Person>void validUser(T t) {
+		if(t.getId() < 1 && userMap.containsKey(t.getId())) {
+			throw new RuntimeException("User is already exist or he have incorrect id");
+		}
+	}
+	
+	private void validId(int id) {
+		if(id < 1 && !userMap.containsKey(id)) {
+			throw new RuntimeException("Incorrect Id");
+		}
+	}
+	
+	private boolean checkGroup(int id, String group) {
+		if(userMap.get(id) != group) {
+			System.out.println("This is no such " + group + " object by this ID");
+			return false;
+		}
+		return true;
 	}
 }

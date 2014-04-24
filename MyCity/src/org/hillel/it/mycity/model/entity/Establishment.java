@@ -78,13 +78,13 @@ public abstract class Establishment extends BaseEntity{
 	 * @param telephoneOfEstablishment
 	 * @return true if telephone number is in standart format
 	 */
-	public boolean checkTelephoneOfEstablishment(String telephoneOfEstablishment) throws ClassNotFoundException{
+	private boolean checkTelephoneOfEstablishment(String telephoneOfEstablishment) throws ClassNotFoundException{
 		Pattern telephonePattern = Pattern.compile("(^0([6][3678]|[9][1-9]|39|48|50))\\d{7}");
 		Matcher telephoneMatcher = telephonePattern.matcher(telephoneOfEstablishment);
 		return telephoneMatcher.find();
 	}
 	
-	public void checkAddComment(Comment comment) {
+	private void checkAddComment(Comment comment) {
 		try {
 			comment.checkEstablishment(this);
 			comment.checkId(comment.getId());
@@ -94,7 +94,7 @@ public abstract class Establishment extends BaseEntity{
 		}
 	}
 	
-	public void checkAddAssessment(Assessment assessment) {
+	private void checkAddAssessment(Assessment assessment) {
 		try {
 			assessment.checkEstablishment(this);
 			assessment.checkId(assessment.getId());
