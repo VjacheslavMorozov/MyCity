@@ -10,6 +10,7 @@ import org.hillel.it.mycity.model.entity.Assessment;
 import org.hillel.it.mycity.model.entity.Establishment;
 import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.persistence.repository.AssessmentRepository;
+import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
 
 public class InMemoryAssessmentRepository implements AssessmentRepository{
 	
@@ -124,5 +125,10 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 		if(assessments.isEmpty()) {
 			throw new NullPointerException("Assessment array is empty");
 		}
+	}
+	
+	public int getAssessmentMaxId() {
+		int id = maxId;
+		return id;
 	}
 }

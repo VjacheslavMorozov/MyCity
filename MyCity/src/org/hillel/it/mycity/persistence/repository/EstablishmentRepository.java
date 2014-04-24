@@ -23,4 +23,6 @@ public interface EstablishmentRepository {
 	public void deleteEstablishments();
 	public void deleteEstablishment(int id);
 	
+	public int getMaxId ();
+	
 }

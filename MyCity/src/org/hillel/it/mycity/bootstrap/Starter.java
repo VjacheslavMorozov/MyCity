@@ -34,11 +34,27 @@ public class Starter {
 		
 		ServiceMyCity serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, inMemoryCommentRepository, inMemoryAssessmentRepository);
 		
-		SerializationUserRepository serilaizationUserRepository = new SerializationUserRepository(inMemoryUserRepository);
+		/*Administrator administrator = new Administrator("mymail@mail.com", "password");
+		serviceImpl.addAdministrator(administrator);
+		inMemoryUserRepository.sereializeUserData();*/
 		
-		serilaizationUserRepository.deserializeData();
+		inMemoryUserRepository.deserializeUserData();
 		Administrator administrator = serviceImpl.getAdministrator(1);
 		serviceImpl.setLoggedUser(administrator);
+		
+		serviceImpl.addCinema(administrator.createEstablishmentCinema());
+		
+		System.out.println(inMemoryEstablishmentRepository.getMaxId());
+		
+		int id = inMemoryEstablishmentRepository.getMaxId();
+		
+		id++;
+		
+		System.out.println(id);
+		
+		System.out.println(inMemoryEstablishmentRepository.getMaxId());
+		
+		System.out.println(serviceImpl.getAdministrator(1).getEmail());
 		
 	}
 }

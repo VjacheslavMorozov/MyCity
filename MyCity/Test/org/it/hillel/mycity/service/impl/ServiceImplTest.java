@@ -35,9 +35,11 @@ public class ServiceImplTest {
 	private static UserRepository inMemoryUserRepository;
 	private static CommentRepository inMemoryCommentRepository;
 	private static AssessmentRepository inMemoryAssessmentRepository;
+	private static Administrator administrator;
+	private int id;
 	
 	@BeforeClass
-	public static void beforeTest() {
+	public static void beforeClass() {
 		inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
 		inMemoryUserRepository = new InMemoryUserRepository();
 		inMemoryCommentRepository = new InMemoryCommentRepository();
@@ -45,57 +47,76 @@ public class ServiceImplTest {
 		serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, inMemoryCommentRepository, inMemoryAssessmentRepository);
 	}
 	
+	@Before
+	public void beforeTest() { 
+		serviceImpl.addAdministrator(new Administrator("mymail@mail.com", "world"));
+		administrator = serviceImpl.getAdministrator(1);
+		serviceImpl.setLoggedUser(administrator);
+	}
+	
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 	
 	@Test
 	public void addRestaurantTest() {
-		serviceImpl.addAdministrator(new Administrator("mymail1@mail.com", "world"));
-		Administrator administrator1 = serviceImpl.getAdministrator(1);
-		serviceImpl.setLoggedUser(administrator1);
-		serviceImpl.addRestaurant(administrator1.createEstablishmentRestaurant());
+		serviceImpl.addRestaurant(administrator.createEstablishmentRestaurant());
 	}
 	
 	@Test
 	public void addCinemaTest() {
-		serviceImpl.addAdministrator(new Administrator("mymail2@mail.com", "world"));
-		Administrator administrator = serviceImpl.getAdministrator(1);
-		serviceImpl.setLoggedUser(administrator);
 		serviceImpl.addCinema(administrator.createEstablishmentCinema());
 	}
 	
 	@Test
 	public void addNightClubTest() {
-		serviceImpl.addAdministrator(new Administrator("mymail3@mail.com", "world"));
-		Administrator administrator = serviceImpl.getAdministrator(1);
-		serviceImpl.setLoggedUser(administrator);
 		serviceImpl.addNightClub(administrator.createEstablishmentNightClub());
 	}
 	
 	@Test
 	public void deleteEstalbishmentsTest() {
-		serviceImpl.addAdministrator(new Administrator("mymail4@mail.com", "world"));
-		Administrator administrator = serviceImpl.getAdministrator(1);
-		serviceImpl.setLoggedUser(administrator);
 		serviceImpl.addNightClub(administrator.createEstablishmentNightClub());
 		serviceImpl.deleteEstablishments();
 	}
 	
 	@Test
 	public void deleteEstablishment() {
-		serviceImpl.addAdministrator(new Administrator("mymail5@mail.com", "world"));
-		Administrator administrator = serviceImpl.getAdministrator(1);
-		serviceImpl.setLoggedUser(administrator);
 		serviceImpl.addNightClub(administrator.createEstablishmentNightClub());
 		serviceImpl.deleteEstablishment(1);
 	}
 	
 	@Test
 	public void getCinemas() {
-		serviceImpl.addAdministrator(new Administrator("mymail5@mail.com", "world"));
-		Administrator administrator = serviceImpl.getAdministrator(1);
-		serviceImpl.setLoggedUser(administrator);
 		serviceImpl.addCinema(administrator.createEstablishmentCinema());
 		assertNotNull(serviceImpl.getCinemas());
+	}
+	
+	@Test
+	public void getNightClubs() {
+		serviceImpl.addNightClub(administrator.createEstablishmentNightClub());
+		assertNotNull(serviceImpl.getNightClubs());
+	}
+	
+	@Test
+	public void getRestaurants() {
+		serviceImpl.addRestaurant(administrator.createEstablishmentRestaurant());
+		assertNotNull(serviceImpl.getRestaurants());
+	}
+	
+	@Test
+	public void getCinema() {
+		serviceImpl.addCinema(administrator.createEstablishmentCinema());
+		assertNotNull(serviceImpl.getCinema(1));
+	}
+	
+	@Test
+	public void getNightClub() {
+		serviceImpl.addNightClub(administrator.createEstablishmentNightClub());
+		assertNotNull(serviceImpl.getNightClub(1));
+	}
+	
+	@Test
+	public void getRestaurant() {
+		serviceImpl.addRestaurant(administrator.createEstablishmentRestaurant());
+		assertNotNull(serviceImpl.getRestaurant(1));
 	}
 }

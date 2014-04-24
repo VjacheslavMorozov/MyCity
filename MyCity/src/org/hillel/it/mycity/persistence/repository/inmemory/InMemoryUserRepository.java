@@ -1,5 +1,8 @@
 package org.hillel.it.mycity.persistence.repository.inmemory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -21,26 +24,28 @@ import org.hillel.it.mycity.persistence.repository.UserRepository;
 
 public class InMemoryUserRepository implements UserRepository, Serializable{
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	private List<Administrator> administrators;
 	private List<Moderator> moderators;
 	private List<User> users;
-	private Map<Integer, String> userMap;
+	private Map<Integer, Group> userMap;
 	private int maxId;
+	private File file;
 	
 	public InMemoryUserRepository() {
 		administrators = new ArrayList<>();
 		moderators = new ArrayList<>();
 		users = new ArrayList<>();
-		userMap = new HashMap<Integer, String>();
+		userMap = new HashMap<Integer, Group>();
 		maxId = 1;
+		file = new File("storeNew.bin");
 	}
 
 	@Override
 	public void addUser(User user) {
 		validUser(user);
 		user.setGroup(Group.User);
-		userMap.put(maxId, "User");
+		userMap.put(maxId, Group.User);
 		user.setId(maxId++);
 		users.add(user);
 	}
@@ -49,7 +54,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	public void addModerator(Moderator moderator) {
 		validUser(moderator);
 		moderator.setGroup(Group.Moderator);
-		userMap.put(maxId, "Moderator");
+		userMap.put(maxId, Group.Moderator);
 		moderator.setId(maxId++);
 		moderators.add(moderator);
 	}
@@ -58,7 +63,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	public void addAdministrator(Administrator administrator) {
 		validUser(administrator);
 		administrator.setGroup(Group.Administrator);
-		userMap.put(maxId, "Administrator");
+		userMap.put(maxId, Group.Administrator);
 		administrator.setId(maxId++);
 		administrators.add(administrator);
 	}
@@ -68,7 +73,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		validId(id);
 		
 		switch (userMap.get(id)) {
-		case "User":
+		case User:
 			objectNotNull(users);
 			Iterator<User> iteratorUsers = users.iterator();
 			while(iteratorUsers.hasNext()) {
@@ -78,7 +83,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 				}
 			}
 			break;
-		case "Moderator":
+		case Moderator:
 			objectNotNull(moderators);
 			Iterator<Moderator> iteratorModerators = moderators.iterator();
 			while (iteratorModerators.hasNext()) {
@@ -88,7 +93,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 				}
 			}
 			break;
-		case "Administrator":
+		case Administrator:
 			objectNotNull(administrators);
 			Iterator<Administrator> iteratorAdministrators = administrators.iterator();
 			while (iteratorAdministrators.hasNext()) {
@@ -126,7 +131,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	@Override
 	public User getUser(int id) {
 		objectNotNull(users);
-		if(!checkGroup(id, "User")) {
+		if(!checkGroup(id, Group.User)) {
 			return null;
 		}
 		for(User user : users) {
@@ -140,7 +145,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	@Override
 	public Moderator getModerator(int id) {
 		objectNotNull(moderators);
-		if(!checkGroup(id, "Moderator")) {
+		if(!checkGroup(id, Group.Moderator)) {
 			return null;
 		}
 		for(Moderator moderator : moderators) {
@@ -154,7 +159,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	@Override
 	public Administrator getAdministrator(int id) {
 		objectNotNull(administrators);
-		if(!checkGroup(id, "Administrator")) {
+		if(!checkGroup(id, Group.Administrator)) {
 			return null;
 		}
 		for(Administrator administrator : administrators) {
@@ -195,11 +200,37 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		}
 	}
 	
-	private boolean checkGroup(int id, String group) {
+	private boolean checkGroup(int id, Group group) {
 		if(userMap.get(id) != group) {
 			System.out.println("This is no such " + group + " object by this ID");
 			return false;
 		}
 		return true;
+	}
+	
+	public void sereializeUserData() throws IOException {
+		FileOutputStream fos = new FileOutputStream(file);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		
+		oos.writeObject(administrators);
+		oos.writeObject(moderators);
+		oos.writeObject(users);
+		oos.writeObject(userMap);
+		oos.writeInt(maxId);
+		
+		oos.flush();
+		oos.close();
+	}
+	
+	public void deserializeUserData() throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream(file);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		
+		administrators = (List<Administrator>) ois.readObject();
+		moderators = (List<Moderator>) ois.readObject();
+		users = (List<User>) ois.readObject();
+		userMap = (Map<Integer, Group>) ois.readObject();
+		maxId = ois.readInt();
+		ois.close();
 	}
 }

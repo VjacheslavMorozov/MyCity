@@ -168,21 +168,28 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		restaurants.clear();
 	}
 	
-	public void validEstablishment(Establishment establishment) {
+	private void validEstablishment(Establishment establishment) {
 		if(establishment.getId() > 0) {
 			throw new RuntimeException("This establishment is already exist in memory");
 		}
 	}
 	
-	public void validId(int id) {
-		if(id < 1 && !estbalishmentMap.containsKey(id)) {
+	private void validId(int id) {
+		if(id < 1 && id > maxId) {
 			throw new RuntimeException("Incorrect id");
+		} else if(!estbalishmentMap.containsKey(id)) {
+			throw new RuntimeException("No such id");
 		}
 	}
 	
-	public <T extends List>void establishmentNotNull(T t) {
+	private <T extends List>void establishmentNotNull(T t) {
 		if(t.isEmpty()) {
 			throw new NullPointerException("Array list is empty");
 		}
+	}
+	
+	public int getMaxId() {
+		int id = maxId;
+		return id;
 	}
 }

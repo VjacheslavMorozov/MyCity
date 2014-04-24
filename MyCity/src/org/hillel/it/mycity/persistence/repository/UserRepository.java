@@ -1,5 +1,6 @@
 package org.hillel.it.mycity.persistence.repository;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Administrator;
@@ -19,6 +20,7 @@ public interface UserRepository {
 	public List<Moderator> getModerators();
 	public List<User> getUsers();
 	public void deleteUsers();
-	public void setAdministratorsDeserialization(List<Administrator> administrators);
-	public List<Administrator> getAdministratorsForSerialization();
+	
+	public void deserializeUserData() throws IOException, ClassNotFoundException;
+	public void sereializeUserData() throws IOException;
 }

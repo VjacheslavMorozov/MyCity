@@ -26,7 +26,7 @@ public class SerializationUserRepository{
 		FileOutputStream fos = new FileOutputStream(file);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		
-		oos.writeObject(inMemoryUserRepository.getAdministratorsForSerialization());
+		oos.writeObject(inMemoryUserRepository);
 		oos.flush();
 		oos.close();
 	}
@@ -36,7 +36,7 @@ public class SerializationUserRepository{
 		FileInputStream fis = new FileInputStream(file);
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		
-		inMemoryUserRepository.setAdministratorsDeserialization((List<Administrator>) ois.readObject());
+		ois.readObject();
 		ois.close();
 	}
 }
