@@ -74,7 +74,6 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		validId(id);
 		switch (estbalishmentMap.get(id)) {
 		case "Cinema":
-			establishmentNotNull(cinemas);
 			Iterator<Cinema> iteratorCinemas = cinemas.iterator();
 			while (iteratorCinemas.hasNext()) {
 				if(iteratorCinemas.next().getId() == id) {
@@ -85,7 +84,6 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 			}
 			break;
 		case "NightClub":
-			establishmentNotNull(nightClubs);
 			Iterator<NightClub> iteratorNightClubs = nightClubs.iterator();
 			while (iteratorNightClubs.hasNext()) {
 				if(iteratorNightClubs.next().getId() == id) {
@@ -96,7 +94,6 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 			}
 			break;
 		case "Restaurant":
-			establishmentNotNull(restaurants);
 			Iterator<Restaurant> iteratorRestaurants = restaurants.iterator();
 			while (iteratorRestaurants.hasNext()) {
 				if(iteratorRestaurants.next().getId() == id) {
@@ -120,7 +117,6 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	@Override
 	public Cinema getCinema(int id) {
 		validId(id);
-		establishmentNotNull(cinemas);
 		for(Cinema cinema : cinemas) {
 			if(cinema.getId() == id) {
 				return cinema;
@@ -132,7 +128,6 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	@Override
 	public Restaurant getRestaurant(int id) {
 		validId(id);
-		establishmentNotNull(restaurants);
 		for(Restaurant restaurant : restaurants) {
 			if(restaurant.getId() == id) {
 				return restaurant;
@@ -144,7 +139,6 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 	@Override
 	public NightClub getNightClub(int id) {
 		validId(id);
-		establishmentNotNull(nightClubs);
 		for(NightClub nightClub : nightClubs) {
 			if(nightClub.getId() == id) {
 				return nightClub;
@@ -179,12 +173,6 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 			throw new RuntimeException("Incorrect id");
 		} else if(!estbalishmentMap.containsKey(id)) {
 			throw new RuntimeException("No such id");
-		}
-	}
-	
-	private <T extends List>void establishmentNotNull(T t) {
-		if(t.isEmpty()) {
-			throw new NullPointerException("Array list is empty");
 		}
 	}
 	

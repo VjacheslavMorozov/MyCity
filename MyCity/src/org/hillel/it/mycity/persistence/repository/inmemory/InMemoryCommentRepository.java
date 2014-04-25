@@ -84,11 +84,6 @@ public class InMemoryCommentRepository implements CommentRepository{
 
 	@Override
 	public Comment getComment(int id) {
-		try {
-			commentsNotNull();
-		} catch (NullPointerException e) {
-			throw new NullPointerException("Array list is empty");
-		}
 		for(Comment comment: comments) {
 			if(comment.getId() == id) {
 				return comment;
@@ -99,11 +94,6 @@ public class InMemoryCommentRepository implements CommentRepository{
 
 	@Override
 	public List<Comment> getComments(Person user) {
-		try {
-			commentsNotNull();
-		} catch (NullPointerException e) {
-			throw new NullPointerException("Array list is empty");
-		}
 		List<Comment> comments = new ArrayList<>(); 
 		for(Comment comment: this.comments) {
 			if(comment.getCreatedBy().equals(user)) {
@@ -115,11 +105,6 @@ public class InMemoryCommentRepository implements CommentRepository{
 
 	@Override
 	public List<Comment> getComments(Establishment establishment) {
-		try {
-			commentsNotNull();
-		} catch (NullPointerException e) {
-			throw new NullPointerException();
-		}
 		List<Comment> comments = new ArrayList<>(); 
 		for(Comment comment: this.comments) {
 			if(comment.checkEstablishment(establishment)) {
@@ -131,11 +116,6 @@ public class InMemoryCommentRepository implements CommentRepository{
 
 	@Override
 	public List<Comment> getComments(Establishment establishment, Person user) {
-		try {
-			commentsNotNull();
-		} catch (NullPointerException e) {
-			throw new NullPointerException();
-		}
 		List<Comment> comments = new ArrayList<>(); 
 		for(Comment comment: this.comments) {
 			if(comment.checkEstablishment(establishment) && comment.getCreatedBy().equals(user)) {
@@ -148,11 +128,5 @@ public class InMemoryCommentRepository implements CommentRepository{
 	@Override
 	public List<Comment> getComments() {
 		return Collections.unmodifiableList(comments);
-	}
-	
-	private void commentsNotNull() {
-		if(comments.isEmpty()) {
-			throw new NullPointerException("Comments array is empty");
-		}
 	}
 }

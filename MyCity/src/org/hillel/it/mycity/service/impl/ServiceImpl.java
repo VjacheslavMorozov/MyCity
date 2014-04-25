@@ -20,17 +20,18 @@ import org.hillel.it.mycity.persistence.repository.AssessmentRepository;
 import org.hillel.it.mycity.persistence.repository.CommentRepository;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
+import org.hillel.it.mycity.persistence.repository.inmemory.FileUserRepository;
 import org.hillel.it.mycity.service.ServiceMyCity;
 import org.w3c.dom.ranges.RangeException;
 
 public class ServiceImpl implements ServiceMyCity {
 	private EstablishmentRepository establishmentRepository;
-	private UserRepository userRepository;
+	private FileUserRepository userRepository;
 	private CommentRepository commentRepository;
 	private AssessmentRepository assessmentRepository;
 	private Person loggedUser; 
 	
-	public ServiceImpl(EstablishmentRepository establishmentRepository, UserRepository userRepository, CommentRepository commentRepository, AssessmentRepository assessmentRepository) {
+	public ServiceImpl(EstablishmentRepository establishmentRepository, FileUserRepository userRepository, CommentRepository commentRepository, AssessmentRepository assessmentRepository) {
 		this.establishmentRepository = establishmentRepository;
 		this.userRepository = userRepository;
 		this.commentRepository = commentRepository;

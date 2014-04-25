@@ -25,12 +25,11 @@ import org.hillel.it.mycity.persistence.repository.UserRepository;
 public class InMemoryUserRepository implements UserRepository, Serializable{
 	
 	private static final long serialVersionUID = 2L;
-	private List<Administrator> administrators;
-	private List<Moderator> moderators;
-	private List<User> users;
-	private Map<Integer, Group> userMap;
-	private int maxId;
-	private File file;
+	protected List<Administrator> administrators;
+	protected List<Moderator> moderators;
+	protected List<User> users;
+	protected Map<Integer, Group> userMap;
+	protected int maxId;
 	
 	public InMemoryUserRepository() {
 		administrators = new ArrayList<>();
@@ -38,7 +37,6 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		users = new ArrayList<>();
 		userMap = new HashMap<Integer, Group>();
 		maxId = 1;
-		file = new File("storeNew.bin");
 	}
 
 	@Override
@@ -74,7 +72,6 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		
 		switch (userMap.get(id)) {
 		case User:
-			objectNotNull(users);
 			Iterator<User> iteratorUsers = users.iterator();
 			while(iteratorUsers.hasNext()) {
 				if(iteratorUsers.next().getId() == id) {
@@ -84,7 +81,6 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 			}
 			break;
 		case Moderator:
-			objectNotNull(moderators);
 			Iterator<Moderator> iteratorModerators = moderators.iterator();
 			while (iteratorModerators.hasNext()) {
 				if(iteratorModerators.next().getId() == id) {
@@ -94,7 +90,6 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 			}
 			break;
 		case Administrator:
-			objectNotNull(administrators);
 			Iterator<Administrator> iteratorAdministrators = administrators.iterator();
 			while (iteratorAdministrators.hasNext()) {
 				if(iteratorAdministrators.next().getId() == id) {
@@ -130,7 +125,6 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 
 	@Override
 	public User getUser(int id) {
-		objectNotNull(users);
 		if(!checkGroup(id, Group.User)) {
 			return null;
 		}
@@ -144,7 +138,6 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 
 	@Override
 	public Moderator getModerator(int id) {
-		objectNotNull(moderators);
 		if(!checkGroup(id, Group.Moderator)) {
 			return null;
 		}
@@ -158,7 +151,6 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 
 	@Override
 	public Administrator getAdministrator(int id) {
-		objectNotNull(administrators);
 		if(!checkGroup(id, Group.Administrator)) {
 			return null;
 		}
@@ -182,12 +174,6 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		return maxId;
 	}
 	
-	private <T extends List>void objectNotNull(T t) {
-		if(t.isEmpty()) {
-			throw new NullPointerException("ArrayLists is empty");
-		}
-	}
-	
 	private <T extends Person>void validUser(T t) {
 		if(t.getId() < 1 && userMap.containsKey(t.getId())) {
 			throw new RuntimeException("User is already exist or he have incorrect id");
@@ -206,31 +192,5 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 			return false;
 		}
 		return true;
-	}
-	
-	public void sereializeUserData() throws IOException {
-		FileOutputStream fos = new FileOutputStream(file);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		
-		oos.writeObject(administrators);
-		oos.writeObject(moderators);
-		oos.writeObject(users);
-		oos.writeObject(userMap);
-		oos.writeInt(maxId);
-		
-		oos.flush();
-		oos.close();
-	}
-	
-	public void deserializeUserData() throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream(file);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		
-		administrators = (List<Administrator>) ois.readObject();
-		moderators = (List<Moderator>) ois.readObject();
-		users = (List<User>) ois.readObject();
-		userMap = (Map<Integer, Group>) ois.readObject();
-		maxId = ois.readInt();
-		ois.close();
 	}
 }

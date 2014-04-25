@@ -71,11 +71,6 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 
 	@Override
 	public Assessment getAssessment(int id) {
-		try {
-			assessmentsNotNull();
-		} catch (NullPointerException e) {
-			throw new NullPointerException();
-		}
 		for(Assessment assessment: assessments){
 			if(assessment.getId() == id) {
 				return assessment;
@@ -86,11 +81,6 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 
 	@Override
 	public List<Assessment> getAssessments(Person user) {
-		try {
-			assessmentsNotNull();
-		} catch (NullPointerException e) {
-			throw new NullPointerException();
-		}
 		List<Assessment> assessments = new ArrayList<>();
 		for(Assessment assessment: this.assessments){
 			if(assessment.getCreatedBy().equals(user)) {
@@ -102,11 +92,6 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 
 	@Override
 	public List<Assessment> getAssessments(Establishment establishment) {
-		try {
-			assessmentsNotNull();
-		} catch (NullPointerException e) {
-			throw new NullPointerException();
-		}
 		List<Assessment> assessments = new ArrayList<>();
 		for(Assessment assessment: this.assessments){
 			if(assessment.checkEstablishment(establishment)) {
@@ -119,12 +104,6 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 	@Override
 	public List<Assessment> getAssessments() {
 		return Collections.unmodifiableList(assessments);
-	}
-	
-	private void assessmentsNotNull() {
-		if(assessments.isEmpty()) {
-			throw new NullPointerException("Assessment array is empty");
-		}
 	}
 	
 	public int getAssessmentMaxId() {

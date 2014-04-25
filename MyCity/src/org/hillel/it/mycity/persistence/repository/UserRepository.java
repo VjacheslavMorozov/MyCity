@@ -21,6 +21,4 @@ public interface UserRepository {
 	public List<User> getUsers();
 	public void deleteUsers();
 	
-	public void deserializeUserData() throws IOException, ClassNotFoundException;
-	public void sereializeUserData() throws IOException;
 }
