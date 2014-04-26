@@ -30,7 +30,7 @@ import org.hillel.it.mycity.service.impl.ServiceImpl;
 public class Starter {
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		EstablishmentRepository inMemoryEstablishmentRepository = new InMemoryEstablishmentRepository();
-		FileUserRepository fileUserRepository = new FileUserRepository();
+		UserRepository fileUserRepository = new FileUserRepository();
 		CommentRepository inMemoryCommentRepository = new InMemoryCommentRepository();
 		AssessmentRepository inMemoryAssessmentRepository = new InMemoryAssessmentRepository();
 		

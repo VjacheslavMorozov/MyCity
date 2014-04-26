@@ -23,9 +23,12 @@ public class Configuration {
 		}
 		return instance;
 	}
-	public String getFilePath() throws IOException {
+	public String getFilePath() {
 		InputStream stream = Configuration.class.getClassLoader().getResourceAsStream("applications.propeties");
-		prop.load(stream);
+		try {
+			prop.load(stream);
+		} catch (IOException e) {
+		}
 		filePath = prop.getProperty("file.path");
 		IOUtils.closeQuietly(stream);
 		return filePath;

@@ -26,12 +26,12 @@ import org.w3c.dom.ranges.RangeException;
 
 public class ServiceImpl implements ServiceMyCity {
 	private EstablishmentRepository establishmentRepository;
-	private FileUserRepository userRepository;
+	private UserRepository userRepository;
 	private CommentRepository commentRepository;
 	private AssessmentRepository assessmentRepository;
 	private Person loggedUser; 
 	
-	public ServiceImpl(EstablishmentRepository establishmentRepository, FileUserRepository userRepository, CommentRepository commentRepository, AssessmentRepository assessmentRepository) {
+	public ServiceImpl(EstablishmentRepository establishmentRepository, UserRepository userRepository, CommentRepository commentRepository, AssessmentRepository assessmentRepository) {
 		this.establishmentRepository = establishmentRepository;
 		this.userRepository = userRepository;
 		this.commentRepository = commentRepository;
@@ -42,7 +42,11 @@ public class ServiceImpl implements ServiceMyCity {
 	@Override
 	public void addRestaurant(Restaurant restaurant) {
 		checkUser(restaurant);
-		establishmentRepository.addRestaurant(restaurant);	
+		try {
+			establishmentRepository.addRestaurant(restaurant);
+		} catch (RuntimeException e) {
+			throw new RuntimeException(e);
+		}	
 	}
 
 	@Override

@@ -28,14 +28,9 @@ public class FileUserRepository extends InMemoryUserRepository implements UserRe
 		super();
 		file = new File("store.bin");
 	}
-	public void sereializeUserData() throws IOException {
+	private void sereializeUserData() throws IOException {
 		FileOutputStream fos = new FileOutputStream(file);
-		//FileUtils.writeByteArrayToFile(file, SerializationUtils.serialize((Serializable) administrators));
-		//FileUtils.writeByteArrayToFile(file, SerializationUtils.serialize((Serializable) moderators));
-		//FileUtils.writeByteArrayToFile(file, SerializationUtils.serialize((Serializable) users));
-		//SerializationUtils.serialize(this, fos);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		
 		oos.writeObject(administrators);
 		oos.writeObject(moderators);
 		oos.writeObject(users);
@@ -45,13 +40,8 @@ public class FileUserRepository extends InMemoryUserRepository implements UserRe
 		oos.close();
 	}
 	
-	public void deserializeUserData() throws IOException, ClassNotFoundException {
+	private void deserializeUserData() throws IOException, ClassNotFoundException {
 		FileInputStream fis = new FileInputStream(file);
-		//byte[] data = FileUtils.readFileToByteArray(file);
-		//SerializationUtils.deserialize(fis);
-		//administrators = SerializationUtils.deserialize(data);
-		//moderators = SerializationUtils.deserialize(data);
-		//users = SerializationUtils.deserialize(data);
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		
 		administrators = (List<Administrator>) ois.readObject();
