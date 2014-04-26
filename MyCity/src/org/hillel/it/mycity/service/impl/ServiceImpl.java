@@ -168,29 +168,17 @@ public class ServiceImpl implements ServiceMyCity {
 	
 	@Override
 	public Administrator getAdministrator(int id) {
-		try {
-			return userRepository.getAdministrator(id);
-		} catch (NullPointerException e) {
-			throw new NullPointerException("List of users is empty");
-		}
+		return userRepository.getAdministrator(id);
 	}
 
 	@Override
 	public Moderator getModerator(int id) {
-		try {
-			return userRepository.getModerator(id);
-		} catch (NullPointerException e) {
-			throw new NullPointerException("List of users is empty");
-		}
+		return userRepository.getModerator(id);
 	}
 
 	@Override
 	public User getUser(int id) {
-		try {
-			return userRepository.getUser(id);
-		} catch (NullPointerException e) {
-			throw new NullPointerException("List of users is empty");
-		}
+		return userRepository.getUser(id);
 	}
 
 	//DELETE Person

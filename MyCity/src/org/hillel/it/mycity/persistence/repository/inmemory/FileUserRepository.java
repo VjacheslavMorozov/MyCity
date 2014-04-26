@@ -20,10 +20,9 @@ import org.hillel.it.mycity.model.entity.Moderator;
 import org.hillel.it.mycity.model.entity.User;
 import org.hillel.it.mycity.persistence.repository.UserRepository;
 
-public class FileUserRepository extends InMemoryUserRepository{
+public class FileUserRepository extends InMemoryUserRepository implements UserRepository{
 	
 	private File file;
-	private InMemoryUserRepository inMemoryUserRepository;
 	
 	public FileUserRepository() {
 		super();
@@ -31,6 +30,9 @@ public class FileUserRepository extends InMemoryUserRepository{
 	}
 	public void sereializeUserData() throws IOException {
 		FileOutputStream fos = new FileOutputStream(file);
+		//FileUtils.writeByteArrayToFile(file, SerializationUtils.serialize((Serializable) administrators));
+		//FileUtils.writeByteArrayToFile(file, SerializationUtils.serialize((Serializable) moderators));
+		//FileUtils.writeByteArrayToFile(file, SerializationUtils.serialize((Serializable) users));
 		//SerializationUtils.serialize(this, fos);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		
@@ -41,12 +43,15 @@ public class FileUserRepository extends InMemoryUserRepository{
 		oos.writeInt(maxId);
 		oos.flush();
 		oos.close();
-		fos.close();
 	}
 	
 	public void deserializeUserData() throws IOException, ClassNotFoundException {
 		FileInputStream fis = new FileInputStream(file);
+		//byte[] data = FileUtils.readFileToByteArray(file);
 		//SerializationUtils.deserialize(fis);
+		//administrators = SerializationUtils.deserialize(data);
+		//moderators = SerializationUtils.deserialize(data);
+		//users = SerializationUtils.deserialize(data);
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		
 		administrators = (List<Administrator>) ois.readObject();

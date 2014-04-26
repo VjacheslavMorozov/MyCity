@@ -10,6 +10,7 @@ import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Cinema;
 import org.hillel.it.mycity.model.entity.Establishment;
 import org.hillel.it.mycity.model.entity.Group;
+import org.hillel.it.mycity.model.entity.Moderator;
 import org.hillel.it.mycity.model.entity.Person;
 import org.hillel.it.mycity.model.entity.PersonFactory;
 import org.hillel.it.mycity.model.entity.Restaurant;
@@ -36,6 +37,7 @@ public class Starter {
 		ServiceMyCity serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, fileUserRepository, inMemoryCommentRepository, inMemoryAssessmentRepository);
 		
 		Configuration configuration = Configuration.getInstance();
-		configuration.getFilePath();
+		System.out.println(configuration.getFilePath());
+	
 	}
 }
