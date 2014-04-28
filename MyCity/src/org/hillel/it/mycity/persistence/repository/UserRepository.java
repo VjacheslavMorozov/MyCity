@@ -20,4 +20,5 @@ public interface UserRepository {
 	public List<Moderator> getModerators();
 	public List<User> getUsers();
 	public void deleteUsers();
+	public void deserializeData();
 }

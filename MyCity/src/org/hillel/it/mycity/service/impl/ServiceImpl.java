@@ -339,4 +339,9 @@ public class ServiceImpl implements ServiceMyCity {
 			throw new RuntimeException("Users has no login into the system. Call setLoggedUser method");
 		}
 	}
+
+	@Override
+	public void deserializeUserData() {
+		userRepository.deserializeData();
+	}
 }

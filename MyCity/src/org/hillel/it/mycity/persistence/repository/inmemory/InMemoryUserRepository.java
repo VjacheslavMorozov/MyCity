@@ -1,11 +1,6 @@
 package org.hillel.it.mycity.persistence.repository.inmemory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Group;
@@ -30,6 +24,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	protected List<User> users;
 	protected Map<Integer, Group> userMap;
 	protected int maxId;
+	private FileUserRepository fileUserRepository;
 	
 	public InMemoryUserRepository() {
 		administrators = new ArrayList<>();
@@ -46,6 +41,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		userMap.put(maxId, Group.User);
 		user.setId(maxId++);
 		users.add(user);
+		fileUserRepository.sereializeUserData(users, Group.User);
 	}
 
 	@Override
@@ -55,6 +51,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		userMap.put(maxId, Group.Moderator);
 		moderator.setId(maxId++);
 		moderators.add(moderator);
+		fileUserRepository.sereializeUserData(moderators, Group.Moderator);
 	}
 
 	@Override
@@ -64,6 +61,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		userMap.put(maxId, Group.Administrator);
 		administrator.setId(maxId++);
 		administrators.add(administrator);
+		fileUserRepository.sereializeUserData(administrators, Group.Administrator);
 	}
 
 	@Override
@@ -192,5 +190,18 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void deserializeData(){
+		try {
+			fileUserRepository.deserializeUserData();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void setFileUserRepository(FileUserRepository fileUserRepository) {
+		this.fileUserRepository = fileUserRepository;
 	}
 }

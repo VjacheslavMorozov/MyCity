@@ -65,6 +65,9 @@ public interface ServiceMyCity {
 	public void deleteUsers();
 	public void deleteUser(int id);
 	
+	//DeserializeData
+	public void deserializeUserData();
+	
 	//CommentRepository
 	//CREATE Comment
 	public void addComment(Comment comment);

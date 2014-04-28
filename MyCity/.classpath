@@ -26,5 +26,7 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/MyCity/lib/commons-validator-1.4.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/db/lib/derby.jar"/>
+	<classpathentry kind="lib" path="/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/db/lib/derbyclient.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
