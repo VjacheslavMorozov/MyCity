@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Cinema;
@@ -41,6 +42,7 @@ public class ServiceImplTest {
 	private static Administrator administrator;
 	private static int userId;
 	private static int establishmentId;
+	private static String email;
 	
 	@BeforeClass
 	public static void beforeClass() {
@@ -54,6 +56,11 @@ public class ServiceImplTest {
 		administrator = serviceImpl.getAdministrator(1);
 		serviceImpl.setLoggedUser(administrator);
 		userId++;
+	}
+	
+	@Before
+	public void beforeTest() {
+		email = "maymail" + userId + "@mail.com";
 	}
 	
 	@Rule
@@ -142,14 +149,14 @@ public class ServiceImplTest {
 	
 	@Test
 	public void addModerator() {
-		Moderator moderator = new Moderator("mymail@mail.com", "password");
+		Moderator moderator = new Moderator(email, "password");
 		serviceImpl.addModerator(moderator);
 		userId++;
 	}
 	
 	@Test
 	public void addUser() {
-		User user = new User("mymail@mail.com", "password");
+		User user = new User(email, "password");
 		serviceImpl.addUser(user);
 		System.out.println(serviceImpl.getUser(userId).getUsername());
 		userId++;
@@ -157,7 +164,7 @@ public class ServiceImplTest {
 	
 	@Test
 	public void getAdministrators() {
-		Administrator administrator = new Administrator("mymail@mail.com", "password");
+		Administrator administrator = new Administrator(email, "password");
 		serviceImpl.addAdministrator(administrator);
 		assertNotNull(serviceImpl.getAdministrators());
 		userId++;
@@ -165,7 +172,7 @@ public class ServiceImplTest {
 	
 	@Test
 	public void getModerators() {
-		Moderator moderator = new Moderator("mymail@mail.com", "password");
+		Moderator moderator = new Moderator(email, "password");
 		serviceImpl.addModerator(moderator);
 		assertNotNull(serviceImpl.getModerators());
 		userId++;
@@ -173,7 +180,7 @@ public class ServiceImplTest {
 	
 	@Test
 	public void getUsers() {
-		User user = new User("mymail@mail.com", "password");
+		User user = new User(email, "password");
 		serviceImpl.addUser(user);
 		assertNotNull(serviceImpl.getUsers());
 		userId++;
@@ -181,7 +188,7 @@ public class ServiceImplTest {
 	
 	@Test
 	public void getAdministrator() {
-		Administrator administrator = new Administrator("mymail@mail.com", "password");
+		Administrator administrator = new Administrator(email, "password");
 		serviceImpl.addAdministrator(administrator);
 		assertNotNull(serviceImpl.getAdministrator(userId));
 		userId++;
@@ -189,7 +196,7 @@ public class ServiceImplTest {
 	
 	@Test
 	public void getModerator() {
-		Moderator moderator = new Moderator("mymail@mail.com", "password");
+		Moderator moderator = new Moderator(email, "password");
 		serviceImpl.addModerator(moderator);
 		assertNotNull(serviceImpl.getModerator(userId));
 		userId++;
@@ -197,7 +204,7 @@ public class ServiceImplTest {
 	
 	@Test
 	public void getUser() {
-		User user = new User("mymail@mail.com", "password");
+		User user = new User(email, "password");
 		serviceImpl.addUser(user);
 		assertNotNull(serviceImpl.getUser(userId));
 		userId++;
@@ -205,15 +212,17 @@ public class ServiceImplTest {
 	
 	@Test
 	public void deleteUser() {
-		Administrator administrator = new Administrator("mymail@mail.com", "password");
+		Administrator administrator = new Administrator(email, "password");
 		serviceImpl.addAdministrator(administrator);
 		serviceImpl.deleteUser(userId);
 		userId++;
-		Moderator moderator = new Moderator("mymail@mail.com", "password");
+		beforeTest();
+		Moderator moderator = new Moderator(email, "password");
 		serviceImpl.addModerator(moderator);
 		serviceImpl.deleteUser(userId);
 		userId++;
-		User user = new User("mymail@mail.com", "password");
+		beforeTest();
+		User user = new User(email, "password");
 		serviceImpl.addUser(user);
 		serviceImpl.deleteUser(userId);
 		userId++;

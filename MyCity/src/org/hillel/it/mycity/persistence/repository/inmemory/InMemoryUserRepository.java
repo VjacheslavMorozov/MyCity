@@ -5,9 +5,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Group;
@@ -23,6 +25,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	protected List<Moderator> moderators;
 	protected List<User> users;
 	protected Map<Integer, Group> userMap;
+	protected Set<String> emailSet;
 	protected int maxId;
 	private FileUserRepository fileUserRepository;
 	
@@ -31,12 +34,14 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		moderators = new ArrayList<>();
 		users = new ArrayList<>();
 		userMap = new HashMap<Integer, Group>();
+		emailSet = new HashSet<String>();
 		maxId = 1;
 	}
 
 	@Override
 	public void addUser(User user) {
 		validUser(user);
+		validEmail(user.getEmail());
 		user.setGroup(Group.User);
 		userMap.put(maxId, Group.User);
 		user.setId(maxId++);
@@ -47,6 +52,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	@Override
 	public void addModerator(Moderator moderator) {
 		validUser(moderator);
+		validEmail(moderator.getEmail());
 		moderator.setGroup(Group.Moderator);
 		userMap.put(maxId, Group.Moderator);
 		moderator.setId(maxId++);
@@ -57,6 +63,7 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	@Override
 	public void addAdministrator(Administrator administrator) {
 		validUser(administrator);
+		validEmail(administrator.getEmail());
 		administrator.setGroup(Group.Administrator);
 		userMap.put(maxId, Group.Administrator);
 		administrator.setId(maxId++);
@@ -203,5 +210,12 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 	
 	protected void setFileUserRepository(FileUserRepository fileUserRepository) {
 		this.fileUserRepository = fileUserRepository;
+	}
+	
+	private void validEmail(String email) {
+		if(emailSet.contains(email)) {
+			throw new RuntimeException("User with this email is already exist");
+		}
+		emailSet.add(email);
 	}
 }

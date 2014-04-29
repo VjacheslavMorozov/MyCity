@@ -59,6 +59,7 @@ public class FileUserRepository extends InMemoryUserRepository implements UserRe
 					maxId = administrator.getId() + 1;
 				}
 				userMap.put(administrator.getId(), Group.Administrator);
+				emailSet.add(administrator.getEmail());
 			}
 		}
 		file = new File("moderatorData.bin");
@@ -70,6 +71,7 @@ public class FileUserRepository extends InMemoryUserRepository implements UserRe
 					maxId = moderator.getId() + 1;
 				}
 				userMap.put(moderator.getId(), Group.Moderator);
+				emailSet.add(moderator.getEmail());
 			}
 		}
 		file = new File("userData.bin");
@@ -81,6 +83,7 @@ public class FileUserRepository extends InMemoryUserRepository implements UserRe
 					maxId = user.getId() + 1;
 				}
 				userMap.put(user.getId(), Group.User);
+				emailSet.add(user.getEmail());
 			}
 		}
 	}
