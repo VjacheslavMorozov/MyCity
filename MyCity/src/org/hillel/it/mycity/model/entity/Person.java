@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.hillel.it.mycity.helper.CryptoHelper;
@@ -25,11 +26,13 @@ public abstract class Person extends BaseEntity implements Serializable{
 	//при вызове методов добавления и удаление файлов.
 	//private boolean deleted - есть пользователь удалил аккаунт, сообщения остаются, если их не удаляют
 	//в ручную, но удаляются оценки.
+	private static long userNameCount = 256;
 	
 	public Person(String email, String password) {
 		setEmail(email);
 		setPassword(password);
 		emailVerified = false;
+		setUsername("user" + userNameCount++);
 	}
 	
 	/**
