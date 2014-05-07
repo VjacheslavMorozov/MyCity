@@ -53,17 +53,15 @@ public interface ServiceMyCity {
 	public void addUser(User user);
 
 	// READ Person
-	public List<Administrator> getAdministrators();
-	public List<Moderator> getModerators();
-	public List<User> getUsers();
+	public List<Person> getPersons();
 
 	public Administrator getAdministrator(int id);
 	public Moderator getModerator(int id);
 	public User getUser(int id);
 
 	// DELETE Person
-	public void deleteUsers();
-	public void deleteUser(int id);
+	public void deletePersons();
+	public void deletePerson(int id);
 	
 	//DeserializeData
 	public void deserializeUserData();

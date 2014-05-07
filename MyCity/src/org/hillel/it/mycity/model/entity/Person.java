@@ -26,13 +26,12 @@ public abstract class Person extends BaseEntity implements Serializable{
 	//при вызове методов добавления и удаление файлов.
 	//private boolean deleted - есть пользователь удалил аккаунт, сообщения остаются, если их не удаляют
 	//в ручную, но удаляются оценки.
-	private static long userNameCount = 256;
 	
 	public Person(String email, String password) {
 		setEmail(email);
 		setPassword(password);
 		emailVerified = false;
-		setUsername("user" + userNameCount++);
+		setUsername("user" + getId()+256);
 	}
 	
 	/**
@@ -175,6 +174,12 @@ public abstract class Person extends BaseEntity implements Serializable{
 		emailVerified = true;
 	}
 	
+	/**
+	 * Check user data for change different type of parameter. For class Comment this check
+	 * pass successful if creater of this Comment is this user or user with aministrator rights
+	 * For class Assessment check pass successful if creater of this Assessment is this user.
+	 * @param t one of classes Comment or Assessment
+	 */
 	public <T extends BaseEntity> void checkUserData(T t) {
 		if(t.getClass() == Comment.class) {
 			if(t.getCreatedBy() != this && !inGroup(Group.Administrator)) {
@@ -195,5 +200,9 @@ public abstract class Person extends BaseEntity implements Serializable{
 		if(!EmailValidator.getInstance().isValid(email)) {
 			throw new RuntimeException("Incorrect email");
 		}
+	}
+	
+	public Group getGroup() {
+		return group;
 	}
 }

@@ -30,13 +30,6 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 		assessment.setId(maxId++);
 		assessments.add(Objects.requireNonNull(assessment, "This object does not cointains any information"));
 	}
-	
-	public boolean validAssessment(Assessment assessment) {
-		if(assessment.getId() > 0) {
-			return false;
-		}
-		return true;
-	}
 
 	@Override
 	public void deleteAssessment(int id) {
@@ -109,5 +102,12 @@ public class InMemoryAssessmentRepository implements AssessmentRepository{
 	public int getAssessmentMaxId() {
 		int id = maxId;
 		return id;
+	}
+	
+	public boolean validAssessment(Assessment assessment) {
+		if(assessment.getId() > 0) {
+			return false;
+		}
+		return true;
 	}
 }

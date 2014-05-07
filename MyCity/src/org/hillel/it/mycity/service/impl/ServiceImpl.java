@@ -156,18 +156,8 @@ public class ServiceImpl implements ServiceMyCity {
 	
 	//READ Person
 	@Override
-	public List<Administrator> getAdministrators() {
-		return userRepository.getAdministrators();
-	}
-
-	@Override
-	public List<Moderator> getModerators() {
-		return userRepository.getModerators();
-	}
-
-	@Override
-	public List<User> getUsers() {
-		return userRepository.getUsers();
+	public List<Person> getPersons() {
+		return userRepository.getPersons();
 	}
 	
 	@Override
@@ -187,13 +177,13 @@ public class ServiceImpl implements ServiceMyCity {
 
 	//DELETE Person
 	@Override
-	public void deleteUsers() {
-		userRepository.deleteUsers();
+	public void deletePersons() {
+		userRepository.deletePersons();
 	}
 
 	@Override
-	public void deleteUser(int id) {
-		userRepository.deleteUser(id);
+	public void deletePerson(int id) {
+		userRepository.deletePerson(id);
 	}
 
 	//CREATE Comment

@@ -1,5 +1,11 @@
 package org.hillel.it.mycity.bootstrap;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.hillel.it.mycity.connectionpool.ReuseableConnectionPool;
 import org.hillel.it.mycity.info.Configuration;
 import org.hillel.it.mycity.model.entity.Administrator;
 import org.hillel.it.mycity.model.entity.Moderator;
@@ -12,6 +18,7 @@ import org.hillel.it.mycity.persistence.repository.inmemory.FileUserRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryAssessmentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryCommentRepository;
 import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryEstablishmentRepository;
+import org.hillel.it.mycity.persistence.repository.inmemory.InMemoryUserRepository;
 import org.hillel.it.mycity.service.ServiceMyCity;
 import org.hillel.it.mycity.service.impl.ServiceImpl;
 
@@ -25,26 +32,16 @@ public class Starter {
 		ServiceMyCity serviceImpl = new ServiceImpl(inMemoryEstablishmentRepository, inMemoryUserRepository, inMemoryCommentRepository, inMemoryAssessmentRepository);
 		
 		Configuration configuration = Configuration.getInstance();
-		System.out.println(configuration.getFilePath());
 		
-		serviceImpl.deleteUsers();
+		ReuseableConnectionPool rcp = new ReuseableConnectionPool(configuration.getUrl(), configuration.getMaxConnCount());
 		
-		Administrator administrator = new Administrator("mymail@mail.com", "password");
-		serviceImpl.addAdministrator(administrator);
-		Moderator moderator = new Moderator("mymail@mail.com", "password");
-		serviceImpl.addModerator(moderator);
-		User user = new User("mymail@mail.com", "password");
-		serviceImpl.addUser(user);
-		
-		serviceImpl.deleteUsers();
-		
-		serviceImpl.deserializeUserData();
-		System.out.println(serviceImpl.getAdministrator(1).getEmail());
-		
-		administrator = new Administrator("mymail1@mail.com", "password");
-		serviceImpl.addAdministrator(administrator);
-		System.out.println(serviceImpl.getAdministrator(4).getEmail());
-		
-		
+		try(Connection conn = rcp.getConnection()) {
+			try(Statement st = conn.createStatement()) {
+				st.executeUpdate("create table ");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
