@@ -37,7 +37,6 @@ public class Starter {
 		
 		try(Connection conn = rcp.getConnection()) {
 			try(Statement st = conn.createStatement()) {
-				st.executeUpdate("create table ");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
