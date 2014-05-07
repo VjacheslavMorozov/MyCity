@@ -37,6 +37,25 @@ public class Starter {
 		
 		try(Connection conn = rcp.getConnection()) {
 			try(Statement st = conn.createStatement()) {
+//				st.executeUpdate("CREATE TABLE BaseEntity(" +
+//						"baseentity_id INT GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1)," +
+//						"createdDate DATE," +
+//						"modifiedDate DATE," +
+//						"createdBy_id INT," +
+//						"modifiedBy_id INT," +
+//						"PRIMARY KEY (baseentity_id)," +
+//						"FOREIGN KEY (createdBy_id) REFERENCES Administrator(administrator_id)," +
+//						"FOREIGN KEY (modifiedBy_id) REFERENCES Administrator(administrator_id))");
+//				st.executeUpdate("CREATE TABLE Administrator(" + 
+//						"administrator_id INT GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1)," +
+//						"firstname VARCHAR(20)," +
+//						"lastname VARCHAR(20)," +
+//						"username VARCHAR(50)," +
+//						"email VARCHAR(60)," +
+//						"password VARCHAR(60)," +
+//						"emailvarified BOOLEAN," +
+//						"PRIMARY KEY (administrator_id))");
+//				st.executeUpdate("DROP TABLE Administrator");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

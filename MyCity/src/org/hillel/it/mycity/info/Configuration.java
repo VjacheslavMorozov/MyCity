@@ -22,7 +22,7 @@ public class Configuration {
 	}
 	
 	public String getFilePath() {
-		InputStream stream = Configuration.class.getClassLoader().getResourceAsStream("applications.propeties");
+		InputStream stream = Configuration.class.getClassLoader().getResourceAsStream("application.properties");
 		try {
 			prop.load(stream);
 		} catch (IOException e) {
@@ -33,7 +33,7 @@ public class Configuration {
 	}
 	
 	public String getUrl() {
-		InputStream stream = Configuration.class.getClassLoader().getResourceAsStream("applications.propeties");
+		InputStream stream = Configuration.class.getClassLoader().getResourceAsStream("application.properties");
 		try {
 			prop.load(stream);
 		} catch (IOException e) {
@@ -44,7 +44,7 @@ public class Configuration {
 	}
 	
 	public int getMaxConnCount() {
-		InputStream stream = Configuration.class.getClassLoader().getResourceAsStream("applications.propeties");
+		InputStream stream = Configuration.class.getClassLoader().getResourceAsStream("application.properties");
 		try {
 			prop.load(stream);
 		} catch (IOException e) {

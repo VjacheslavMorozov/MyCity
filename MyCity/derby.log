@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed May 07 22:56:53 EEST 2014:
+ Производится загрузка Derby версии The Apache Software Foundation - Apache Derby - 10.10.1.2 - (1495037): экземпляр a816c00e-0145-d842-94ad-000004d0a498
+в каталоге базы данных /Users/artemvlasov/git/MyCity/MyCity/DerbyDB sun.misc.Launcher$AppClassLoader@4821e115 
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_51-b13
+user.dir=/Users/artemvlasov/git/MyCity/MyCity
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.9.2
+derby.system.home=null
+Запущен загрузчик классов базы данных - derby.database.classpath=''
