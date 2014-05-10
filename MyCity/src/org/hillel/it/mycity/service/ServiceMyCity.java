@@ -53,7 +53,9 @@ public interface ServiceMyCity {
 	public void addUser(User user);
 
 	// READ Person
-	public List<Person> getPersons();
+	public List<Administrator> getAdministrators();
+	public List<Moderator> getModerators();
+	public List<User> getUsers();
 
 	public Administrator getAdministrator(int id);
 	public Moderator getModerator(int id);

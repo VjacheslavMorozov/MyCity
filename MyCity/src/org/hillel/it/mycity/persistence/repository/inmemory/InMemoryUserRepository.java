@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,13 +20,17 @@ import org.hillel.it.mycity.persistence.repository.UserRepository;
 public class InMemoryUserRepository implements UserRepository, Serializable{
 	
 	private static final long serialVersionUID = 2L;
-	protected List<Person> persons;
+	protected List<Administrator> administrators;
+	protected List<Moderator> moderators;
+	protected List<User> users;
 	protected Map<Integer, Group> userMap;
 	protected Set<String> emailSet;
 	protected int maxId;
 	
 	public InMemoryUserRepository() {
-		persons = new ArrayList<>();
+		administrators = new ArrayList<>();
+		moderators = new ArrayList<>();
+		users = new ArrayList<>();
 		userMap = new HashMap<Integer, Group>();
 		emailSet = new HashSet<String>();
 		maxId = 1;
@@ -38,8 +43,8 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		user.setGroup(Group.User);
 		userMap.put(maxId, Group.User);
 		user.setId(maxId++);
-		persons.add(user);
-		flush();
+		users.add(user);
+		flush(users, Group.User);
 	}
 
 	@Override
@@ -49,8 +54,8 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		moderator.setGroup(Group.Moderator);
 		userMap.put(maxId, Group.Moderator);
 		moderator.setId(maxId++);
-		persons.add(moderator);
-		flush();
+		moderators.add(moderator);
+		flush(moderators, Group.Moderator);
 	}
 
 	@Override
@@ -60,58 +65,101 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		administrator.setGroup(Group.Administrator);
 		userMap.put(maxId, Group.Administrator);
 		administrator.setId(maxId++);
-		persons.add(administrator);
-		flush();
+		administrators.add(administrator);
+		flush(administrators, Group.Administrator);
 	}
 
 	@Override
 	public void deletePerson(int id) {
 		validId(id);
-		for(int i = 0; i < persons.size(); i++) {
-			if(persons.get(i).getId() == id) {
-				persons.remove(i);
+
+		switch (userMap.get(id)) {
+		case User:
+			Iterator<User> iteratorUsers = users.iterator();
+			while(iteratorUsers.hasNext()) {
+				if(iteratorUsers.next().getId() == id) {
+					iteratorUsers.remove();
+					return;
+				}
 			}
+			break;
+		case Moderator:
+			Iterator<Moderator> iteratorModerators = moderators.iterator();
+			while (iteratorModerators.hasNext()) {
+				if(iteratorModerators.next().getId() == id) {
+					iteratorModerators.remove();
+					return;
+				}
+			}
+			break;
+		case Administrator:
+			Iterator<Administrator> iteratorAdministrators = administrators.iterator();
+			while (iteratorAdministrators.hasNext()) {
+				if(iteratorAdministrators.next().getId() == id) {
+					iteratorAdministrators.remove();
+					return;
+				}
+			}
+			break;
 		}
 	}
 
 	@Override
-	public List<Person> getPersons() {
-		return Collections.unmodifiableList(persons);
+	public List<Administrator> getAdministrators() {
+		return Collections.unmodifiableList(administrators);
+	}
+
+	@Override
+	public List<Moderator> getModerators() {
+		return Collections.unmodifiableList(moderators);
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return Collections.unmodifiableList(users);
 	}
 
 	@Override
 	public void deletePersons() {
-		persons.clear();
+		administrators.clear();
+		moderators.clear();
+		users.clear();
 	}
 
 	@Override
 	public User getUser(int id) {
-		checkGroup(id, Group.User);
-		for(Person person : persons) {
-			if(person.getId() == id) {
-				return (User) person;
+		if(!checkGroup(id, Group.User)) {
+			return null;
+		}
+		for(User user : users) {
+			if (user.getId() == id) {
+				return user;
 			}
 		}
 		return null;
 	}
-	
-	@Override
-	public Administrator getAdministrator(int id) {
-		checkGroup(id, Group.Administrator);
-		for(Person person : persons) {
-			if(person.getId() == id) {
-				return (Administrator) person;
-			}
-		}
-		return null;
-	}
-	
+
 	@Override
 	public Moderator getModerator(int id) {
-		checkGroup(id, Group.Moderator);
-		for(Person person : persons) {
-			if(person.getId() == id) {
-				return (Moderator) person;
+		if(!checkGroup(id, Group.Moderator)) {
+			return null;
+		}
+		for(Moderator moderator : moderators) {
+			if (moderator.getId() == id) {
+				return moderator;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Administrator getAdministrator(int id) {
+		if(!checkGroup(id, Group.Administrator)) {
+			return null;
+		}
+		for(Administrator administrator : administrators) {
+			if (administrator.getId() == id) {
+				return administrator;
 			}
 		}
 		return null;
@@ -151,5 +199,5 @@ public class InMemoryUserRepository implements UserRepository, Serializable{
 		emailSet.add(email);
 	}
 	
-	public void flush(){}
+	public <T>void flush(T t, Group group){}
 }

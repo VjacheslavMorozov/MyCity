@@ -156,8 +156,18 @@ public class ServiceImpl implements ServiceMyCity {
 	
 	//READ Person
 	@Override
-	public List<Person> getPersons() {
-		return userRepository.getPersons();
+	public List<Administrator> getAdministrators() {
+		return userRepository.getAdministrators();
+	}
+	
+	@Override
+	public List<Moderator> getModerators() {
+		return userRepository.getModerators();
+	}
+	
+	@Override
+	public List<User> getUsers() {
+		return userRepository.getUsers();
 	}
 	
 	@Override

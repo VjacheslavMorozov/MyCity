@@ -1,5 +1,6 @@
 package org.hillel.it.mycity.persistence.repository;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.hillel.it.mycity.model.entity.Administrator;
@@ -16,7 +17,9 @@ public interface UserRepository {
 	public User getUser(int id);
 	public Administrator getAdministrator(int id);
 	public Moderator getModerator(int id);
-	public List<Person> getPersons();
+	public List<Administrator> getAdministrators();
+	public List<Moderator> getModerators();
+	public List<User> getUsers();
 	public void deletePersons();
 	public void deserializeData();
 }
