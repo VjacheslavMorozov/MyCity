@@ -22,7 +22,6 @@ public interface EstablishmentRepository {
 	public void deleteRestaurants();
 	public void deleteEstablishments();
 	public void deleteEstablishment(int id);
-	
-	public int getMaxId ();
+	public void updateDataBase();
 	
 }

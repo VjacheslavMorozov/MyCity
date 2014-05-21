@@ -16,11 +16,11 @@ import org.hillel.it.mycity.model.entity.Restaurant;
 import org.hillel.it.mycity.persistence.repository.EstablishmentRepository;
 
 public class InMemoryEstablishmentRepository implements EstablishmentRepository{
-	private List<Cinema> cinemas;
-	private List<NightClub> nightClubs;
-	private List<Restaurant> restaurants;
+	protected List<Cinema> cinemas;
+	protected List<NightClub> nightClubs;
+	protected List<Restaurant> restaurants;
 	private Map<Integer, String> estbalishmentMap;
-	private int maxId;
+	protected int maxId;
 	
 	public InMemoryEstablishmentRepository() {
 		cinemas = new ArrayList<>();
@@ -36,6 +36,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		estbalishmentMap.put(maxId, "Cinema");
 		cinema.setId(maxId++);
 		cinemas.add(Objects.requireNonNull(cinema, "This object does not cointains any information"));
+		flushCinema(cinema);
 	}
 
 	@Override
@@ -44,6 +45,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		estbalishmentMap.put(maxId, "NightClub");
 		nightClub.setId(maxId++);
 		nightClubs.add(Objects.requireNonNull(nightClub, "This object does not cointains any information"));
+		flushNightClub(nightClub);
 	}
 
 	@Override
@@ -52,6 +54,7 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		estbalishmentMap.put(maxId, "Restaurant");
 		restaurant.setId(maxId++);
 		restaurants.add(Objects.requireNonNull(restaurant, "This object does not cointains any information"));
+		flushRestaurant(restaurant);
 	}
 
 	@Override
@@ -180,4 +183,9 @@ public class InMemoryEstablishmentRepository implements EstablishmentRepository{
 		int id = maxId;
 		return id;
 	}
+	
+	protected void flushCinema(Cinema cinema){}
+	protected void flushNightClub(NightClub nightClub){}
+	protected void flushRestaurant(Restaurant restaurant){}
+	public void updateDataBase(){}
 }

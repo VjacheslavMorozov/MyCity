@@ -8,15 +8,6 @@ public class Administrator extends Person {
 		super(email, password);
 	}
 	
-	//лучше делать через Setter и вынести этот конструктор в базовый класс Person. И оставить только
-	//главные поля - password и email
-	/*public Administrator(String lastName, String firstName, String username, String password){
-		this.lastName = lastName;
-		this.firstName = firstName;
-		this.username = username;
-		this.setPassword(password);		
-	}*/
-	
 	public Cinema createEstablishmentCinema() {
 		Cinema cinema = new Cinema();
 		cinema.setCreatedBy(this);

@@ -29,4 +29,22 @@ public abstract class RestaurantsAndNightClubs extends Establishment{
 	public int getTimeCloseInMinute() {	
 		return timeClose.getTimeInMinute();
 	}
+	
+	protected String getRestAndNCSQLData() {
+		String rsnc = "";
+		if(timeOpen.getTimeInMinute() > 0) {
+			int minute = timeOpen.getTimeInMinute()%60;
+			int hour = (timeOpen.getTimeInMinute()-minute)/60;
+			rsnc = rsnc + ", timeOpen = " + hour + ":" + minute + ":00";
+		}
+		if(timeClose.getTimeInMinute() > 0) {
+			int minute = timeClose.getTimeInMinute()%60;
+			int hour = (timeClose.getTimeInMinute()-minute)/60;
+			rsnc = rsnc + ", timeClose = " + hour + ":" + minute + ":00";
+		}
+		if(averageCheck > 0) {
+			rsnc = rsnc + ", averageCheck = " + averageCheck;			
+		}
+		return rsnc;
+	}
 }

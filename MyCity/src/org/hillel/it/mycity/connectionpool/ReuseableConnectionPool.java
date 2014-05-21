@@ -9,6 +9,8 @@ import java.util.Objects;
 
 public class ReuseableConnectionPool implements ConnectionPool, AutoCloseable{
 	private String url;
+	private String username = "root";
+	private String password = "1234";
 	private List<ReuseableConnection> conns;
 	private int maxConnCount;
 	
@@ -21,9 +23,16 @@ public class ReuseableConnectionPool implements ConnectionPool, AutoCloseable{
 		conns = new ArrayList<>(maxConnCount);
 	}
 	
-	private ReuseableConnection createConnection() throws SQLException {
-		Connection conn = DriverManager.getConnection(url);
-		ReuseableConnection rc = new ReuseableConnectionImpl(conn);
+	private ReuseableConnection createConnection() {
+		ReuseableConnection rc = null;
+		Connection conn = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, username, password);
+			rc = new ReuseableConnectionImpl(conn);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 		conns.add(rc);
 		return rc;
 	}
@@ -36,11 +45,7 @@ public class ReuseableConnectionPool implements ConnectionPool, AutoCloseable{
 			}
 		}
 		if(conns.size() < maxConnCount) {
-			try {
-				return createConnection();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			return createConnection();
 		}
 		return null;
 	}

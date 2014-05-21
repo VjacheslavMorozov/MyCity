@@ -6,10 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Establishment extends BaseEntity{
-	private String nameOfEstablishment;
-	private String addressOfEstablishment;
-	private String telephoneOfEstablishment; //формат (0482) 34-56-15, можно добавить форматирование по
-	private String descriptionOfEstablishment;
+	private String name;
+	private String address;
+	private String telephone; //формат (0482) 34-56-15, можно добавить форматирование по
+	private String description;
 	private List<Comment> commentsOfEstablishment;
 	private List<Assessment> assessmentsOfEstablishment;
 	
@@ -19,19 +19,19 @@ public abstract class Establishment extends BaseEntity{
 	}
 	
 	public void setNameOfEstablishment(String nameOfEstablishment){
-		this.nameOfEstablishment = nameOfEstablishment;
+		this.name = nameOfEstablishment;
 	}
 
 	public String getNameOfEstablishment() {
-		return nameOfEstablishment;
+		return name;
 	}
 	
 	public void setAddressOfEstablishment(String addressOfEstablishment) {
-		this.addressOfEstablishment = addressOfEstablishment;
+		this.address = addressOfEstablishment;
 	}
 	
 	public String getAddressOfEstablishment() {
-		return addressOfEstablishment;
+		return address;
 	}
 	
 	public void setTelephoneOfEstablishment(String telephoneOfEstablishment) throws ClassNotFoundException {
@@ -39,19 +39,19 @@ public abstract class Establishment extends BaseEntity{
 			System.out.println("Incorrect format");
 			return;
 		}
-		this.telephoneOfEstablishment = telephoneOfEstablishment;
+		this.telephone = telephoneOfEstablishment;
 	}
 	
 	public String getTelephoneOfEstablishment() {
-		return telephoneOfEstablishment;
+		return telephone;
 	}
 	
 	public void setDescriptionOfEstablishment(String descriptionOfEstablishment) {
-		this.descriptionOfEstablishment = descriptionOfEstablishment;
+		this.description = descriptionOfEstablishment;
 	}
 	
 	public String getDescriptionOfEstablishment() {
-		return descriptionOfEstablishment;
+		return description;
 	}
 	
 	/**
@@ -102,5 +102,28 @@ public abstract class Establishment extends BaseEntity{
 			System.out.println("Problem with Assessment: " + e);
 			throw new RuntimeException();
 		}
+	}
+	
+	public String getEstablishmentSQLData() {
+		String establishmentString = "establishmentBaseEntity = (SELECT MAX(idBaseEntity) FROM BaseEntity)";
+		int stringLength = establishmentString.length();
+		if(name != null) {
+			establishmentString = establishmentString + ", name = " + "'" + name + "'";
+		}
+		if(address != null) {
+			establishmentString = establishmentString + ", address = " + "'" + address + "'";
+		}
+		if(telephone != null) {
+			establishmentString = establishmentString + ", telephone = " + "'" + telephone + "'";
+		}
+		if(description != null) {
+			establishmentString = establishmentString + ", description = " + "'" + description + "'";
+		}
+		if(stringLength == establishmentString.length()) {
+			return "";
+		} else {
+			return establishmentString;
+		}
+		
 	}
 }

@@ -32,4 +32,25 @@ public class Cinema extends Establishment{
 	public String getCinemaTechnology() {	
 		return cinemaTechnology;
 	}
+	
+	
+	public String getCinemaSQLData() {
+		String cinemaString = "cinemaEstablishment = (SELECT MAX(idEstablishment) FROM Establishment)";
+		int stringLength = cinemaString.length();
+		if(numberOfHalls > 0) {
+			cinemaString = cinemaString + ", numberOfHalls = " + numberOfHalls;
+		}
+		if(numberOfSeatsInHall > 0) {
+			cinemaString = cinemaString + ", numberOfSeatsInHall = " + numberOfSeatsInHall;
+		}
+		if(cinemaTechnology != null) {
+			cinemaString = cinemaString + ", cinemaTechnology = " + "'" + cinemaTechnology + "'";
+		}
+		if(stringLength == cinemaString.length()) {
+			return "";
+		} else {
+			return cinemaString;
+		}
+		
+	}
 }

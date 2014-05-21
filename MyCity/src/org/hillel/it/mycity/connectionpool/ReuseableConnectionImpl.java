@@ -31,6 +31,7 @@ public class ReuseableConnectionImpl implements ReuseableConnection{
 		return available;
 	}
 	
+	@Override
 	public void close() {
 		available = true;
 	}
